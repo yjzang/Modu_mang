@@ -1,0 +1,53 @@
+
+	 /*  상 화 형  part */
+
+
+	.hotPlace img{
+		margin:auto;
+	}
+
+	.localHotplaceArea{
+		width: 1240px;
+		height: 100%;
+		display:flex;
+		padding:50px;
+		margin: 50px auto 50px auto;
+		
+	}
+	.localHotplaceBackground{
+		background-color: #9dc3e6;
+		margin-left: -600%;
+		margin-right: -600%;
+		
+	}
+	.localHotplaceTop6{
+		width: 83%;
+		float: left;
+		
+		font-family: Nanum Gothic;
+	}
+	.localHotplaceTitle{
+		width: 13%;
+		color:white;
+		font-size: 25px;
+		float: right;
+		margin-top: 50px;
+		margin-left: 50px;
+		font-family: Nanum Gothic;
+	}
+	.card img{
+		margin-top: 30px;
+	}
+	.cardBackground{
+		background-color: #9dc3e6;
+		border: none;
+	}
+	.localHotplaceParking{
+		color: blue;
+	}
+	.news{
+		width: 80%;
+		height: auto;
+		padding: 10px;
+		margin:auto auto 50px auto;
+	}
