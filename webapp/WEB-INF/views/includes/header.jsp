@@ -74,12 +74,7 @@
 					<div class="clubIcon">
 						<img src="${pageContext.request.contextPath }/assets/images/club05.png" alt="club05">
 						<a class="nav-link" href="#">모임5</a>
-					</div>
-				</li> 
-				<li class="nav-item ml-0">
-					<div class="clubIcon">
-						<button class="t-button"><img src="${pageContext.request.contextPath }/assets/images/down.png" alt="more"></button>
-					</div>
+					</div></div>
 				</li>	
 				<li class="nav-item ml-0">
 					<div class="clubIcon">
@@ -110,8 +105,13 @@
 						통계
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="${pageContext.request.contextPath }/annualreport">월간</a>
-						<a class="dropdown-item" href="${pageContext.request.contextPath }/monthlyreport">연간</a>
+				</li> 
+				<li class="nav-item ml-0">
+					<div class="clubIcon">
+						<button class="t-button"><img src="${pageContext.request.contextPath }/assets/images/down.png" alt="more"></button>
+					
+						<a class="dropdown-item" href="${pageContext.request.contextPath }/monthlyreport">월간</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath }/annualreport">연간</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="${pageContext.request.contextPath }/eventreport">행사별</a>
 					</div>
@@ -121,7 +121,11 @@
 				</li>
 
 				<li class="nav-item menuTab">
+
 					<a class="nav-link" href="${pageContext.request.contextPath }/membershipfee">회비관리</a>
+
+				
+
 				</li>
 				<li class="nav-item menuTab">
 					<a class="nav-link" href="#">모임관리</a>
