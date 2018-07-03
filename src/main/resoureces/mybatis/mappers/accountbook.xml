@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="accountbook">
+	
+	<select id="getaccountlist" parameterType="String" resultType="com.modu.vo.AccountbookVo">
+		<![CDATA[
+		select categoryno,accountbookno,groupno,usage,spend,import,categoryname,tagname tag,to_char(accountbookdate,'yyyy"년" mm"월" dd"일"') accountbookdate
+		from accountbook join accountbook_category using(categoryno) join accountbook_tag using(accountbookno) join tag using(tagno)
+		where groupno=#{groupNo}
+		]]>
+	</select>
+
+	
+</mapper>
