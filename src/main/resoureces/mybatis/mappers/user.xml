@@ -6,7 +6,7 @@
 	<select id="loginUser" parameterType="int" resultType="com.modu.vo.ModuUserVo">
 		<![CDATA[
 		select *
-		from modu_user
+		from user_tbl
 		where userno=#{userNo}
 		]]>
 	</select>
@@ -14,7 +14,7 @@
 	<select id="loginGroup" parameterType="int" resultType="com.modu.vo.ModuGroupVo">
 		<![CDATA[
 		select *
-		from modu_group
+		from group_tbl
 		where manager=#{userNo}
 		]]>
 	</select>

@@ -2,39 +2,42 @@ package com.modu.vo;
 
 public class AccountbookVo {
 	private int accountbookno;
-	private String accountbookdate;
-	private String usage;
-	private int spend;
-	private int categoryno;
+	private String accountbookRegDate;
+	private String accountbookUsage;
+	private int accountbookSpend;
+	private int accountbookIncome;
+	private String categoryNo;
 	private String categoryName;
-	private int importmoney;
-	private String tag;
+	private int groupNo;
+	private String tagName;
 
 	public AccountbookVo() {
 
 	}
 
-	public AccountbookVo(String accountbookdate, String usage, int spend, int categoryno,
-			String categoryName, int importmoney, String tag) {
-		this.accountbookdate = accountbookdate;
-		this.usage = usage;
-		this.spend = spend;
-		this.categoryno = categoryno;
+	public AccountbookVo(String accountbookRegDate, String accountbookUsage, int accountbookSpend,
+			int accountbookIncome, String categoryNo, String categoryName, int groupNo, String tagName) {
+		this.accountbookRegDate = accountbookRegDate;
+		this.accountbookUsage = accountbookUsage;
+		this.accountbookSpend = accountbookSpend;
+		this.accountbookIncome = accountbookIncome;
+		this.categoryNo = categoryNo;
 		this.categoryName = categoryName;
-		this.importmoney = importmoney;
-		this.tag = tag;
+		this.groupNo = groupNo;
+		this.tagName = tagName;
 	}
-	
-	public AccountbookVo(int accountbookno, String accountbookdate, String usage, int spend, int categoryno,
-			String categoryName, int importmoney, String tag) {
+
+	public AccountbookVo(int accountbookno, String accountbookRegDate, String accountbookUsage, int accountbookSpend,
+			int accountbookIncome, String categoryNo, String categoryName, int groupNo, String tagName) {
 		this.accountbookno = accountbookno;
-		this.accountbookdate = accountbookdate;
-		this.usage = usage;
-		this.spend = spend;
-		this.categoryno = categoryno;
+		this.accountbookRegDate = accountbookRegDate;
+		this.accountbookUsage = accountbookUsage;
+		this.accountbookSpend = accountbookSpend;
+		this.accountbookIncome = accountbookIncome;
+		this.categoryNo = categoryNo;
 		this.categoryName = categoryName;
-		this.importmoney = importmoney;
-		this.tag = tag;
+		this.groupNo = groupNo;
+		this.tagName = tagName;
 	}
 
 	public int getAccountbookno() {
@@ -45,36 +48,44 @@ public class AccountbookVo {
 		this.accountbookno = accountbookno;
 	}
 
-	public String getAccountbookdate() {
-		return accountbookdate;
+	public String getAccountbookRegDate() {
+		return accountbookRegDate;
 	}
 
-	public void setAccountbookdate(String accountbookdate) {
-		this.accountbookdate = accountbookdate;
+	public void setAccountbookRegDate(String accountbookRegDate) {
+		this.accountbookRegDate = accountbookRegDate;
 	}
 
-	public String getUsage() {
-		return usage;
+	public String getAccountbookUsage() {
+		return accountbookUsage;
 	}
 
-	public void setUsage(String usage) {
-		this.usage = usage;
+	public void setAccountbookUsage(String accountbookUsage) {
+		this.accountbookUsage = accountbookUsage;
 	}
 
-	public int getSpend() {
-		return spend;
+	public int getAccountbookSpend() {
+		return accountbookSpend;
 	}
 
-	public void setSpend(int spend) {
-		this.spend = spend;
+	public void setAccountbookSpend(int accountbookSpend) {
+		this.accountbookSpend = accountbookSpend;
 	}
 
-	public int getCategoryno() {
-		return categoryno;
+	public int getAccountbookIncome() {
+		return accountbookIncome;
 	}
 
-	public void setCategoryno(int categoryno) {
-		this.categoryno = categoryno;
+	public void setAccountbookIncome(int accountbookIncome) {
+		this.accountbookIncome = accountbookIncome;
+	}
+
+	public String getCategoryNo() {
+		return categoryNo;
+	}
+
+	public void setCategoryNo(String categoryNo) {
+		this.categoryNo = categoryNo;
 	}
 
 	public String getCategoryName() {
@@ -85,28 +96,30 @@ public class AccountbookVo {
 		this.categoryName = categoryName;
 	}
 
-	public int getImportmoney() {
-		return importmoney;
+	public int getGroupNo() {
+		return groupNo;
 	}
 
-	public void setImportmoney(int importmoney) {
-		this.importmoney = importmoney;
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getTagName() {
+		return tagName;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
 	}
 
 	@Override
 	public String toString() {
-		return "AccountbookVo [accountbookno=" + accountbookno + ", accountbookdate=" + accountbookdate + ", usage="
-				+ usage + ", spend=" + spend + ", categoryno=" + categoryno + ", categoryName=" + categoryName
-				+ ", importmoney=" + importmoney + ", tag=" + tag + "]";
+		return "AccountbookVo [accountbookno=" + accountbookno + ", accountbookRegDate=" + accountbookRegDate
+				+ ", accountbookUsage=" + accountbookUsage + ", accountbookSpend=" + accountbookSpend
+				+ ", accountbookIncome=" + accountbookIncome + ", categoryNo=" + categoryNo + ", categoryName="
+				+ categoryName + ", groupNo=" + groupNo + ", tagName=" + tagName + "]";
 	}
+	
 	
 	
 	
