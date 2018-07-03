@@ -102,8 +102,8 @@
 				<li id="btn_main" class="nav-item menuTab active">
 					<a class="nav-link" href="${pageContext.request.contextPath }/main">메인 <span class="sr-only">(current)</span></a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">가계부</a>
+				<li id="accountbook" class="nav-item menuTab">
+					<a class="nav-link" href="${pageContext.request.contextPath }/accountbook/accountbook">가계부</a>
 				</li>
 				<li class="nav-item menuTab dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -121,7 +121,7 @@
 				</li>
 
 				<li class="nav-item menuTab">
-					<a class="nav-link" href="#">회비관리</a>
+					<a class="nav-link" href="${pageContext.request.contextPath }/membershipfee">회비관리</a>
 				</li>
 				<li class="nav-item menuTab">
 					<a class="nav-link" href="#">모임관리</a>

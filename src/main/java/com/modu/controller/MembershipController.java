@@ -16,7 +16,7 @@ public class MembershipController {
 		return "/membership/membershipFeeStart";
 	}
 	
-	@RequestMapping("membershipsetting")
+	@RequestMapping("/membershipsetting")
 	public String membershipSetting() {
 		
 		System.out.println("/membershipSetting");
