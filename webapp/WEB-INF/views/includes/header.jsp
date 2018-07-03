@@ -121,7 +121,7 @@
 				</li>
 
 				<li class="nav-item menuTab">
-					<a class="nav-link" href="#">회비관리</a>
+					<a class="nav-link" href="${pageContext.request.contextPath }/membershipfee" onclick="btn_board()">회비관리</a>
 				</li>
 				<li class="nav-item menuTab">
 					<a class="nav-link" href="#">모임관리</a>
