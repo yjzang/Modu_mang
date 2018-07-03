@@ -35,10 +35,10 @@
 				2018년 6월 27일 회식
 			</h4>
 			<div class="text-right mr-5">
-				<a href="./board_write.html" class="btn btn-sm btn-primary">
+				<a href="${pageContext.request.contextPath }/board/write" class="btn btn-sm btn-primary">
 					글쓰기		
 				</a>
-				<a href="./board_write.html" class="btn btn-sm btn-secondary">
+				<a href="${pageContext.request.contextPath }/board/write" class="btn btn-sm btn-secondary">
 					수정		
 				</a>
 				<button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#deleteModal">
@@ -315,14 +315,14 @@
 	<script src="${pageContext.request.contextPath }/assets/js/header.js"></script>
 	<script type="text/javascript">
 
+	
+
 		$(document).ready(function(){
 			
 			$('.menuTab').removeClass("active");
 			$("#btn_board").addClass("active");
 		});
-		
-		
-
+	
 		/*좋아요*/
 
 
