@@ -110,10 +110,10 @@
 						통계
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="#">월간</a>
-						<a class="dropdown-item" href="#">연간</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath }/annualreport">월간</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath }/monthlyreport">연간</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">행사별</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath }/eventreport">행사별</a>
 					</div>
 				</li>
 				<li id="btn_board" class="nav-item menuTab">

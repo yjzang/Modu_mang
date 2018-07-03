@@ -34,8 +34,8 @@ public class AccountBookController {
 	
 	@ResponseBody
 	@RequestMapping( "/getaccountlist")
-	public List<AccountbookVo> getaccountlist(@RequestParam("groupNo") String groupNo){
-		List<AccountbookVo> list = moduAccountbookService.getaccountlist(groupNo);
+	public List<AccountbookVo> getaccountlist(@RequestParam("groupNo") String groupNo, @RequestParam("month") String month){
+		List<AccountbookVo> list = moduAccountbookService.getaccountlist(groupNo,month);
 		System.out.println(list);
 		return list;
 	}
