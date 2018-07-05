@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardDB">
+	
+	<insert id="insert" parameterType="boardVo" >
+		<selectKey keyProperty="boardNo" resultType="string" order="BEFORE">  
+		select seq_board_no.nextval FROM dual
+	 </selectKey>
+	
+		<![CDATA[
+		insert into board_tbl(boardNo,boardTitle,boardContent,boardRegDate)
+		values(#{boardNo},#{boardTitle},#{boardContent},sysdate)	
+	       ]]>
+    
+	
+	</insert>
+	
+	
+	<select id="getPostList" resultType="boardVo" >
+
+		select boardNo,boardTitle,boardContent,to_char(boardRegDate,'yyyy/mm/dd') boardRegDate
+		from board_tbl
+		order by boardRegDate desc
+
+	</select>
+	
+
+	
+</mapper>
