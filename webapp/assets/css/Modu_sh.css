@@ -178,7 +178,7 @@
 
 	.custom-file-label::after {
 
-		content: url('images/up.png');
+		content: url('../images/up.png');
 		margin-top: 2px;
 		height: auto;
 
@@ -200,7 +200,7 @@
 	 @font-face{
 	 
 		font-family:"Typo_SsangmunDongB";
-		src: url('fonts/Typo_SsangmunDongB.ttf') format('truetype');	
+		src: url('../fonts/Typo_SsangmunDongB.ttf') format('truetype');
 
 	}
 	
@@ -213,4 +213,56 @@
 	.boardImg img{
 		margin : 2% auto 2% auto;
 		width: 90%;
+	}
+
+
+	/*모임메인*/
+	.hotPlace img{
+		margin:auto;
+	}
+
+	.localHotplaceArea{
+		width: 1240px;
+		height: 100%;
+		display:flex;
+		padding:50px;
+		margin: 50px auto 50px auto;
+
+	}
+	.localHotplaceBackground{
+		background-color: #9dc3e6;
+		margin-left: -600%;
+		margin-right: -600%;
+
+	}
+	.localHotplaceTop6{
+		width: 83%;
+		float: left;
+
+		font-family: Nanum Gothic;
+	}
+	.localHotplaceTitle{
+		width: 13%;
+		color:white;
+		font-size: 25px;
+		float: right;
+		margin-top: 50px;
+		margin-left: 50px;
+		font-family: Nanum Gothic;
+	}
+	.card img{
+		margin-top: 30px;
+	}
+	.cardBackground{
+		background-color: #9dc3e6;
+		border: none;
+	}
+	.localHotplaceParking{
+		color: blue;
+	}
+	.news{
+		width: 80%;
+		height: auto;
+		padding: 10px;
+		margin:auto auto 50px auto;
 	}

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import com.modu.vo.ModuGroupVo;
 import com.modu.vo.ModuUserVo;
 
+import java.util.Map;
+
 @Repository
 public class ModuUserDao {
 
@@ -19,5 +21,22 @@ public class ModuUserDao {
 	
 	public ModuGroupVo loginGroup(int userNo) {
 		return sqlSession.selectOne("user.loginGroup",userNo);
+	}
+
+	public void joinUser(ModuUserVo userVo) {
+		sqlSession.insert("user.joinUser",userVo);
+	}
+
+	public int emailCheckAjax(String email) {
+		return sqlSession.selectOne("user.emailCheckAjax",email);
+	}
+
+	public ModuUserVo userLoginCheck(Map<String, Object> map) {
+		System.out.println(map.toString());
+		return sqlSession.selectOne("user.userLoginAvailableCheck",map);
+	}
+
+	public ModuUserVo kakaoLogin(Map<String,Object> map) {
+		return sqlSession.selectOne("user.userLoginAvailableCheck",map);
 	}
 }
