@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -25,7 +26,7 @@
 				<%--<button class="mr-2"style="border:2px solid #0179c1; background-color:white; ">--%>
 					<%--<a class="nav-link" href="#" style="color: #0179c1; font-weight: bold;" data-toggle="modal" data-target="#exampleModalCenter3">회원가입</a>--%>
 				<%--</button>--%>
-				<span>${authUser.userEmail}${authUser.userBirthday}</span>
+		
 			</ul>
 
 		</div>
@@ -133,8 +134,7 @@
 				</li>
 			</ul> 	
 		</div>
-		<%--<button style="border:2px solid #0179c1; background-color:white; ">--%>
-			<%--<a class="nav-link" href="#" style="color: #0179c1; font-weight: bold;" data-toggle="modal" data-target="#kakaoModal">테스트</a>--%>
-		<%--</button>--%>
+		
 	</nav>
 </header>
+

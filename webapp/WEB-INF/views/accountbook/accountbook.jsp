@@ -44,14 +44,14 @@ table {
 
 		<div class="calendar-content" style="margin-left: 500px">
 			<input type="text" class="form-control page-link col-4 text-center"
-				style="font-size: 25px" id="demo-2" value="2018 / 06">
+				style="font-size: 25px" id="monthCal" value="">
 		</div>
 
 		<hr>
 
 		<div class="table-responsive">
 			<form>
-				<input type="text" value="${authUser.name}"> <input
+				<input type="text" value="${authUser.userName}"> <input
 					type="text" id="groupno" value="${group.groupNo}">
 				<table class="table table-striped table-sm">
 					<thead>
@@ -71,7 +71,7 @@ table {
 						</tr>
 					</thead>
 
-					<tbody id="accountbook">
+					<tbody id="accountbookContent">
 
 					</tbody>
 
@@ -99,7 +99,7 @@ table {
 			&nbsp;
 			<button type="button" class="btn btn-primary">저장하기</button>
 			&nbsp;
-			<button type="button" class="btn btn-primary">삭제하기</button>
+			<button type="button" class="btn btn-danger">삭제하기</button>
 			&nbsp;
 		</div>
 		<br> <br>
@@ -175,10 +175,22 @@ table {
 		$(document)
 				.ready(
 						function() {
-							
+
+							//내비바 가계부 탭 활성화
 							$('.menuTab').removeClass("active");
 							$("#accountbook").addClass("active");
 							
+							//오늘 날짜 불러와서 달력에 입력
+							var today = new Date();
+							var year = today.getFullYear();
+							var month = '' + (today.getMonth() + 1);
+							if(month.length < 2) 
+								{month = "0" + month;}
+				            $('[id=monthCal]').val(year + " / " + month);
+				            
+				            //표에 가계부 내역 호출
+				            fetchAccountbookList();
+
 							//최상단 체크박스 클릭시 체크박스 전체 선택 / 전체 해제
 							$("#checkall").click(
 									function() {
@@ -197,11 +209,10 @@ table {
 
 							//////////////////////////////////////////////////////////////
 
-							groupNo = $("[id=groupno]").val();
-							fetchAccountbookList(groupNo);
+						
 
 							//페이지 로딩시 리스트 불러오기
-							function fetchAccountbookList(groupNo) {
+							function fetchAccountbookList(groupNo,month) {
 								$
 										.ajax({
 
@@ -209,11 +220,12 @@ table {
 											type : "post",
 											//contentType : "application/json",
 											data : {
-												groupNo : groupNo
+												groupNo : $("[id=groupno]").val() , month : $('[id=monthCal]').val()
 											},
 
 											dataType : "json",
 											success : function(list) {
+												$("[id=accountbookContent]").empty();
 												for (var i = 0; i < list.length; i++) {
 													render(list[i], i);
 												}
@@ -238,18 +250,18 @@ table {
 								str += "</div>";
 								str += "</td>"
 								str += "<td>"
-								str += "<input type='text' id='date" + i + "' readonly='readonly' class='datepicker form-control text-center data" + i + "' value='" + accountbookVo.accountbookdate + "' style='margin-top:7px' placeholder='날짜'>";
+								str += "<input type='text' id='date" + i + "' readonly='readonly' class='datepicker form-control text-center data" + i + "' value='" + accountbookVo.accountbookRegDate + "' style='margin-top:7px' placeholder='날짜'>";
 								str += "</td>";
 								str += "<td>";
-								str += "<input type='text' class='form-control text-center data" + i + "' style='margin-top: 7px' id='usage" + i + "' value='" + accountbookVo.usage + "' placeholder='사용내역'>";
+								str += "<input type='text' class='form-control text-center data" + i + "' style='margin-top: 7px' id='usage" + i + "' value='" + accountbookVo.accountbookUsage + "' placeholder='사용내역'>";
 								str += "</td>";
 								str += "<td>";
-								str += "<input type='text' class='form-control text-center data" + i + "' style='margin-top: 7px' id='spend" + i + "' value='" + accountbookVo.spend + "' placeholder='지출액'>";
+								str += "<input type='text' class='form-control text-center data" + i + "' style='margin-top: 7px' id='spend" + i + "' value='" + accountbookVo.accountbookSpend + "' placeholder='지출액'>";
 								str += "</td>";
 								str += "<td>";
 								str += "<select class='form-control custom-select text-center data" + i + "' style='margin-top: 7px' id='category" + i + "'>";
 								str += "<option selected>분류</option>";
-								if (accountbookVo.categoryno == 1) {
+								if (accountbookVo.categoryNo == 1) {
 									str += "<option value='1' selected>식당</option>";
 								} else {
 									str += "<option value='1'>식당</option>";
@@ -267,11 +279,11 @@ table {
 								str += "</select>";
 								str += "</td>";
 								str += "<td>";
-								str += "<input type='text' class='form-control text-center data" + i + "' style='margin-top: 7px' id='tag" + i + "' value='" + accountbookVo.tag + "' placeholder='태그'>";
+								str += "<input type='text' class='form-control text-center data" + i + "' style='margin-top: 7px' id='tag" + i + "' value='" + accountbookVo.tagName + "' placeholder='태그'>";
 								str += "<td>";
 								str += "</tr>";
 
-								$("[id=accountbook]").append(str);
+								$("[id=accountbookContent]").append(str);
 								datepickerReset();
 
 							}
@@ -317,60 +329,58 @@ table {
 								str += "<td>";
 								str += "</tr>";
 
-								$("[id=accountbook]").append(str);
+								$("[id=accountbookContent]").append(str);
 								datepickerReset();
 							}
 
 							//마지막 줄 선택시 새로운 라인 삽입
-							$("[id=accountbook]").on(
-									"focus",
-									"tr",
-									function() {
-										var $this = $(this);
-										$this.attr("id");
-										if ($('[id=accountbook] > tr').index(
-												this) == $(
-												'[id=accountbook] > tr ')
-												.last().index()) {
-											var today = new Date();
-											var yyyy = today.getFullYear();
-											var mm = today.getMonth() + 1;
-											var dd = today.getDate();
-											
-											$("[id=date" + $this.attr("id") +"]").attr("value",yyyy + "년 " + mm + "월 " + dd + "일");
-											
-											var row = parseInt($this.attr("id")) + 1;
-											newline(row);
-										}
+							$("[id=accountbookContent]")
+									.on(
+											"focus",
+											"tr",
+											function() {
+												var $this = $(this);
+												console.log($('[id=tag]').attr('value'));
+												$this.attr("id");
+												if ($(
+														'[id=accountbookContent] > tr')
+														.index(this) == $(
+														'[id=accountbookContent] > tr ')
+														.last().index()) {
+													var today = new Date();
+													var yyyy = today
+															.getFullYear();
+													var mm = today.getMonth() + 1;
+													var dd = today.getDate();
 
-									});					
+													$("[id=date" + $this.attr("id")+ "]").attr("value",yyyy + "년 " + mm + "월 " + dd + "일");
 
+													var row = parseInt($this
+															.attr("id")) + 1;
+													newline(row);
+												}
+
+											});
 
 							//////////////////////////////////////////////////////////////
 							/*datepicker*/
 
-							$( function() {
-							    $( ".datepicker" ).datepicker();
-							  } );
+							$(function() {
+								$(".datepicker").datepicker();
+							});
 
 							/*캘린더 datepicker*/
-							$('#demo-2').monthpicker(
+							$('#monthCal').monthpicker(
 									{
 										pattern : 'yyyy / mm',
-										selectedYear : 2018,
+										selectedYear : (new Date()).getFullYear(),
 										startYear : 1900,
 										finalYear : 2212,
 										monthNames : [ '1월', '2월', '3월', '4월',
 												'5월', '6월', '7월', '8월', '9월',
 												'10월', '11월', '12월' ],
-									});
-							var options = {
-								selectedYear : 2018,
-								startYear : 2008,
-								finalYear : 2018,
-								openOnFocus : false
+							});
 
-							};
 
 							//내비바 효과
 							var didScroll;
@@ -411,29 +421,39 @@ table {
 								lastScrollTop = st;
 							}
 
-							function datepickerReset(){
-							$(document).find(".datepicker").removeClass('hasdatepicker').datepicker();
-							
-							$.datepicker.setDefaults({
-							    prevText: '이전 달',
-							    nextText: '다음 달',
-							    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], //월 이름
-							    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], //
-							    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-							    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-							    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-							    showMonthAfterYear: true,
-							    yearSuffix: '년',
-							    changeMonth: true,
-							    changeYear : true,
-							    dateFormat: "yy년 mm월 dd일"
-							}); 
+							function datepickerReset() {
+								$(document).find(".datepicker").removeClass(
+										'hasdatepicker').datepicker();
+
+								$.datepicker.setDefaults({
+									prevText : '이전 달',
+									nextText : '다음 달',
+									monthNames : [ '1월', '2월', '3월', '4월',
+											'5월', '6월', '7월', '8월', '9월',
+											'10월', '11월', '12월' ], //월 이름
+									monthNamesShort : [ '1월', '2월', '3월', '4월',
+											'5월', '6월', '7월', '8월', '9월',
+											'10월', '11월', '12월' ], //
+									dayNames : [ '일', '월', '화', '수', '목', '금',
+											'토' ],
+									dayNamesShort : [ '일', '월', '화', '수', '목',
+											'금', '토' ],
+									dayNamesMin : [ '일', '월', '화', '수', '목',
+											'금', '토' ],
+									showMonthAfterYear : true,
+									yearSuffix : '년',
+									changeMonth : true,
+									changeYear : true,
+									dateFormat : "yy년 mm월 dd일"
+								});
 							}
-
-
-
+							
+							$('[id=monthCal]').change( 
+									function changeAccountbookList() {
+										fetchAccountbookList()
+									}
+									 );
 						})
-					
 	</script>
 
 

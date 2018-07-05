@@ -10,19 +10,19 @@ public class ReportController {
     @RequestMapping(value = "/annualreport",method = RequestMethod.GET)
     public String annualReport(){
         System.out.println("연간 보고서로 이동");
-        return "report/annual_report";
+        return "/report/annual_report";
     }
 
     @RequestMapping(value = "/monthlyreport",method = RequestMethod.GET)
     public String monthlyReport(){
         System.out.println("월간 보고서로 이동");
-        return "report/monthly_report";
+        return "/report/monthly_report";
     }
 
     @RequestMapping(value = "/eventreport",method = RequestMethod.GET)
     public String eventReport(){
         System.out.println("행사별 보고서로 이동");
-        return "report/event_report";
+        return "/report/event_report";
     }
 
 }
