@@ -14,12 +14,9 @@
 
 
 <!-----------header------------------>
-<header>
 	
 <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-	
 
-</header>
 
 <!----------------- container------------------->
 <div class="container">
@@ -206,7 +203,7 @@
   </li>
 </div>
 <div>
-  <button type="button" class="btn btn-secondary btn-lg mt-5" href="./membershipFeeSetting.html" onclick="location.href='./feeManage.html'">&ensp;&ensp;설정하기&ensp;&ensp;</button>
+  <button type="button" class="btn btn-secondary btn-lg mt-5" onclick="location.href='${pageContext.request.contextPath }/feemanage'">&ensp;&ensp;설정하기&ensp;&ensp;</button>
 </div>
 </form>
 </center>
