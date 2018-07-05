@@ -6,27 +6,45 @@ public class ModuGroupVo {
 	private String groupExplain;
 	private String groupImg;
 	private String groupType;
+	private String memberFeeAmount;
+	private String memberFeeDate;
 	private int manager;
-
+	private String groupBank;
+	private String groupAccount;
+	private String groupAccountHolder;
+	
 	public ModuGroupVo() {
 	}
 
-	public ModuGroupVo(String groupName, String groupExplain, String groupImg, String groupType, int manager) {
+	public ModuGroupVo(String groupName, String groupExplain, String groupImg, String groupType,
+			String memberFeeAmount, String memberFeeDate, int manager, String groupBank, String groupAccount,
+			String groupAccountHolder) {
 		this.groupName = groupName;
 		this.groupExplain = groupExplain;
 		this.groupImg = groupImg;
 		this.groupType = groupType;
+		this.memberFeeAmount = memberFeeAmount;
+		this.memberFeeDate = memberFeeDate;
 		this.manager = manager;
+		this.groupBank = groupBank;
+		this.groupAccount = groupAccount;
+		this.groupAccountHolder = groupAccountHolder;
 	}
 
 	public ModuGroupVo(int groupNo, String groupName, String groupExplain, String groupImg, String groupType,
-			int manager) {
+			String memberFeeAmount, String memberFeeDate, int manager, String groupBank, String groupAccount,
+			String groupAccountHolder) {
 		this.groupNo = groupNo;
 		this.groupName = groupName;
 		this.groupExplain = groupExplain;
 		this.groupImg = groupImg;
 		this.groupType = groupType;
+		this.memberFeeAmount = memberFeeAmount;
+		this.memberFeeDate = memberFeeDate;
 		this.manager = manager;
+		this.groupBank = groupBank;
+		this.groupAccount = groupAccount;
+		this.groupAccountHolder = groupAccountHolder;
 	}
 
 	public int getGroupNo() {
@@ -69,6 +87,22 @@ public class ModuGroupVo {
 		this.groupType = groupType;
 	}
 
+	public String getMemberFeeAmount() {
+		return memberFeeAmount;
+	}
+
+	public void setMemberFeeAmount(String memberFeeAmount) {
+		this.memberFeeAmount = memberFeeAmount;
+	}
+
+	public String getMemberFeeDate() {
+		return memberFeeDate;
+	}
+
+	public void setMemberFeeDate(String memberFeeDate) {
+		this.memberFeeDate = memberFeeDate;
+	}
+
 	public int getManager() {
 		return manager;
 	}
@@ -77,11 +111,38 @@ public class ModuGroupVo {
 		this.manager = manager;
 	}
 
+	public String getGroupBank() {
+		return groupBank;
+	}
+
+	public void setGroupBank(String groupBank) {
+		this.groupBank = groupBank;
+	}
+
+	public String getGroupAccount() {
+		return groupAccount;
+	}
+
+	public void setGroupAccount(String groupAccount) {
+		this.groupAccount = groupAccount;
+	}
+
+	public String getGroupAccountHolder() {
+		return groupAccountHolder;
+	}
+
+	public void setGroupAccountHolder(String groupAccountHolder) {
+		this.groupAccountHolder = groupAccountHolder;
+	}
+
 	@Override
 	public String toString() {
 		return "ModuGroupVo [groupNo=" + groupNo + ", groupName=" + groupName + ", groupExplain=" + groupExplain
-				+ ", groupImg=" + groupImg + ", groupType=" + groupType + ", manager=" + manager + "]";
+				+ ", groupImg=" + groupImg + ", groupType=" + groupType + ", memberFeeAmount=" + memberFeeAmount
+				+ ", memberFeeDate=" + memberFeeDate + ", manager=" + manager + ", groupBank=" + groupBank
+				+ ", groupAccount=" + groupAccount + ", groupAccountHolder=" + groupAccountHolder + "]";
 	}
 
+	
 	
 }

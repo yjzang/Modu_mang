@@ -34,19 +34,31 @@ public class AccountBookController {
 	
 	@ResponseBody
 	@RequestMapping( "/getaccountlist")
-	public List<AccountbookVo> getaccountlist(@RequestParam("groupNo") String groupNo){
-		List<AccountbookVo> list = moduAccountbookService.getaccountlist(groupNo);
-		System.out.println(list);
-		return list;
+	public Map<String,Object> getAccountList(@RequestParam("groupNo") String groupNo, @RequestParam("month") String month){
+		Map<String,Object> map = moduAccountbookService.getAccountList(groupNo,month);
+		System.out.println(map.get("categoryList"));
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping( "/searchaccountlistbydate")
+	public Map<String,Object> searchaccountlistbydate(@RequestParam("groupNo") String groupNo, @RequestParam("search_date1") String search_date1, @RequestParam("search_date2") String search_date2){		
+		Map<String,Object> map = moduAccountbookService.searchaccountlistbydate(groupNo,search_date1,search_date2);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping( "/searchaccountlist")
+	public Map<String,Object> searchaccountlist(@RequestParam("groupNo") String groupNo, @RequestParam("mode") String mode, @RequestParam("search_text") String search_text){	
+		Map<String,Object> map = moduAccountbookService.searchaccountlist(groupNo,mode,search_text);
+		return map;
 	}
 	
 	
 	
 	
 	
-	
-	
-	////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////로그인/////////////////////////////////////////////
 	
 	@RequestMapping( "/login")
 	public String login(HttpSession session,Model model){
