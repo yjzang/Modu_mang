@@ -26,25 +26,7 @@
 <!----------------- container------------------->
 
 <div class="container text-center" >
- 
-<c:if test="${empty list}">
-
-	<center class="mb-5">
-
-				<div class="carousel-item active">
-					<div class="carousel-caption d-none d-md-block mb-5  text-left">
-						<img class="d-block w-100" src="${pageContext.request.contextPath }/assets/images/board0.png" alt="게시판에 글이 없음">
-							<p>테스트</p>
-						 <a	href="${pageContext.request.contextPath}/board/write" class="btn btn-sm btn-primary"> 글쓰기 </a>
-
-					</div>
-
-				</div>
-
-
-
-			</center>
-</c:if>				
+			
 <div class="mb-5">
       <a href="${pageContext.request.contextPath }/board/write" class="btn btn-sm btn-primary">
 							글쓰기		
