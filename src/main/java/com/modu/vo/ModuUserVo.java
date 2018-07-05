@@ -10,13 +10,6 @@ public class ModuUserVo {
 		
 	}
 	
-	public ModuUserVo(String userEmail, String userPassword, String userName, String userBirthday) {
-		this.userEmail = userEmail;
-		this.userPassword = userPassword;
-		this.userName = userName;
-		this.userBirthday = userBirthday;
-	}
-	
 	public ModuUserVo(int userNo, String userEmail, String userPassword, String userName, String userBirthday) {
 		this.userNo = userNo;
 		this.userEmail = userEmail;
