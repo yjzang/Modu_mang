@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 
 <html>
@@ -14,30 +15,52 @@
 </head>
 <body style="overflow-x:hidden; overflow-y:auto;">
 
+
+
+
 <!-- 수정 확인 -->
 <!-----------header------------------>
-<header>
-	
+
 <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 	
 
-</header>
 <!----------------- container------------------->
 
-<div class="container" >
+<div class="container text-center" >
+ 
+<c:if test="${empty list}">
 
+	<center class="mb-5">
+
+				<div class="carousel-item active">
+					<div class="carousel-caption d-none d-md-block mb-5  text-left">
+						<img class="d-block w-100" src="${pageContext.request.contextPath }/assets/images/board0.png" alt="게시판에 글이 없음">
+							<p>테스트</p>
+						 <a	href="${pageContext.request.contextPath}/board/write" class="btn btn-sm btn-primary"> 글쓰기 </a>
+
+					</div>
+
+				</div>
+
+
+
+			</center>
+</c:if>				
+<div class="mb-5">
+      <a href="${pageContext.request.contextPath }/board/write" class="btn btn-sm btn-primary">
+							글쓰기		
+		</a>
+</div>
+<c:forEach items="${list}"	var="boardVo" >
 	<div class="card text-center w-75 mx-auto my-2">
 		<div class="card-header">
 			<!-- Button trigger modal -->
 
-
 			<h4 class="card-title mt-3">
-				2018년 6월 27일 회식
+				${boardVo.boardTitle}
 			</h4>
 			<div class="text-right mr-5">
-				<a href="${pageContext.request.contextPath }/board/write" class="btn btn-sm btn-primary">
-					글쓰기		
-				</a>
+				
 				<a href="${pageContext.request.contextPath }/board/write" class="btn btn-sm btn-secondary">
 					수정		
 				</a>
@@ -145,8 +168,8 @@
 		</div>
 		<div class="card-body">
 			<div class="text-left p-5 mb-4" style="border:dashed black 1px ; width: 50%">
-				<p class="card-text">삼겹살에 소주한잔 쩔었지	<br>너무나 즐거웠네</p>
-				<a href="#" class="btn btn-primary">이 날 얼마 나왔지?</a>
+				<pre class="card-text" id="boardContent" > ${boardVo.boardContent}</pre>
+			
 
 			</div>
 			<div class="text-left my-3">
@@ -219,6 +242,8 @@
 
 				</div>
 
+
+
 				<div>
 
 					<div class="my-2 text-left comment-top" id="multiCollapseExample1">
@@ -282,31 +307,18 @@
 			</div>
 		</div>
 
-
-
 	</div>
+	
+</c:forEach>
 
 </div>
 
 
+
+
+
 	<!----------------- footer------------------->		
-	<div class="footer" style="border-top: #c3c3c3 solid 1px; padding: 20px; text-align: center; ">
-		<div >
-			<a href="#">이용약관</a> &ensp;
-			<a href="#"> 개인정보처리방침 </a> &ensp;
-			<a href="#"> 이메일주소 무단수집거부 </a>
-		</div> 
-		<hr>
-		<span style="border-top: #c3c3c3 solid 1px; padding: 20px ; text-align: center; ">
-			주소: 서울특별시 서초구 서초대로74길33 비트빌 3층   전화: 02-111-1111   Team: SangHwa Lee / Young-Joo Kwak / Gyung-seop Kim/ NaYeon Roh  
-		</span>
-		<br><br>
-		<span style="font-weight: bold;">
-			Copyright ⓒ 2018 모두의 가계부. All Right Reserved
-		</span>
-
-	</div>
-
+	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 
 
 
