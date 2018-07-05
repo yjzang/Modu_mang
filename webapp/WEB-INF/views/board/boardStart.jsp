@@ -28,21 +28,23 @@
 
 <div class="container text-center" >
  
-
-		
-<div class="mb-5">
-
 	<div class="carousel-item active">
-					<div class="carousel-caption d-none d-md-block mb-5  text-left">
-						<img class="d-block w-100" src="${pageContext.request.contextPath }/assets/images/board0.png" alt="게시판에 글이 없음">
-							<p>테스트</p>
-						 <a	href="${pageContext.request.contextPath}/board/write" class="btn btn-sm btn-primary"> 글쓰기 </a>
+			<div class="carousel-caption d-none d-md-block mb-5  text-center">	
+				<div style="margin-bottom:110px;">
+					<h4 class="mx-auto" style="color: black;text-shadow:none;" >사진과 가계부를</h4>
+					<h4 class="mx-auto" style="color: black;text-shadow:none;"> 멤버들과 <span style="color:#00b0f0; text-shadow:none;"> 공유 </span>하세요</h4>
+	        
+	        	<a class="btn btn-primary  mt-4 mx-auto" style="text-shadow:none; " href="${pageContext.request.contextPath }/board/write">첫 글 올리기</a>       
+	            </div>
+			
+				<br>
+			</div>
+               <img class="d-block w-100" src="${pageContext.request.contextPath }/assets/images/board1.png" alt="게시판에 글이 없음">
+		</div>
+		
+	
 
-					</div>
 
-				</div>
-
-</div>
 
 </div>
 
