@@ -16,12 +16,9 @@
 
 <!-- 수정 확인 -->
 <!-----------header------------------>
-<header>
-	
+
 <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 	
-
-</header>
 <!----------------- container------------------->
 
 <div class="container" >
