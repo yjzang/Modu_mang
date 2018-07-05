@@ -4,7 +4,7 @@
 
   <typeAliases>
   	 <typeAlias alias="boardVo" type="com.modu.vo.BoardVo" />
-		 <typeAlias alias="GroupVo" type="com.modu.vo.ModuGroupVo" />
+	 <typeAlias alias="GroupVo" type="com.modu.vo.ModuGroupVo" />
   </typeAliases>	
 
     	
