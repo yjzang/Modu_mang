@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Modu:war exploded">
-    <output-path>$PROJECT_DIR$/target/mysite4-0.0.1-SNAPSHOT</output-path>
+      <output-path>$PROJECT_DIR$/target/Modu-0.0.1-SNAPSHOT</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
