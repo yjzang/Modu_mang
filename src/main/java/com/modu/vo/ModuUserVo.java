@@ -6,17 +6,14 @@ public class ModuUserVo {
 	private String userPassword;
 	private String userName;
 	private String userBirthday;
+
+
+
 	public ModuUserVo() {
 		
 	}
-	
-	public ModuUserVo(String userEmail, String userPassword, String userName, String userBirthday) {
-		this.userEmail = userEmail;
-		this.userPassword = userPassword;
-		this.userName = userName;
-		this.userBirthday = userBirthday;
-	}
-	
+
+
 	public ModuUserVo(int userNo, String userEmail, String userPassword, String userName, String userBirthday) {
 		this.userNo = userNo;
 		this.userEmail = userEmail;
@@ -67,10 +64,14 @@ public class ModuUserVo {
 
 	@Override
 	public String toString() {
-		return "ModuUserVo [userNo=" + userNo + ", userEmail=" + userEmail + ", userPassword=" + userPassword
-				+ ", userName=" + userName + ", userBirthday=" + userBirthday + "]";
+
+		return "ModuUserVo{" +
+				"userNo=" + userNo +
+				", userEmail='" + userEmail + '\'' +
+				", userPassword='" + userPassword + '\'' +
+				", userName='" + userName + '\'' +
+				", userBirthday='" + userBirthday + '\'' +
+				'}';
 	}
-	
-	
-	 
+
 }

@@ -18,5 +18,17 @@
 		where manager=#{userNo}
 		]]>
 	</select>
+
+	<insert id="joinUser" parameterType="com.modu.vo.ModuUserVo">
+		insert into USER_TBL values (SEQ_USERNO.nextval,#{userEmail},#{userPassword},#{userName},#{userBirthday})
+	</insert>
+
+	<select id="emailCheckAjax" parameterType="String" resultType="int">
+		select count(*) from USER_TBL where useremail = #{userEmail}
+	</select>
+	<select id="userLoginAvailableCheck" parameterType="map" resultType="com.modu.vo.ModuUserVo">
+		<![CDATA[	select USERNO,USEREMAIL,USERNAME,USERBIRTHDAY from USER_TBL where USEREMAIL=#{userEmail} and USERPASSWORD=#{userPassword}
+	]]>
+	</select>
 	
 </mapper>
