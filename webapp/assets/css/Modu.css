@@ -178,7 +178,7 @@
 
 	.custom-file-label::after {
 
-		content: url('images/up.png');
+		content: url('../images/up.png');
 		margin-top: 2px;
 		height: auto;
 
@@ -200,7 +200,7 @@
 	 @font-face{
 	 
 		font-family:"Typo_SsangmunDongB";
-		src: url('fonts/Typo_SsangmunDongB.ttf') format('truetype');	
+		src: url('../fonts/Typo_SsangmunDongB.ttf') format('truetype');
 
 	}
 	

@@ -22,7 +22,6 @@
 <!-----------header------------------>
 
 <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-	
 
 <!----------------- container------------------->
 
