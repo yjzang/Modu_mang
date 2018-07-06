@@ -314,10 +314,13 @@
 			
 			$('.menuTab').removeClass("active");
 			$("#btn_board").addClass("active");
+			
+			fetchGallery();
+			fetchList();
+
 		});
 	
 		/*좋아요*/
-
 
 		$("#like").on('click',function(){
 
@@ -333,6 +336,111 @@
 			}
 		
 
+		});
+		
+		
+		/* 게시글 불러오기 AJAX */
+		
+		function fetchBoard(){
+			/* console.log("초기화 1이어야하는 "+ begin); */
+			
+		$.ajax({
+			  
+			  url : "${pageContext.request.contextPath}/board/getList",
+			  type : "POST",
+			  /*   data : {begin : 1},
+			  dataType : "json", */
+			
+			  success : function(list){
+				  
+				  $.each(list, function(idx, val) {
+						console.log(idx + " " + val.no);
+						var src ='${pageContext.request.contextPath}/assets/images/like_off.PNG';
+						if(val.state==1){
+							src ='${pageContext.request.contextPath}/assets/images/like.PNG';
+						}
+						render(val,"down",src);
+							  
+						  });
+				  
+			  
+			  },
+			  
+			  error : function(XHR, status, error){
+				 console.error(XHR+status+error);
+			  }
+			  
+		  });
+		  
+		}
+		
+		/* 게시글 그리기 함수 */
+		function render(vo,updown,src){
+			  str= " ";
+			  str+= "	<li id=li_"+vo.no+" style='background-color:white;padding-bottom:10px'>";
+			  str+= "	<div id='btn_align' style='border-bottom:1px solid #D8D8D8;' >";
+			  str+= "	<img id='img' data-delno="+vo.no+" src='${pageContext.request.contextPath}/upload/"+vo.saveName+"'";
+			  str+= " 		style='width:90%;height:80px;margin:5px;cursor:pointer;' data-userno="+vo.userNo+">";
+			  str+= "	</div>";
+			  str+= "	<div>";
+			  str+= "	  <img id='heart' data-likeno="+vo.no+" data-state='"+vo.state+"'src="+src;
+			  str+= " 				style='width:15px;height:15px;margin-left:5px;margin-bottom:1px;cursor:pointer;'/>  ";
+			  str+= "	<span id='like_"+vo.no+"' type='text' style='border:none;font-size:8pt;'>"+vo.like+"</span>";
+			  str+= "	<span style='font-size:8pt;float:right;'>"+vo.userName+"</span>";
+			  str+= "	</div>";
+			  str+= "	</li>";
+			  str+= "	";
+			  
+			  if(updown=="up"){
+				  
+				  $("#img_list").prepend(str);
+				  
+			  } else{
+				  
+				  $("#img_list").append(str);
+			  }
+				  
+		}
+		
+		
+		/* 게시글 지우기 함수 */
+		function remove(no){
+			
+			$("#li_"+no).remove();
+			
+		}
+		
+				}
+		
+		
+		/* 게시글 삭제 Ajax */
+		$("#btn_del").on("click",function(){
+			
+			var no = $("#img_no").val();
+			
+			$.ajax({
+				  
+				  url : "${pageContext.request.contextPath}/gallery/delete",
+				  type : "POST",
+				  data : {no:no},
+				  dataType : "json",	
+				
+				  success : function(result){
+						 
+						  remove(no);
+						  $("#img-pop").modal('hide');
+					
+											
+				  },
+				  
+				  error : function(XHR, status, error){
+					 console.error(XHR+status+error);
+				  }
+				  
+			  });
+			
+			
+			 
 		});
 
 		/*   댓글 펼치기,감추기   */

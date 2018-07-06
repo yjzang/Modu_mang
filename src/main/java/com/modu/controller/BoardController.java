@@ -3,8 +3,6 @@ package com.modu.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.annotation.MultipartConfig;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +43,15 @@ public class BoardController {
 		}
 	}
 	
+
+	@ResponseBody
+	@RequestMapping(value="/getList",method= {RequestMethod.GET, RequestMethod.POST})
+	public List<BoardVo> getList(Model model) {
+		
+		List<BoardVo> list =(List<BoardVo>)service.getPostList();
+		return list;
+	
+	}
 	
 	
 	@RequestMapping("/write")

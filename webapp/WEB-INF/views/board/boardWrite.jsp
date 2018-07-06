@@ -289,17 +289,19 @@
 <script src="${pageContext.request.contextPath }/assets/js/header.js"></script>
 <script type="text/javascript">
 
-	/*   댓글 펼치기,감추기   */
+
+	
 	$(document).ready(function(){
 			
 		$('.menuTab').removeClass("active");
 		$("#btn_board").addClass("active");
+	
 	});
 
-
 	
 	
 	
+	/*   댓글 펼치기,감추기   */
 	$("#btn-comment").on("click",function(){
 
 		var val = $('#btn-comment').val();
