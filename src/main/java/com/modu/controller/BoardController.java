@@ -1,5 +1,6 @@
 package com.modu.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.annotation.MultipartConfig;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.modu.service.BoardService;
 import com.modu.vo.BoardVo;
+import com.modu.vo.FileVo;
 
 @Controller
 @RequestMapping("/board")
@@ -53,16 +55,36 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addPost(@ModelAttribute BoardVo vo) {
+	public String addPost( @ModelAttribute BoardVo boardVo,
+							@RequestParam("files") MultipartFile[] files ,
+							@ModelAttribute FileVo fileVo,
+							Model model) {
 		
 		System.out.println("글쓰기 저장 오긴 왔음");
-		service.addPost(vo);
+		/*service.addPost(boardVo);*/
 		
+		
+
+		System.out.println("컨트롤러 :" + fileVo.getUserNo());
+		for(MultipartFile file: files) {
+		
+		System.out.println("배열로 받아지는지 보자" +file.getOriginalFilename());
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fileVo", fileVo);
+		map.put("file",file);
+		
+		service.addPost(boardVo,map);
+
+
+
+	}
 		
 		return "redirect:/board";
 		
 		
 	}
+	
+	
 	/*
 	@ResponseBody
 	@RequestMapping(value="/getPostList",method=RequestMethod.POST)

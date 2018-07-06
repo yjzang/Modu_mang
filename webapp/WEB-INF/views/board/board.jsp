@@ -25,11 +25,11 @@
 
 <!----------------- container------------------->
 
-<div class="container text-center" >
+<div class="container" >
 			
-<div class="mb-5">
-      <a href="${pageContext.request.contextPath }/board/write" class="btn btn-sm btn-primary">
-							글쓰기		
+<div class="mb-5 text-center">
+      <a href="${pageContext.request.contextPath }/board/write" class="btn btn-lg btn-outline-primary" style="font-weight:bold; border:solid 2px; width:900px; ">
+						총무만 할 수 있는 '새 글쓰기'		
 		</a>
 </div>
 <c:forEach items="${list}"	var="boardVo" >
