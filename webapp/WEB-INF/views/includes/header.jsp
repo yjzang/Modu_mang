@@ -43,46 +43,42 @@
 				<li class="nav-item">
 					<a class="nav-link" href="${pageContext.request.contextPath }/groupmain" style="font-size: 1.4em;  font-weight: 800; color: #54c9ad;">나의 모임 <span class="sr-only">(current)</span></a>
 				</li>
+				<c:choose>
+				<c:when test="${empty gList}">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+					<%-- <li class="nav-item">
+					<div class="clubIcon">
+						<img class="w-5 mr-5" src="${pageContext.request.contextPath }/assets/images/add.png" alt="add">
+						<!-- <a class="modal" data-toggle="modal" data-target="#exampleModalCenter01"></a> -->
+					</div>
+				</li> --%>
+				</c:when>
+				<c:otherwise>
+				<c:forEach items="${gList}" var="gro">
 				<li class="nav-item">
 					<div class="clubIcon active">
-						<img src="${pageContext.request.contextPath }/assets/images/club01.png" alt="club01">
+						<img src="${pageContext.request.contextPath }/upload/${gro.groupImg}" alt="">
 						<br>
-						<a class="nav-link" href="${pageContext.request.contextPath }/groupmain">모임1</a>
-					</div>
-
-				</li>
-				<li class="nav-item">
-					<div class="clubIcon">
-						<img src="${pageContext.request.contextPath }/assets/images/club02.png" alt="club02">
-						<a class="nav-link" href="${pageContext.request.contextPath }/groupmain">모임2</a>
-					</div>  
-
-				</li>
-				<li class="nav-item">
-					<div class="clubIcon">
-						<img src="${pageContext.request.contextPath }/assets/images/club03.png" alt="club03">
-						<a class="nav-link" href="${pageContext.request.contextPath }/groupmain">모임3</a>
-					</div>
-
-				</li>
-
-				<li class="nav-item">
-					<div class="clubIcon"> 
-						<img src="${pageContext.request.contextPath }/assets/images/club04.png" alt="club04">
-						<a class="nav-link" href="${pageContext.request.contextPath }/groupmain">모임4</a>
+						<a class="nav-link" href="${pageContext.request.contextPath }/groupmain">${gro.groupName}</a>
 					</div>
 				</li>
-				<li class="nav-item">
-					<div class="clubIcon">
-						<img src="${pageContext.request.contextPath }/assets/images/club05.png" alt="club05">
-						<a class="nav-link" href="${pageContext.request.contextPath }/groupmain">모임5</a>
-					</div>
-				</li> 
-				<li class="nav-item ml-0">
+                </c:forEach>
+                <li class="nav-item ml-0">
 					<div class="clubIcon">
 						<button class="t-button"><img src="${pageContext.request.contextPath }/assets/images/down.png" alt="more"></button>
 					</div>
 				</li>	
+                </c:otherwise>
+                </c:choose>
+				<%-- <li class="nav-item">
+					<div class="clubIcon">
+						<img src="${pageContext.request.contextPath }/assets/images/club02.png" alt="">
+						<a class="nav-link" href="${pageContext.request.contextPath }/groupmain">모임2</a>
+					</div>  
+
+				</li> --%>
+				
+				
 				<li class="nav-item ml-0">
 					<div class="clubIcon">
 						<button class="btn btn-sm btn-mint" data-toggle="modal" data-target="#exampleModalCenter01">모임 추가하기 </button>
@@ -93,7 +89,7 @@
 	</nav>
 
 
-
+  
 	<nav id="thirdNav" class="container navbar navbar-expand-lg navbar-light bg-light" >
 
 
@@ -126,8 +122,6 @@
 
 					<a class="nav-link" href="${pageContext.request.contextPath }/membershipfee">회비관리</a>
 
-				
-
 				</li>
 				<li class="nav-item menuTab">
 					<a class="nav-link" href="${pageContext.request.contextPath }/groupmanage">모임관리</a>
@@ -149,16 +143,16 @@
 	        <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
-	      <form id="join-form" name="joinForm" method="get" action="${pageContext.request.contextPath}/plusgroup" enctype="multipart/form-data">
+	      <form id="group-form" name="groupForm" method="post" action="${pageContext.request.contextPath}/plusgroup" enctype="multipart/form-data">
 	      <div class="modal-body">
 	           <center>
 	      	<!-- <label for="gname1">모임 이름</label> -->
-	      	<input type="text" class="form-control w-75 text-center" aria-label="Large" aria-describedby="inputGroup-sizing-sm" id="gname1" name="gname" placeholder="모임이름" value=""><br>
+	      	<input type="text" name="groupName" class="form-control w-75 text-center" aria-label="Large" aria-describedby="inputGroup-sizing-sm" id="gname1" name="gname" placeholder="모임이름" value=""><br>
 	      	<!-- <label for="gtag1">모임 설명, 해시태그</label> -->
-	      	<input type="text" class="form-control w-75 text-center" aria-label="Large" aria-describedby="inputGroup-sizing-sm" id="gtag1" name="gtag" placeholder="모임설명, 해시태그" value=""><br>
+	      	<input type="text" name="groupExplain" class="form-control w-75 text-center" aria-label="Large" aria-describedby="inputGroup-sizing-sm" id="gtag1" name="gtag" placeholder="모임설명, 해시태그" value=""><br>
 
 					<div class="form-group p-2 w-75" style="position: relative;">
-						<input type="file" class="custom-file-input" id="boardUpload"  multiple="true" onchange="loadFile(event);">
+						<input type="file" name="file" class="custom-file-input" id="boardUpload"  multiple="true" onchange="loadFile(event);">
 						<label class="custom-file-label text-center pr-5" for="boardUpload">이미지 업로드 &emsp;</label>
 						<img id="addImg"  src="" class="w-100 mx-auto mt-3">
 					</div>
@@ -169,19 +163,19 @@
 	      	<!-- <input type="text" class="form-control w-75" aria-label="Large" aria-describedby="inputGroup-sizing-sm" id="gcar1" name="gcar"> --><br>
 
 	      	<div class="custom-control custom-radio custom-control-inline">
-			  <input type="radio" id="customRadioInline1" name="customRadioInline" class="custom-control-input">
+			  <input type="radio" id="customRadioInline1" name="groupType" class="custom-control-input" value="1">
 			  <label class="custom-control-label" for="customRadioInline1">계모임</label>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
-			  <input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
+			  <input type="radio" id="customRadioInline2" name="groupType" class="custom-control-input" value="2">
 			  <label class="custom-control-label" for="customRadioInline2">동아리/동호회</label>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
-			  <input type="radio" id="customRadioInline3" name="customRadioInline" class="custom-control-input">
+			  <input type="radio" id="customRadioInline3" name="groupType" class="custom-control-input" value="3">
 			  <label class="custom-control-label" for="customRadioInline3">친목모임</label>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
-			  <input type="radio" id="customRadioInline4" name="customRadioInline" class="custom-control-input">
+			  <input type="radio" id="customRadioInline4" name="groupType" class="custom-control-input" value="4">
 			  <label class="custom-control-label" for="customRadioInline4">기타</label>
 			</div>
 	        <div class="text-center mb-3">
