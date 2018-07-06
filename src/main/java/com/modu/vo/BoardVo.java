@@ -5,7 +5,7 @@ public class BoardVo {
 	String boardNo;
 	String boardTitle;
 	String boardContent;
-	String writer;
+	String userNo;
 	String tagNo;
 	String groupNo;
 	
@@ -29,11 +29,12 @@ public class BoardVo {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
-	public String getWriter() {
-		return writer;
+	
+	public String getUserNo() {
+		return userNo;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
 	}
 	public String getTagNo() {
 		return tagNo;
@@ -47,5 +48,14 @@ public class BoardVo {
 	public void setGroupNo(String groupNo) {
 		this.groupNo = groupNo;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "BoardVo [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
+				+ ", userNo=" + userNo + ", tagNo=" + tagNo + ", groupNo=" + groupNo + "]";
+	}
+	
+	
 }
 

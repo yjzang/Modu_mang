@@ -5,8 +5,8 @@
 	
 	<insert id="insert" parameterType="boardVo" >
 		<selectKey keyProperty="boardNo" resultType="string" order="BEFORE">  
-		select seq_board_no.nextval FROM dual
-	 </selectKey>
+			select seq_boardNo.nextval FROM dual
+		</selectKey>
 	
 		<![CDATA[
 		insert into board_tbl(boardNo,boardTitle,boardContent,boardRegDate)
@@ -14,6 +14,20 @@
 	       ]]>
     
 	
+	</insert>
+	
+	
+	
+	<insert id="insertFile" parameterType="fileVo" >
+		<selectKey keyProperty="boardImgNo" resultType="string" order="BEFORE">  
+			select seq_boardImgNo.nextval FROM dual
+	 	</selectKey>
+	
+		<![CDATA[
+		insert into board_img_tbl
+		values(#{boardImgNo},#{originalName},#{saveName},#{imgSize},#{boardImgPath},#{boardNo},#{userNo})	
+	       ]]>
+    
 	</insert>
 	
 	

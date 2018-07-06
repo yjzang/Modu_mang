@@ -25,9 +25,10 @@
 <!----------------- container------------------->
 <div class="container">
 	<div class="text-center">
-		<h4>글쓰기</h4>
+		<h4>글쓰기</h4> ${authUser.userNo}
 	</div>
-	<form action="${pageContext.request.contextPath}/board/add" method="post" enctype="multipart/form-data" >
+	<form id="form_board" action="${pageContext.request.contextPath}/board/add" method="post" enctype="multipart/form-data"  >
+		<input type="hidden" name="userNo" value="${authUser.userNo}">
 		<input class="form-control mx-auto col-9 my-3" name="boardTitle" placeholder="제목을 입력하세요">
 		<textarea class="form-control col-9 mx-auto my-3" name="boardContent" id="exampleFormControlTextarea1" rows="10" placeholder="내용을 입력하세요"></textarea>
 		
@@ -130,31 +131,33 @@
 			</div>
 	
 		</div>
-	
-		
+
 			<div class="form-group p-2 col-9 mx-auto my-3" style="position: relative;">
-				<input type="file" class="custom-file-input" id="boardUpload"  name="file" multiple="true" onchange="loadFile(event);">
+				<input type="file" class="custom-file-input" id="boardUpload"  name="files" multiple="true" onchange="loadFile(event);">
 				<label class="custom-file-label up-label text-center pr-5" for="inputGroupFile04">이미지 업로드 &emsp;</label>
-				<div class="col-4" style="float : left"><img id="addImg01"  src="" class="w-100 mx-auto mt-3"></div>
-				<div class="col-4" style="float : left"><img id="addImg02"  src="" class="w-100 mx-auto mt-3"></div>
-				<div class="col-4" style="float : left"><img id="addImg03"  src="" class="w-100 mx-auto mt-3"></div>
+				<div class="rounded col-2" style="float : left"><img id="addImg01"  src="" class="w-100 mx-auto mt-3"></div>
+				<div class="col-2" style="float : left"><img id="addImg02"  src="" class="w-100 mx-auto mt-3"></div>
+				<div class="col-2" style="float : left"><img id="addImg03"  src="" class="w-100 mx-auto mt-3"></div>
+				<div class="col-2" style="float : left"><img id="addImg04"  src="" class="w-100 mx-auto mt-3"></div>
+				<div class="col-2" style="float : left"><img id="addImg05"  src="" class="w-100 mx-auto mt-3"></div>
+				<div class="col-2" style="float : left"><img id="addImg06"  src="" class="w-100 mx-auto mt-3"></div>
 				<div style="clear:both;"> </div>
-				<div class="col-4" style="float : left"><img id="addImg04"  src="" class="w-100 mx-auto mt-3"></div>
-				<div class="col-4" style="float : left"><img id="addImg05"  src="" class="w-100 mx-auto mt-3"></div>
-				<div class="col-4" style="float : left"><img id="addImg06"  src="" class="w-100 mx-auto mt-3"></div>
+				
+				
+				
 				<div style="clear:both;"> </div>
-				<div class="col-4" style="float : left"><img id="addImg07"  src="" class="w-100 mx-auto mt-3"></div>
-				<div class="col-4" style="float : left"><img id="addImg08"  src="" class="w-100 mx-auto mt-3"></div>
-				<div class="col-4" style="float : left"><img id="addImg09"  src="" class="w-100 mx-auto mt-3"></div>
+				<div class="col-3" style="float : left"><img id="addImg07"  src="" class="w-100 mx-auto mt-3"></div>
+				<div class="col-3" style="float : left"><img id="addImg08"  src="" class="w-100 mx-auto mt-3"></div>
+				<div class="col-3" style="float : left"><img id="addImg09"  src="" class="w-100 mx-auto mt-3"></div>
 				<div style="clear:both;"> </div>
-			</div> 
-			
-			
+			</div>
 			<div class="text-right mb-5 mx-auto w-75"  >
-			<input class="btn btn-primary btn-lg mr-2" type="submit" value="저  장">
-			<input type="button"  class="btn btn-secondary btn-lg" onclick="location.href='${pageContext.request.contextPath }/board'" value="취 소">		
- 	</div>
-	</form>
+				<input class="btn btn-primary btn-lg mr-2" type="submit" value="저  장">
+				<input type="button"  class="btn btn-secondary btn-lg" onclick="location.href='${pageContext.request.contextPath }/board'" value="취 소">		
+ 			</div>
+	 </form>		
+			
+
 
  
 
@@ -293,6 +296,10 @@
 		$("#btn_board").addClass("active");
 	});
 
+
+	
+	
+	
 	$("#btn-comment").on("click",function(){
 
 		var val = $('#btn-comment').val();
@@ -312,6 +319,7 @@
 		return	
 
 	});    
+
 
 
 	/*  이미지 미리보기 , 확장자 체크  */		
