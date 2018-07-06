@@ -17,9 +17,12 @@
           media="screen">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 </head>
-
+<c:if test="${authUser eq null}">
+<body style="overflow-x:hidden; overflow-y:auto;padding-top: 90px;">
+</c:if>
+<c:if test="${authUser ne null}">
 <body style="overflow-x:hidden; overflow-y:auto;">
-
+</c:if>
 <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 
 <!----------------- container------------------->
@@ -153,7 +156,7 @@
             <div class="mb-4">
                 <a href="#">아이디 찾기 </a> |
                 <a href="#">비밀번호 찾기 </a> |
-                <a href="#" style="cursor: pointer" onclick="joinForm()">회원가입하기</a>
+                <a href="#" id="joinForm">회원가입하기</a>
             </div>
         </div>
     </div>
@@ -293,10 +296,15 @@
             forceParse: 0
         });
     });
-    var joinForm = function(){
+    $("#joinForm").on("click",function () {
         $("#exampleModalCenter").modal("hide");
         $("#exampleModalCenter3").modal();
-    }
+    });
+
+    // var joinForm = function(){
+    //     $("#exampleModalCenter").modal("hide");
+    //     $("#exampleModalCenter3").modal();
+    // }
     //이메일 회원가입 이메일 중복확인
     var emailCheck = function () {
         var emailCheck = $("#userEmail").val();
