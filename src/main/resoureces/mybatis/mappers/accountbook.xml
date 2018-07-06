@@ -3,11 +3,39 @@
 
 <mapper namespace="accountbook">
 	
-	<select id="getaccountlist" parameterType="String" resultType="com.modu.vo.AccountbookVo">
+	<select id="getaccountlist" parameterType="Map" resultType="com.modu.vo.AccountbookVo">
 		<![CDATA[
-		select categoryno,accountbookno,groupno,usage,spend,import,categoryname,tagname tag,to_char(accountbookdate,'yyyy"년" mm"월" dd"일"') accountbookdate
-		from accountbook join accountbook_category using(categoryno) join accountbook_tag using(accountbookno) join tag using(tagno)
-		where groupno=#{groupNo}
+		select accountbookno,accountbookusage,accountbookspend,accountbookincome,categoryno,abt.groupno,memberfeeno,categoryname,nvl(tagname,' ') tagname,to_char(accountbookregdate,'yyyy"년" mm"월" dd"일"') accountbookregdate
+		from accountbook_tbl abt join category_tbl cate using(categoryno) left join accountbook_tag_tbl using(accountbookno) left join tag_tbl using(tagno)
+		where abt.groupno=#{groupNo} and abt.accountbookregdate between #{startDate} and #{endDate}
+		order by accountbookregdate , accountbookno asc
+		]]>
+	</select>
+	
+	<select id="getcategorylist" parameterType="int" resultType="com.modu.vo.AccountbookCategoryVo">
+		<![CDATA[
+			select categoryno,categoryname
+			from category_tbl
+			where groupno=#{groupNo}
+			order by categoryno asc
+		]]>
+	</select>
+	
+	<select id="searchAccountListByTag" parameterType="Map" resultType="com.modu.vo.AccountbookVo">
+		<![CDATA[
+		select accountbookno,accountbookusage,accountbookspend,accountbookincome,categoryno,abt.groupno,memberfeeno,categoryname,nvl(tagname,' ') tagname,to_char(accountbookregdate,'yyyy"년" mm"월" dd"일"') accountbookregdate
+		from accountbook_tbl abt join category_tbl cate using(categoryno) left join accountbook_tag_tbl using(accountbookno) left join tag_tbl using(tagno)
+		where abt.groupno=#{groupNo} and accountbookusage like #{data}
+		order by accountbookregdate , accountbookno asc
+		]]>
+	</select>
+
+	<select id="searchAccountListByUsage" parameterType="Map" resultType="com.modu.vo.AccountbookVo">
+		<![CDATA[
+		select accountbookno,accountbookusage,accountbookspend,accountbookincome,categoryno,abt.groupno,memberfeeno,categoryname,nvl(tagname,' ') tagname,to_char(accountbookregdate,'yyyy"년" mm"월" dd"일"') accountbookregdate
+		from accountbook_tbl abt join category_tbl cate using(categoryno) left join accountbook_tag_tbl using(accountbookno) left join tag_tbl using(tagno)
+		where abt.groupno=#{groupNo} and accountbookusage like #{data}
+		order by accountbookregdate , accountbookno asc
 		]]>
 	</select>
 

@@ -5,40 +5,30 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>회비관리 시작페이지</title>
+	<title>그룹 첫 페이지</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/bootstrap.css"> <!-- stylesheet 외부의 css 가져오겟다 -->
 	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/Modu.css"> <!-- stylesheet 외부의 css 가져오겟다 --> 
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/bootstrap-datetimepicker.min.css">
 </head>
 <body style="overflow-x:hidden; overflow-y:auto;">
 
 <!-----------header------------------>
-
   <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-
-	<!----------------- container------------------->
-	<div class="container">
+  
+  <div class="container">
 		<div class="carousel-item active">
-			<div class="carousel-caption d-none d-md-block mb-5  text-left">	
-			<div class="mb-0">
-				<h1 class="mr-5">아직,&nbsp;&ensp;&ensp;&ensp;</h1>
-                <h1 class="ml-4">회비설정을 </h1>
-                <h1 class="mb-5">안하셨나요?</h1>
-            </div>
-				<a class="btn btn-primary btn-lg ml-5 mt-0" style="text-shadow:none; " href="${pageContext.request.contextPath }/membershipsetting">회비설정하기</a>
-				<br>
-			</div>
-               <img class="d-block w-100" src="${pageContext.request.contextPath }/assets/images/membership3.jpg" alt="membershipsetting">
+		<center>
+               <img style="height: 80%; width: 80%;"  src="${pageContext.request.contextPath }/assets/images/groupImg04.png" alt="groupImg05">
+        </center>
 		</div>
 	</div>
+  
+  
 
+<!----------------- footer------------------->		
 <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-	
-	
-	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-	<script src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
-	<script src="${pageContext.request.contextPath }/assets/js/header.js"></script>
-	
-	
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
 </body>
 </html>
