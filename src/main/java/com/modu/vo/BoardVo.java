@@ -1,5 +1,7 @@
 package com.modu.vo;
 
+import java.util.Arrays;
+
 public class BoardVo {
 
 	String boardNo;
@@ -8,6 +10,7 @@ public class BoardVo {
 	String userNo;
 	String tagNo;
 	String groupNo;
+	String[] saveNameArr;
 	
 	
 	
@@ -50,11 +53,23 @@ public class BoardVo {
 	}
 	
 	
+	public String[] getSaveNameArr() {
+		return saveNameArr;
+	}
+	public void setSaveNameArr(String[] saveNameArr) {
+		this.saveNameArr = saveNameArr;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "BoardVo [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
-				+ ", userNo=" + userNo + ", tagNo=" + tagNo + ", groupNo=" + groupNo + "]";
+				+ ", userNo=" + userNo + ", tagNo=" + tagNo + ", groupNo=" + groupNo + ", saveNameArr="
+				+ Arrays.toString(saveNameArr) + "]";
 	}
+	
+	
+	
 	
 	
 }
