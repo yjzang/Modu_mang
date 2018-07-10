@@ -43,4 +43,27 @@ public class BoardDao {
 	
 	}
 	
+	public List<FileVo> getPostImgs(String boardNo) {
+		
+		List<FileVo> fileList =sqlsession.selectList("boardDB.getPostImgs",boardNo);
+		return fileList;
+	}
+	
+	
+	
+	
+	public int deletePost(String boardNo) {
+		
+		
+		int flagPost= sqlsession.delete("boardDB.deletePost",boardNo);
+		return flagPost;
+		
+	}
+	
+	public int deleteImg(String boardNo) {
+		
+		int flagImg = sqlsession.delete("boardDB.deleteImg",boardNo);
+		return flagImg;
+		
+	}
 }

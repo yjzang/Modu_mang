@@ -46,11 +46,22 @@ public class BoardController {
 
 	@ResponseBody
 	@RequestMapping(value="/getList",method= {RequestMethod.GET, RequestMethod.POST})
-	public List<BoardVo> getList(Model model) {
+	public List<BoardVo> getList() {
 		
-		List<BoardVo> list =(List<BoardVo>)service.getPostList();
-		return list;
+		List<BoardVo> postList =(List<BoardVo>)service.getPostList();
+		System.out.println(postList);
+		return postList;
 	
+	}
+
+	
+	@ResponseBody
+	@RequestMapping(value="/delete",method= {RequestMethod.GET, RequestMethod.POST})
+	public int deletePost(@RequestParam String boardNo) {
+		
+		int flag = service.deletePost(boardNo);
+		return flag;
+		
 	}
 	
 	
@@ -73,18 +84,19 @@ public class BoardController {
 		
 
 		System.out.println("컨트롤러 :" + fileVo.getUserNo());
-		for(MultipartFile file: files) {
-		
-		System.out.println("배열로 받아지는지 보자" +file.getOriginalFilename());
+		System.out.println("보드VO확인용 - " + boardVo.toString());
+		System.out.println("파일VO확인용 - " + fileVo.toString());
+		System.out.println("파일 확인용 - " + fileVo.toString());
+	/*	System.out.println("배열로 받아지는지 보자" +file.getOriginalFilename());*/
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("fileVo", fileVo);
-		map.put("file",file);
+		map.put("files",files);
 		
 		service.addPost(boardVo,map);
 
 
 
-	}
+	
 		
 		return "redirect:/board";
 		

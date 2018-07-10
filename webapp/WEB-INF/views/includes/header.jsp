@@ -119,7 +119,7 @@
 					</div>
 				</li>
 				<li id="btn_board" class="nav-item menuTab">
-					<a class="nav-link" href="${pageContext.request.contextPath }/board" onclick="btn_board()">게시판</a>
+					<a class="nav-link" href="${pageContext.request.contextPath }/board" >게시판</a>
 				</li>
 
 				<li class="nav-item menuTab">
