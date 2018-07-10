@@ -29,9 +29,10 @@
 	</div>
 	<form id="form_board" action="${pageContext.request.contextPath}/board/add" method="post" enctype="multipart/form-data"  >
 		<input type="hidden" name="userNo" value="${authUser.userNo}">
+		<div>
 		<input class="form-control mx-auto col-9 my-3" name="boardTitle" placeholder="제목을 입력하세요">
 		<textarea class="form-control col-9 mx-auto my-3" name="boardContent" id="exampleFormControlTextarea1" rows="10" placeholder="내용을 입력하세요"></textarea>
-		
+		</div>
 		<div class="card col-9 mx-auto my-3">
 			<div class="card-header">
 				<h5 class="mt-3" style="font-size: 1.2em;">가계부 첨부</h5>
@@ -295,7 +296,6 @@
 			
 		$('.menuTab').removeClass("active");
 		$("#btn_board").addClass("active");
-	
 	});
 
 	

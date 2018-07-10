@@ -33,12 +33,59 @@
 	
 	<select id="getPostList" resultType="boardVo" >
 
-		select boardNo,boardTitle,boardContent,to_char(boardRegDate,'yyyy/mm/dd') boardRegDate
+		select boardNo,boardTitle,boardContent,boardRegDate
 		from board_tbl
-		order by boardRegDate desc
+		order by boardRegdate desc
 
 	</select>
 	
 
+	
+	<select id="getPostImgs" resultType="fileVo" >
+
+		select boardImgNo,saveName,userNo,boardNo
+		from board_img_tbl
+		where boardNo=#{boardNo}
+
+	</select>
+	
+	<delete id="deleteImg" parameterType="string">
+		delete from board_img_tbl
+		where boardNo = #{boardNo}
+	</delete>
+	
+	<delete id="deletePost" parameterType="string">
+		delete from board_tbl
+		where boardNo = #{boardNo}
+	</delete>
+
+	<select id="getLikeState" parameterType="map" resultType="string">
+		select likeState 
+		from like_tbl
+		where boardNo = #{boardNo} 
+		and userNo = #{userNo}					
+	</select>
+
+	
+	<insert id="upLike" parameterType="map">
+		insert into like_tbl
+		values(seq_like_no.nextval,'on',#{boardNo},#{boardNo},#{userNo}		
+	</insert>
+	
+	<delete id="downLike" parameterType="map">
+		delete form like_tbl
+		where boardNo = #{boardNo} 
+		and userNo = #{userNo}	
+	</delete>
+	
+
+	<select id="getLikeTotal" parameterType="map" resultType="string">
+		select rownum total 
+		from 
+		(select * from like_tbl
+		where boardNo = #{boardNo}
+		and likeState='on') 
+							
+	</select>
 	
 </mapper>

@@ -4,6 +4,7 @@
 
 <!-----------header------------------>
 <header>
+
     <%--첫번째 네비바--%>
     <nav class="container navbar navbar-expand-lg navbar-light bg-light">
         <%-- 공통 로고 --%>
@@ -163,6 +164,7 @@
 
         </nav>
     </c:if>
+
 </header>
 
 

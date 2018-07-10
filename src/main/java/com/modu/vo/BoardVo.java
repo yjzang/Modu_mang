@@ -1,17 +1,19 @@
 package com.modu.vo;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class BoardVo {
 
 	String boardNo;
 	String boardTitle;
 	String boardContent;
+	String boardRegDate;
 	String userNo;
 	String tagNo;
 	String groupNo;
-	String[] saveNameArr;
-	
+	String likeState;
+	String likeTotal;
+	List<FileVo> imgList ;
 	
 	
 	public String getBoardNo() {
@@ -52,22 +54,47 @@ public class BoardVo {
 		this.groupNo = groupNo;
 	}
 	
-	
-	public String[] getSaveNameArr() {
-		return saveNameArr;
+	public List<FileVo> getImgList() {
+		return imgList;
 	}
-	public void setSaveNameArr(String[] saveNameArr) {
-		this.saveNameArr = saveNameArr;
+	public void setImgList(List<FileVo> imgList) {
+		this.imgList = imgList;
+	}
+	
+	public String getBoardRegDate() {
+		return boardRegDate;
+	}
+	public void setBoardRegDate(String boardRegDate) {
+		this.boardRegDate = boardRegDate;
+	}
+	
+	public String getLikeState() {
+		return likeState;
+	}
+	public void setLikeState(String likeState) {
+		this.likeState = likeState;
+	}
+	
+	
+	public String getLikeTotal() {
+		return likeTotal;
+	}
+	public void setLikeTotal(String likeTotal) {
+		this.likeTotal = likeTotal;
 	}
 	
 	
 	@Override
 	public String toString() {
 		return "BoardVo [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
-				+ ", userNo=" + userNo + ", tagNo=" + tagNo + ", groupNo=" + groupNo + ", saveNameArr="
-				+ Arrays.toString(saveNameArr) + "]";
+				+ ", boardRegDate=" + boardRegDate + ", userNo=" + userNo + ", tagNo=" + tagNo + ", groupNo=" + groupNo
+				+ ", likeState=" + likeState + ", likeTotal=" + likeTotal + ", imgList=" + imgList + "]";
 	}
+
 	
+	
+	
+
 	
 	
 	

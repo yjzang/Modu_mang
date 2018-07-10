@@ -32,23 +32,12 @@
 						총무만 할 수 있는 '새 글쓰기'		
 		</a>
 </div>
-<c:forEach items="${list}"	var="boardVo" >
-	<div class="card text-center w-75 mx-auto my-2">
-		<div class="card-header">
-			<!-- Button trigger modal -->
-
-			<h4 class="card-title mt-3">
-				${boardVo.boardTitle}
-			</h4>
-			<div class="text-right mr-5">
-				
-				<a href="${pageContext.request.contextPath }/board/write" class="btn btn-sm btn-secondary">
-					수정		
-				</a>
-				<button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#deleteModal">
-					삭제		
-				</button>
-			</div>
+	
+	
+	<div id="postList" >
+		
+			
+			<!-- Delete Modal -->
 
 			<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
 				<div class="modal-dialog" role="document">
@@ -62,56 +51,15 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-outline-dark" data-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-outline-danger">삭제</button>
+							<button type="button" class="btn btn-outline-danger" id="btn_del" >삭제</button>
 						</div>
 					</div>
 				</div>
 			</div>
+			
+			
 
-
-			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-				<ol class="carousel-indicators">
-					<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active" style="color: #00b0f0"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-				</ol>
-				<div class="carousel-inner boardImg">
-					<div class="carousel-item active">
-						<img class="d-block" src="${pageContext.request.contextPath }/assets/images/moim01.jpg" alt="First slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block" src="${pageContext.request.contextPath }/assets/images/moim02.jpg" alt="Second slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block" src="${pageContext.request.contextPath }/assets/images/moim03.jpg" alt="Third slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block" src="${pageContext.request.contextPath }/assets/images/moim04.jpg" alt="Third slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block" src="${pageContext.request.contextPath }/assets/images/moim05.jpg" alt="Third slide">
-					</div>
-					
-				</div>
-				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a>
-				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-			</div>
-			<!-- Button trigger modal -->
-			<div class="text-right mr-5">
-				<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#boardUploadModal">
-					사진 추가하기 			
-				</button>
-			</div>
-
-			<!-- Modal -->
+			<!-- Img Upload Modal -->
 			<div class="modal fade" id="boardUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
@@ -147,153 +95,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="card-body">
-			<div class="text-left p-5 mb-4" style="border:dashed black 1px ; width: 50%">
-				<pre class="card-text" id="boardContent" > ${boardVo.boardContent}</pre>
-			
-
-			</div>
-			<div class="text-left my-3">
-				<span class="p-2" style="border:#54c9ad 2px solid; border-radius: 15px;  ">
-					#6월모임
-				</span>
-			</div>
-			<div>
-				<table class="table table-sm text-center">
-					<thead class="thead-light">
-						<tr>
-							<th scope="col"></th>
-							<th scope="col">날짜</th>
-							<th scope="col">사용내역</th>
-							<th scope="col">금액</th>
-							<th scope="col">분류</th>
-							<th scope="col">태그</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">
-								<input width=40px type="checkbox" aria-label="Checkbox for following text input">
-
-							</th>
-							<td>2018/06/28</td>
-							<td>삼겹살</td>
-							<td>150000</td>
-							<td>식비</td>
-							<td>#6월모임</td>
-
-						</tr>
-						<tr>
-							<th scope="row">
-								<input type="checkbox" aria-label="Checkbox for following text input">
-							</th>
-							<td>2018/06/28</td>
-							<td>소주한잔</td>
-							<td>77000</td>
-							<td>식비</td>
-							<td>#6월모임</td>
-
-						</tr>
-						<tr>
-							<th scope="row">
-								<input type="checkbox" aria-label="Checkbox for following text input">
-							</th>
-							<td>2018/06/28</td>
-							<td>버스 대절</td>
-							<td>200000</td>
-							<td>교통비</td>
-							<td>#6월모임</td>
-
-							
-						</tr>
-					</tbody>
-				</table>
-
-			</div>
-
-			<div class="card-footer p-1">
-				<div class="text-left my-2">
-					<span>
-						<!-- <button class="t-button p-1"> <img width=50px src="${pageContext.request.contextPath }/assets/images/coment.png"></button> -->
-						<button class="t-button p-1 ml-2"> <img id="like" width=50px src="${pageContext.request.contextPath }/assets/images/like_off.png"> </button>
-					</span>
-					<span class="ml-2">
-						12명의 회원이 좋아합니다.
-					</span>
-
-				</div>
-
-
-
-				<div>
-
-					<div class="my-2 text-left comment-top" id="multiCollapseExample1">
-
-						<div class="card">
-							<h5 class="card-header"><span class="mr-3  mb-1"><img src="${pageContext.request.contextPath }/assets/images/club02.png"></span><span>김삼겹</span></h5>
-							<div class="card-body comment">
-
-								<p class="comment">삼겹살에 김치 꿉고 상추에 쌈싸서 크흐~</p>
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<p>
-					<button class="btn btn-sm btn-secondary" id="btn-comment" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2" value="0">댓글 더 보기</button>
-				</p>
-				<div>
-					<div>
-						
-						<div class="collapse multi-collapse my-2 text-left" id="multiCollapseExample1">
-							
-							<div class="card">
-								<h5 class="card-header"><span class="mr-3  mb-1"><img src="${pageContext.request.contextPath }/assets/images/club02.png"></span><span>김삼겹</span></h5>
-								<div class="card-body comment">
-									
-									<p class="comment">삼겹살에 김치 꿉고 상추에 쌈싸서 크흐~</p>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-					<div>
-						
-						<div class="collapse multi-collapse my-2 text-left" id="multiCollapseExample2">
-							
-							<div class="card">
-								<h5 class="card-header"><span class="mr-3 mb-1"><img src="${pageContext.request.contextPath }/assets/images/club01.png"></span><span>김태클</span></h5>
-								<div class="card-body comment">
-									
-									<p  class="comment">근데 여기 사이트 댓글 형식 좀 이상하지 않냐?</p>
-
-									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="input-group my-3">
-					<div class="input-group-prepend"  >
-						<span class="input-group-text" id="">장현수</span>
-					</div>
-					<input type="text" class="form-control " placeholder="댓글을 입력하세요" aria-label="Recipient's username" aria-describedby="basic-addon2">
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button" style="border:"><img src="${pageContext.request.contextPath }/assets/images/write01.png"></button>
-					</div>
-				</div>
-
-
-			</div>
-		</div>
+		
+		
 
 	</div>
-	
-</c:forEach>
-
-</div>
-
 
 
 
@@ -315,28 +120,10 @@
 			$('.menuTab').removeClass("active");
 			$("#btn_board").addClass("active");
 			
-			fetchGallery();
-			fetchList();
+			fetchBoard();
 
 		});
 	
-		/*좋아요*/
-
-		$("#like").on('click',function(){
-
-			var fileName = $("#like").attr('src');
-			fileName = fileName.split(".");
-			fileName = fileName[0].split("/");
-			fileName = fileName.pop(); /* 배열의 맨마지막 요소 불러오기 */
-			console.log(fileName);
-			if(fileName=="like_off"){
-				$("#like").attr("src","${pageContext.request.contextPath }/assets/images/like.png");
-			} else{
-				$("#like").attr("src","${pageContext.request.contextPath }/assets/images/like_off.png");
-			}
-		
-
-		});
 		
 		
 		/* 게시글 불러오기 AJAX */
@@ -344,6 +131,8 @@
 		function fetchBoard(){
 			/* console.log("초기화 1이어야하는 "+ begin); */
 			
+			
+	
 		$.ajax({
 			  
 			  url : "${pageContext.request.contextPath}/board/getList",
@@ -353,15 +142,16 @@
 			
 			  success : function(list){
 				  
+								  
 				  $.each(list, function(idx, val) {
-						console.log(idx + " " + val.no);
+						console.log(idx + " " + val.boardNo);
 						var src ='${pageContext.request.contextPath}/assets/images/like_off.PNG';
 						if(val.state==1){
 							src ='${pageContext.request.contextPath}/assets/images/like.PNG';
-						}
+						} 
 						render(val,"down",src);
 							  
-						  });
+				   });
 				  
 			  
 			  },
@@ -374,61 +164,263 @@
 		  
 		}
 		
+		
+
+	
 		/* 게시글 그리기 함수 */
 		function render(vo,updown,src){
+			  
+						  
 			  str= " ";
-			  str+= "	<li id=li_"+vo.no+" style='background-color:white;padding-bottom:10px'>";
-			  str+= "	<div id='btn_align' style='border-bottom:1px solid #D8D8D8;' >";
-			  str+= "	<img id='img' data-delno="+vo.no+" src='${pageContext.request.contextPath}/upload/"+vo.saveName+"'";
-			  str+= " 		style='width:90%;height:80px;margin:5px;cursor:pointer;' data-userno="+vo.userNo+">";
-			  str+= "	</div>";
-			  str+= "	<div>";
-			  str+= "	  <img id='heart' data-likeno="+vo.no+" data-state='"+vo.state+"'src="+src;
-			  str+= " 				style='width:15px;height:15px;margin-left:5px;margin-bottom:1px;cursor:pointer;'/>  ";
-			  str+= "	<span id='like_"+vo.no+"' type='text' style='border:none;font-size:8pt;'>"+vo.like+"</span>";
-			  str+= "	<span style='font-size:8pt;float:right;'>"+vo.userName+"</span>";
-			  str+= "	</div>";
-			  str+= "	</li>";
-			  str+= "	";
+			  str+= " <div id='board' data-del='board_"+vo.boardNo+"'  data-no='"+vo.boardNo +"'  class='card text-center w-75 mx-auto my-2'>";
+			  str+= "	<div class='card-header'>";
+			  str+= "		<h4 class='card-title mt-3'>" +vo.boardTitle +"</h4>";
+			  str+= "		<div class='text-left ml-5'>" +vo.boardRegDate +"</div>";
+			  str+= "		<div class='text-right mr-5'>";
+			  str+= "			<a href='${pageContext.request.contextPath }/board/write' class='btn btn-sm btn-secondary'>";
+			  str+= "			     수정	</a>	";
+			  str+= "			<button type='button' class='btn btn-sm btn-secondary' data-toggle='modal' data-target='#deleteModal'>";
+			  str+= "			     삭제	</button>";
+			  str+= "		</div>";
+			  str+= "	    <div id='carouselExampleIndicators_"+vo.boardNo+"' class='carousel slide' data-ride='carousel'>";
+			  str+= "			<ol class='carousel-indicators'>";
+			  str+= "				<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active' style='color: #00b0f0'></li>";	  
+			  str+= "				<li data-target='#carouselExampleIndicators' data-slide-to='1'></li>";
+			  str+= "				<li data-target='#carouselExampleIndicators' data-slide-to='2'></li>";
+			  str+= "			</ol>";
+			  
+			  
+			  str+= "			<div class='carousel-inner boardImg'>";
+			  
+			  
+			  //if(vo.imgList[0].saveName!=null){
+			  if(typeof(vo.imgList[0]) != 'undefined'){
+			  str+= "					<div class='carousel-item active'>";
+			  str+= "		   	 			<img class='d-block' src='${pageContext.request.contextPath }/upload/"+ vo.imgList[0].saveName+"' alt='First slide'>"; 
+			  str+= "					</div>";
+			  
+				  for(i=1; i < vo.imgList.length; i++){
+					  
+					  
+					  str+= "			<div class='carousel-item' >";
+					  str+= "				<img class='d-block' src='${pageContext.request.contextPath }/upload/"+ vo.imgList[i].saveName+"' alt='Second slide'>"; 
+					  str+= "			</div>";
+					  
+					  
+					  
+				  }
+			  
+			  } else {					
+				  
+				  str+= "					<div class='carousel-item active' id='btn_upload'  data-toggle='modal' data-target='#boardUploadModal' style='cursor:pointer;'>";
+				  str+= "		   	 			<img class='d-block' src='${pageContext.request.contextPath }/assets/images/plus01.png' alt='First slide' style='width:100px; height:auto; margin-top:100px; margin-bottom:50px;'>";
+				  str+= "                        <div>";
+				  str+= "                         	<h3 style='color:#50c8ef; font-weight:bold;'> 멤버들과의 추억이 담긴 사진을 올려주세요</h3>";
+				  str+= "                         	<br><br><br>";
+				  str+= "                         </div>";
+				  str+= "					</div>";
+				  				
+				
+			  }
+	
+			  
+			  str+= "			</div>";
+			  str+= "			<a class='carousel-control-prev' href='#carouselExampleIndicators_"+vo.boardNo+"' role='button' data-slide='prev'>";
+			  str+= "				<span class='carousel-control-prev-icon' aria-hidden='true'></span>";
+			  str+= "				<span class='sr-only'>Previous</span>";
+			  str+= "			</a>";
+			  str+= "			<a class='carousel-control-next' href='#carouselExampleIndicators_"+vo.boardNo+"' role='button' data-slide='next'>";
+			  str+= "				<span class='carousel-control-next-icon' aria-hidden='true'></span>";
+			  str+= "				<span class='sr-only'>Next</span>";
+			  str+= "			</a>";
+			  str+= "	    </div>";
+		
+			  
+			  
+			  
+			  str+= "	    <div class='text-right mr-5'>";
+			  str+= "	  		 <button type='button' id='btn_upload'  class='btn btn-primary' data-toggle='modal' data-target='#boardUploadModal'>";
+			  str+= "				   사진 추가하기 	";
+			  str+= "	 		 </button>";
+			  str+= "	    </div>";
+			  
+			  
+				
+			  str+= "	    <div class='card-body'>";
+			  str+= "	   		<div class='text-left p-5 mb-4' style='border:dashed black 1px ; width: 50%'>";
+			  str+= "	    	<pre class='card-text' id='boardContent' >"+ vo.boardContent + "</pre>";
+			  str+= "	    </div>";
+			  str+= "	    <div class='text-left my-3'>";
+			  str+= "	       <span class='p-2' style='border:#54c9ad 2px solid; border-radius: 15px; '>";
+			  str+= "	          #6월모임";
+			  str+= "	       </span>";
+			  str+= "	    </div>";
+			  str+= "	    <div>";
+			  str+= "	      <table class='table table-sm text-center'>";
+			  str+= "	         <thead class='thead-light'>";
+			  str+= "	  	       <tr>";
+			  str+= "	    	     <th scope='col'></th>";
+			  str+= "	   		     <th scope='col'>날짜</th>";
+			  str+= "	   		     <th scope='col'>사용내역</th>";
+			  str+= "	    	     <th scope='col'>금액</th>";
+			  str+= "	   		     <th scope='col'>분류</th>";
+			  str+= "	     	     <th scope='col'>태그</th>";
+			  str+= "	  	       </tr>";
+			  str+= "	         </thead>";
+			  str+= "	         <tbody>";
+			  str+= "	           <tr>";
+			  str+= "	   			  <th scope='row'>";
+			  str+= "	  			      <input width=40px type='checkbox' aria-label='Checkbox for following text input'>";
+			  str+= "	  			  </th>";
+			  str+= "	  			  <td>2018/06/28</td> <td>삼겹살</td>  <td>150000</td> <td>식비</td> <td>#6월모임</td>";
+			  str+= "	  		   </tr> ";
+			  str+= "	  		   <tr> ";
+			  str+= "					 <th scope='row'>	<input type='checkbox' aria-label='Checkbox for following text input'>	</th>";
+			  str+= "	   				 <td>2018/06/28</td><td>소주한잔</td><td>77000</td><td>식비</td><td>#6월모임</td>";
+			  str+= "	           </tr>";
+			  str+= "	         </tbody>";
+			  str+= "	      </table>";
+			  str+= "	    </div>";
+			  
+			  
+			  str+= "	    <div class='card-footer p-1'> ";
+			  str+= "	    	<div class='text-left my-2'>";
+			  str+= "	   			<span>";
+			  str+= "	 				  <button class='t-button p-1 ml-2'> <img id='like' data-no='"+vo.boardNo+"' width=50px src='${pageContext.request.contextPath }/assets/images/like_off.png'> </button>";
+			  str+= "	  			</span>";
+			  str+= "	    		<span class='ml-2'>";
+			  str+= "	  				  12명의 회원이 좋아합니다.";
+			  str+= "	  			</span>";
+			  str+= "	        </div>";
+			
+			  
+			  
+			  
+			  str+= "	    	 <div>";
+			  str+= "	      		<div class='my-2 text-left comment-top ' id='multiCollapseExample1'>";
+			  str+= "	   				 <div class='card'>";
+			  str+= "						  <h5 class='card-header'><span class='mr-3  mb-1'><img src='${pageContext.request.contextPath }/assets/images/club02.png'></span><span>김삼겹</span></h5>";
+			  str+= "	   					  <div class='card-body comment'>";
+			  str+= "	  					        <p class='comment'>삼겹살에 김치 꿉고 상추에 쌈싸서 크흐~</p>";
+			  str+= "	   					  </div>";
+			  str+= "	  				 </div>";
+			  str+= "	   		 	</div>";
+			  str+= "	 		 </div>";
+			  
+			  
+			  
+			  str+= "	   		 <p>";
+			  str+= "	   			 <button class='btn btn-sm btn-secondary btn-comment' id='btn-comment' type='button' data-toggle='collapse' data-target='.multi-collapse' aria-expanded='false' aria-controls='multiCollapseExample1 multiCollapseExample2' value='0'>댓글 더 보기</button>";
+			  str+= "	    	 </p>";
+			  
+			  
+			  str+= "	   	 	 <div>";
+			  str+= "	      			<div class='collapse multi-collapse my-2 text-left' id='multiCollapseExample1'>";
+			  str+= "	   					 <div class='card'>";
+			  str+= "							 <h5 class='card-header'><span class='mr-3  mb-1'><img src='${pageContext.request.contextPath }/assets/images/club02.png'></span><span>김삼겹</span></h5>";
+			  str+= "	   						  <div class='card-body comment'>";
+			  str+= "	  						        <p class='comment'>삼겹살에 김치 꿉고 상추에 쌈싸서 크흐~</p>";
+			  str+= "	   				 		 </div>";
+			  str+= "	  			 		</div>";
+			  str+= "	    			</div>";
+			  str+= "	   		  </div>";
+			  
+			  
+			  str+= "	  		  <div>";
+			  str+= "	 		     	<div class='collapse multi-collapse my-2 text-left' id='multiCollapseExample1'>";
+			  str+= "	 		  			 <div class='card'>";
+			  str+= "							 <h5 class='card-header'><span class='mr-3 mb-1'><img src='${pageContext.request.contextPath }/assets/images/club01.png'></span><span>김태클</span></h5>";
+			  str+= "	 		  				  <div class='card-body comment'>";
+			  str+= "			  				        <p  class='comment'>근데 여기 사이트 댓글 형식 좀 이상하지 않냐?</p>";
+			  str+= "			   				  </div>";
+			  str+= "			  			 </div>";
+			  str+= "			    	</div>";
+			  str+= "	 		  </div>";
+			  
+			  
+			  
+			  
+			  str+= "	   		  <div class='input-group my-3'>";
+			  str+= "	 		 		<div class='input-group-prepend'>";
+			  str+= "	 				<span class='input-group-text' id=''>장현수</span>";
+			  str+= "	  		  </div>";
+			  str+= "	 		  <input type='text' class='form-control' placeholder='댓글을 입력하세요' aria-label='Recipient's username' aria-describedby='basic-addon2'>";
+			  str+= "	   		  <div class='input-group-append'>";
+			  str+= "	   				<button class='btn btn-outline-secondary' type='button'><img src='${pageContext.request.contextPath }/assets/images/write01.png'></button>";
+			  str+= "	   		  </div>";
+			  str+= "	    </div>";
+			  str+= "	 </div>";
+			  str+= "</div>";
+			
+							
+			  
 			  
 			  if(updown=="up"){
 				  
-				  $("#img_list").prepend(str);
+				  $("#postList").prepend(str);
 				  
 			  } else{
 				  
-				  $("#img_list").append(str);
+				  $("#postList").append(str);
 			  }
 				  
 		}
 		
 		
-		/* 게시글 지우기 함수 */
-		function remove(no){
+		/*좋아요*/
+
+		$("#like").on('click',function(){
+
+			var boardNo=$(this).data('no');
+			alert(boardNo);
 			
-			$("#li_"+no).remove();
+			var fileName = $("#like").attr('src');
+			fileName = fileName.split(".");
+			fileName = fileName[0].split("/");
+			fileName = fileName.pop(); /* 배열의 맨마지막 요소 불러오기 */
+			console.log(fileName);
+			if(fileName=="like_off"){
+				$("#like").attr("src","${pageContext.request.contextPath }/assets/images/like_on.png");
+			} else{
+				$("#like").attr("src","${pageContext.request.contextPath }/assets/images/like_off.png");
+			}
+		
+
+		});
+			  
+			  
+			  
+			  
+		/* 게시글 지우기 함수 */
+		function remove(boardNo){
+		
+			$("[data-del=board_"+boardNo+"]").remove();
+			
 			
 		}
 		
-				}
+	
+		
+	
 		
 		
 		/* 게시글 삭제 Ajax */
 		$("#btn_del").on("click",function(){
 			
-			var no = $("#img_no").val();
-			
+			var boardNo = $("#board").data('no');
+		
 			$.ajax({
 				  
-				  url : "${pageContext.request.contextPath}/gallery/delete",
+				  url : "${pageContext.request.contextPath}/board/delete",
 				  type : "POST",
-				  data : {no:no},
+				  data : {boardNo:boardNo},
 				  dataType : "json",	
 				
-				  success : function(result){
+				  success : function(flag){
 						 
-						  remove(no);
-						  $("#img-pop").modal('hide');
+					
+						  remove(boardNo);
+						  $("#deleteModal").modal('hide');
 					
 											
 				  },
@@ -448,17 +440,17 @@
 
 		$("#btn-comment").on("click",function(){
 
-			var val = $('#btn-comment').val();
+			var val = $(this).val();
 			console.log(val);
 
 			if(val==0){
 				$('.comment-top').hide();
-				$('#btn-comment').val("1");
+				$(this).val("1");
 				$(this).html("댓글 감추기");
 			} else {
 
 				$('.comment-top').show();
-				$('#btn-comment').val("0");
+				$(this).val("0");
 				$(this).html("댓글 더 보기");
 			}
 			
@@ -474,6 +466,7 @@
 			addImg.src = URL.createObjectURL(event.target.files[0]);
 
 			var fileName = $("#boardUpload").val();
+			alert(fileName);
 
 			fileName = fileName.slice(fileName.indexOf(".") + 1).toLowerCase();
 			console.log(fileName);
