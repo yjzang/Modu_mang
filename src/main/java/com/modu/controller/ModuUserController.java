@@ -57,12 +57,19 @@ public class ModuUserController {
         return "redirect:/main";
     }
 
-    @RequestMapping(value = "kakaoLogin", method = RequestMethod.GET)
+    @RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
     public String kakaoLogin(@RequestParam String userEmail,HttpSession session) {
         System.out.println("카카오톡 로그인하기");
         ModuUserVo userVo = moduUserService.kakaoLogin(userEmail);
         System.out.println("유저 세션 세팅 : "+userVo.toString());
         session.setAttribute("authUser",userVo);
+        return "redirect:/main";
+    }
+
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public String logout(HttpSession session){
+        System.out.println("로그아웃");
+        session.invalidate();
         return "redirect:/main";
     }
 
