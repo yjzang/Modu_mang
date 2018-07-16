@@ -97,7 +97,27 @@ public class ModuAccountbookDao {
 		sqlSession.insert("accountbook.connectTagGroup",map);
 	}
 	
-	public List<AccountbookCategoryVo> getChartData(String groupNo) {
-		return sqlSession.selectList("accountbook.getChartData",groupNo);
+	public List<AccountbookCategoryVo> getChartDataByDate(Map map) {
+		return sqlSession.selectList("accountbook.getChartDataByDate",map);
+	}
+	
+	public List<AccountbookCategoryVo> getChartDataByTag(Map map) {
+		return sqlSession.selectList("accountbook.getChartDataByTag",map);
+	}
+	
+	public List<AccountbookCategoryVo> getChartDataByUsage(Map map) {
+		return sqlSession.selectList("accountbook.getChartDataByUsage",map);
+	}
+	
+	public void categoryDelete(Map map) {
+		sqlSession.selectList("accountbook.categoryDelete",map);
+	}
+	
+	public void categoryUpdate(Map map) {
+		sqlSession.update("accountbook.categoryUpdate",map);
+	}
+	
+	public void categoryInsert(Map map) {
+		sqlSession.insert("accountbook.categoryInsert",map);
 	}
 }

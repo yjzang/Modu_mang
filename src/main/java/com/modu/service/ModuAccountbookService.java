@@ -60,6 +60,9 @@ public class ModuAccountbookService {
 		
 		List<AccountbookCategoryVo> categoryList = moduAccountbookDao.getCategoryList(groupNo);
 		returnMap.put("categoryList", categoryList);
+		
+		List<AccountbookCategoryVo> chartDataList = moduAccountbookDao.getChartDataByDate(map);
+		returnMap.put("chartDataList", chartDataList);
 
 		return returnMap;
 	}
@@ -200,9 +203,16 @@ public class ModuAccountbookService {
 		if(mode.equals("2")) {
 			accountList = moduAccountbookDao.searchAccountListByTag(map);
 			tagList = moduAccountbookDao.getTagListByTagName(map);
+			
+			List<AccountbookCategoryVo> chartDataList = moduAccountbookDao.getChartDataByTag(map);
+			returnMap.put("chartDataList", chartDataList);
+			
 		}else if (mode.equals("3")) {
 			accountList = moduAccountbookDao.searchAccountListByUsage(map);		
 			tagList = moduAccountbookDao.getTagListByGroupNo(groupNo);
+			
+			List<AccountbookCategoryVo> chartDataList = moduAccountbookDao.getChartDataByUsage(map);
+			returnMap.put("chartDataList", chartDataList);
 		}
 		
 		
@@ -277,10 +287,28 @@ public class ModuAccountbookService {
 		moduAccountbookDao.tagDelete(accountbookTagVo);
 	}
 	
-	public List<AccountbookCategoryVo> getChartData(String groupNo) {
-		return moduAccountbookDao.getChartData(groupNo);
+	public List<AccountbookCategoryVo> getCategoryList(String groupno) {
+		return moduAccountbookDao.getCategoryList(groupno);
 	}
 	
+	public void categoryDelete(String groupNo, String categoryno) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("groupNo", groupNo);
+		map.put("categoryno", categoryno);	
+		moduAccountbookDao.categoryDelete(map);
+	}
 	
-
+	public void categoryUpdate(String categoryno, String categoryname) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("categoryno", categoryno);
+		map.put("categoryname", categoryname);	
+		moduAccountbookDao.categoryUpdate(map);
+	}
+	
+	public void categoryInsert(String groupNo, String categoryname) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("groupNo", groupNo);
+		map.put("categoryname", categoryname);	
+		moduAccountbookDao.categoryInsert(map);
+	}
 }

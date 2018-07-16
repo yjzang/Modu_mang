@@ -34,7 +34,9 @@ table {
 
 		<!----------------- 통계 그래프------------------->
 		<center>
-			<canvas class="m-4 w-75" id="myChart" width="50" height="13"></canvas>
+			<div id="chartCanvas">
+				<canvas class="m-4 w-75" id="myChart" width="50" height="13"></canvas>
+			</div>
 		</center>
 
 		<!----------------- 월 선택 달력------------------->
@@ -61,6 +63,12 @@ table {
 				</div>
 				<button class="btn btn-outline-primary my-2 my-sm-0" id="search_btn">검색</button>
 			</form>
+		</div>
+		
+		<!----------------- 그래프 숨김/보이기 , 카테고리 수정 버튼 ------------------->
+		<div class="float-right">
+			<button id="hidegraph" type="button" class="btn btn-primary">그래프 숨기기</button>
+			<button id="categoryUpdate" type="button" class="btn btn-primary">카테고리 수정</button>
 		</div>
 		
 		<!----------------- 가계부 테이블------------------->
@@ -110,7 +118,7 @@ table {
 	<br>
 	<br>
 	
-	<!----------------- 모달 (개별)------------------->
+	<!----------------- 모달 (개별 태그)------------------->
 	<div class="modal fade" id="modal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -121,7 +129,7 @@ table {
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
-	      <div class="modal-body">					
+	      <div class="modal-body" id="tagBody">					
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -131,7 +139,7 @@ table {
 	  </div>
 	</div>
 	
-	<!----------------- 모달 (리스트)------------------->
+	<!----------------- 모달 (일괄 태그)------------------->
 	<div class="modal fade" id="modal1" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -152,6 +160,26 @@ table {
 	    </div>
 	  </div>
 	</div>
+	
+	<!----------------- 모달 (카테고리)------------------->
+	<div class="modal fade" id="modal2" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">카테고리</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body" id="categoryBody">					
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	      	<button type="button" name="categoryInsert" class="btn btn-primary mr-2">카테고리 추가</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 
@@ -165,58 +193,45 @@ table {
 	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
 
 	<script>
-		$(document).ready( function() {
+		$(document).ready( function() {		
 			
-			var ctx = document.getElementById("myChart");
-			var chartCategoryList = new Array();
-			var chartCategoryDatas = new Array(); 
-			
-			function getChartData(){
-				chartCategoryList = new Array();
-				chartCategoryDatas = new Array();
-				$.ajax({
-					url : "${pageContext.request.contextPath }/accountbook/getchartdata",
-					type : "post",
-					//contentType : "application/json",
-					 data : {
-						 groupNo : $("[id=groupno]").val()
-					 }, 
-					dataType : "json",
-					success : function(chartList) {
-						/* chartCategoryList = "";
-						chartCategoryDatas  = ""; */
-						
-						for(var i=0; i<chartList.length; i++){
-							//addData(ctx, chartList[i].categoryName, chartList[i].total);
-							chartCategoryList.push(chartList[i].categoryName);
-							chartCategoryDatas.push(chartList[i].total);
-						}
-						console.log(chartCategoryList);
-						console.log(chartCategoryDatas);
-					},
-					error : function(XHR, status, error) {
-						console.error(status + " : " + error);
-					}
-				});
-			}	
-			
-			new Chart(ctx, {
-			    type: 'bar',
-			    data: {
-			      labels: [ chartCategoryList ],
-			      datasets: [
-			        {
-			          //label: "Population (millions)",
-			          //backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-			          data: [ chartCategoryDatas ]
-			        }
-			      ]
-			    },
-			    options: {
-			    	scales : {
+			//차트 작성
+			function MyChart(chartDataList){
+				
+				 $('[id=myChart]').replaceWith('<canvas class="m-4 w-75" id="myChart" width="50" height="13"></canvas>');
+				 
+				var chartCategoryList = new Array();
+				var chartCategoryDatas = new Array(); 
+				
+				for(var i=0; i<chartDataList.length; i++){
+					chartCategoryList.push(chartDataList[i].categoryName);
+					chartCategoryDatas.push(chartDataList[i].total);
+				} 
+				
+				var canvas = document.getElementById('myChart');
+				
+				var data = {
+				    labels: [ ],
+				    datasets: [
+				        {
+				        	backgroundColor: "rgba(75,192,192,0.4)",
+		                	data: [ ]
+				        }
+				    ]
+				};
+	
+				function adddata(index,data,label){
+					myBarChart.data.datasets[0].data[index] = data;
+				  	myBarChart.data.labels[index] = label;
+				  	myBarChart.update();
+				}
+	
+				var option = {
+					scales : {
 						yAxes : [ {
 							ticks : {
 								beginAtZero : false,
+								beginAtZero: true,
 								callback : function(value, index, values) {
 									return value.toString().replace(
 											/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -228,15 +243,34 @@ table {
 			     	legend: { display: false },
 			      	title: {
 			        	display: true
-			        	//,text : '카테고리 별 통계'
 			      	}
-			   }
-			}); 
-			
+				};
+				
+				var myBarChart = Chart.Bar(canvas,{
+					data:data,
+				  options:option
+				});
+				
+				for(var i=0;i<chartCategoryList.length;i++){
+					adddata(i,chartCategoryDatas[i],chartCategoryList[i]);
+				}
+
+			}			
+			    
 			//내비바 가계부 탭 활성화
 			$('.menuTab').removeClass("active");
 			$("#accountbook").addClass("active");
-							
+			
+			$('[id=hidegraph]').on('click',function(){
+				$('[id=chartCanvas]').toggle();
+				if ( $('[id=hidegraph]').html() == '그래프 숨기기'){
+					$('[id=hidegraph]').html('그래프 보이기');
+				}else{
+					$('[id=hidegraph]').html('그래프 숨기기') ;
+				}
+				
+			});
+			
 			//검색창 숨기기 및 datepicker이벤트 추가
 			$('[id=search_date1]').datepicker();
 			$('[id=search_date2]').datepicker();
@@ -274,6 +308,8 @@ table {
 			$("[id=tagGroup]").click(function() {
 				$('[id=inputTagName]').val('');
 				$('[id=modal1]').modal();
+				$('[id=modal]').modal('hide');
+				$('[id=moda2]').modal('hide');		
 			});
 			
 			//태그 저장 버튼 클릭시 체크된 항목 태그 일괄 적용	
@@ -288,6 +324,7 @@ table {
 				
 				var tagName = $('[id=inputTagName]').val();
 				tagGroup(AccountbookList,tagName);
+				$('[id=modal1]').modal('hide');
 			})
 			
 			//db에서 태그 일괄 적용
@@ -357,14 +394,15 @@ table {
 						
 						var accountbookList = map.accountList;
 						var categoryList = map.categoryList;
+						var chartDataList = map.chartDataList;
 						globalCategoryList = categoryList;
 
 						for (var i = 0; i < accountbookList.length; i++) {
 							render(accountbookList[i], i, categoryList);
 						}
 						newline(i, categoryList);
-						
-						getChartData();
+
+						MyChart(chartDataList);
 					},
 					error : function(XHR, status, error) {
 						console.error(status + " : " + error);
@@ -729,10 +767,13 @@ table {
 							$("[id=accountbookContent]").empty();
 							var accountbookList = map.accountList;
 							var categoryList = map.categoryList;
+							var chartDataList = map.chartDataList;
 
 							for (var i = 0; i < accountbookList.length; i++) {
 								render(accountbookList[i],i, categoryList);
 							}
+							
+							MyChart(chartDataList);
 						},
 						error : function(XHR, status, error) {
 							console.error(status + " : " + error);
@@ -751,10 +792,13 @@ table {
 							$("[id=accountbookContent]").empty();
 							var accountbookList = map.accountList;
 							var categoryList = map.categoryList;
+							var chartDataList = map.chartDataList;
 
 							for (var i = 0; i < accountbookList.length; i++) {
 								render(accountbookList[i], i, categoryList);
 							}
+							
+							MyChart(chartDataList);
 						},
 						error : function(XHR, status, error) {
 							console.error(status + " : " + error);
@@ -772,7 +816,9 @@ table {
 			
 			$("[id=accountbookContent]").on("focusin",".tag",function() {	
 				$('[id=modal]').modal();
-				$("[class=modal-body]").empty();
+				$('[id=modal1]').modal('hide');
+				$('[id=modal2]').modal('hide');
+				$("[id=tagBody]").empty();
 				
 				var accountNo = $(this).closest("tr").attr('id');
 				$('[id=hiddenAnoTag]').val(accountNo);
@@ -810,7 +856,6 @@ table {
 			
 			//태그 칸 추가
 			function tagRowInsert(tagList){
-				
 				var str = "";
 				
 				str+="<div class='my-1' id='" + tagList.accountbooktagno + "'>";
@@ -824,13 +869,13 @@ table {
 				str+="<div style='clear:both;''></div>";
 				str+="</div>";
 				
-				$("[class=modal-body]").append(str);
+				$("[id=tagBody]").append(str);
 				
 				tagRow++;
 			}							
 			
 			//태그 삭제
-			$("[class=modal-body]").on("click","[name=tagDelete]",function() {
+			$("[id=tagBody]").on("click","[name=tagDelete]",function() {
 			
 				$(this).closest("div").remove();
 				var accountbooktagno = $(this).closest("div").attr("id");
@@ -863,12 +908,12 @@ table {
 			
 			
 			//태그 변화 감지
-			$("[class=modal-body]").on("focusout","[id=inputTag]",function() {
+			$("[id=tagBody]").on("focusout","[id=inputTag]",function() {
 				
 				var accountbookNo = $('[id=hiddenAnoTag]').val();
 				var tagname = $(this).val();
 
-				selRow = $(this).closest("div").index() + 1;
+				var selRow = $(this).closest("div").index() + 1;
 				
 				if(selRow <= insertedTagRow){
 					var tagno = $(this).attr('name');
@@ -896,7 +941,7 @@ table {
 					success : function() {
 						$("[id=accountbookContent]").empty();
 						searching();	
-						$("[class=modal-body]").empty();
+						$("[id=tagBody]").empty();
 						tagRow = 1;	
 						tagList(accountbookNo);
 					},
@@ -920,9 +965,166 @@ table {
 					success : function() {
 						$("[id=accountbookContent]").empty();
 						searching();	
-						$("[class=modal-body]").empty();
+						$("[id=tagBody]").empty();
 						tagRow = 1;	
 						tagList(accountbookNo);
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+			}
+			
+			//카테고리 모달창 팝업
+			
+			var cateRow;
+			var insertedCateRow;
+			
+			$("[id=categoryUpdate]").on("click",function() {	
+				$('[id=modal2]').modal();
+				$('[id=modal]').modal('hide');
+				$('[id=modal1]').modal('hide');
+				$("[id=categoryBody]").empty();
+				
+				cateRow = 1;												
+				
+				cateList();			
+			});
+			
+			//카테고리 리스팅
+			function cateList(){
+				$.ajax({
+					url : "${pageContext.request.contextPath }/accountbook/getcategorylist",
+					type : "post",
+					//contentType : "application/json",
+					data : {
+						groupNo : $("[id=groupno]").val(),
+					},
+					dataType : "json", 
+					success : function(cateList) {									
+						for(var i=0;i<cateList.length;i++){
+							cateRowInsert(cateList[i]);
+						}
+						insertedCateRow = cateRow - 1;
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});						
+			}
+			
+			//카테고리 칸 추가
+			function cateRowInsert(cateList){
+				
+				var str = "";
+				
+				str+="<div class='my-1' id='" + cateList.categoryNo + "'>";
+				if(typeof(cateList.categoryName) == 'undefined'){
+					str+="<input class='inputCategory form-control mr-sm-2 ml-2 w-75 float-left' type='search' id='inputCategory' name='' value='' placeholder='카테고리'>";
+				}
+				else{
+					str+="<input class='inputCategory form-control mr-sm-2 ml-2 w-75 float-left' type='search' id='inputCategory' name='" + cateList.categoryNo + "' value='" + cateList.categoryName + "'>";
+				}
+				str+="<button type='button' name='categoryDelete' class='btn btn-danger mr-1 float-left' id='" + cateList.categoryNo + "' value='" + cateRow + "'>삭제</button>";
+				str+="<div style='clear:both;''></div>";
+				str+="</div>";
+				
+				$("[id=categoryBody]").append(str);
+				
+				cateRow++;
+			}	
+			
+			//카테고리 추가 버튼
+			$("[name=categoryInsert]").on("click",function() {								
+				cateRowInsert('');								
+			});
+			
+			//카테고리 삭제
+			$("[id=categoryBody]").on("click","[name=categoryDelete]",function() {
+			
+				$(this).closest("div").remove();
+				var categoryno = $(this).attr('id');
+				categoryDelete(categoryno);
+				insertedTagRow--;
+				
+			});
+			
+			//db에서 카테고리 삭제
+			function categoryDelete(categoryno){
+				$.ajax({
+					url : "${pageContext.request.contextPath }/accountbook/categorydelete",
+					type : "post",
+					//contentType : "application/json",
+					data : {
+						groupNo : $("[id=groupno]").val(),
+						categoryno : categoryno
+					},
+					//dataType : "json",	
+					success : function() {	
+						$("[id=accountbookContent]").empty();
+						searching();
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+			}
+				
+			//카테고리 변화 감지
+			$("[id=categoryBody]").on("focusout","[id=inputCategory]",function() {
+				var categoryname = $(this).val();
+
+				var selRow = $(this).closest("div").index() + 1;
+				if(selRow <= insertedCateRow){
+					var categoryno = $(this).attr('name');
+					updateCategory(categoryno,categoryname);								
+				}else{
+					insertCategory(categoryname);					
+				}
+
+			});	
+			
+			//카테고리 수정
+			function updateCategory(categoryno,categoryname){						
+				$.ajax({
+					url : "${pageContext.request.contextPath }/accountbook/updatecategory",
+					type : "post",
+					//contentType : "application/json",
+					data : {
+						categoryno : categoryno,
+						categoryname : categoryname
+					},
+					//dataType : "json",	
+					success : function() {
+						$("[id=accountbookContent]").empty();
+						searching();	
+						$("[id=categoryBody]").empty();
+						cateRow = 1;	
+						cateList();
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+			}
+			
+			//카테고리 삽입
+			function insertCategory(categoryname) {
+				$.ajax({
+					url : "${pageContext.request.contextPath }/accountbook/insertcategory",
+					type : "post",
+					//contentType : "application/json",
+					data : {
+						categoryname : categoryname,
+						groupNo : $("[id=groupno]").val(),
+					},
+					//dataType : "json",	
+					success : function() {
+						$("[id=accountbookContent]").empty();
+						searching();	
+						$("[id=categoryBody]").empty();
+						cateRow = 1;	
+						cateList();
 					},
 					error : function(XHR, status, error) {
 						console.error(status + " : " + error);

@@ -61,7 +61,7 @@
 	
 	<insert id="insertTag" parameterType="com.modu.vo.AccountbookTagVo">
 		<selectKey keyProperty="tagno" resultType="int" order="BEFORE">	
-			select seq_tag_tbl.nextval from dual
+			select seq_tagno.nextval from dual
 		</selectKey>
 		<![CDATA[
 			insert into tag_tbl(tagno,tagname) 
@@ -81,7 +81,7 @@
 	<insert id="connectTag" parameterType="com.modu.vo.AccountbookTagVo">
 		<![CDATA[
 			insert into accountbook_tag_tbl values(
-			seq_accountbook_tag_tbl.nextval,
+			seq_accountbooktagno.nextval,
 			#{accountbookno},
 			#{tagno})
 		]]>
@@ -90,7 +90,7 @@
 	<insert id="connectTagGroup" parameterType="hashmap">	
 	
 		INSERT INTO accountbook_tag_tbl (accountbooktagno,accountbookno,tagno)
-		SELECT seq_accountbook_tag_tbl.nextval, T.*
+		SELECT seq_accountbooktagno.nextval, T.*
 		FROM (
 		<foreach collection="Acclist" item="item" index="ix" separator="UNION ALL">
 		SELECT #{item},#{tagno}
@@ -127,7 +127,7 @@
 	
 	<insert id="saveAccountbook" parameterType="com.modu.vo.AccountbookVo">
 		<selectKey keyProperty="accountbookno" resultType="int" order="BEFORE">	
-			select seq_accountBookNo.nextval from dual
+			select seq_accountbookno.nextval from dual
 		</selectKey>
 		<![CDATA[
 			insert into accountbook_tbl
@@ -188,14 +188,62 @@
 		    </foreach>		
 	</delete>
 	
-	<select id="getChartData" parameterType="int" resultType="com.modu.vo.AccountbookCategoryVo">
+	<select id="getChartDataByDate" parameterType="Map" resultType="com.modu.vo.AccountbookCategoryVo">
 		<![CDATA[
 			select categoryname,total
 			from (select sum(nvl(accountbookspend,0)) total,categoryno
 			from accountbook_tbl
-			where groupno=#{groupNo}
+			where groupno=#{groupNo} and accountbookregdate between #{startDate} and #{endDate}
 			group by categoryno) join category_tbl using(categoryno)
 		]]>
 	</select>
+	
+	<select id="getChartDataByTag" parameterType="Map" resultType="com.modu.vo.AccountbookCategoryVo">
+		<![CDATA[
+			select categoryname,total
+			from (  select accountbookno,accountbookusage,accountbookspend,accountbookincome,categoryno,abt.groupno,memberfeeno,categoryname,to_char(accountbookregdate,'yyyy"년" mm"월" dd"일"') accountbookregdate,tagname
+        			from accountbook_tbl abt join category_tbl cate using(categoryno) join accountbook_tag_tbl using(accountbookno) join tag_tbl using(tagno)
+        			where abt.groupno=#{groupNo} and tagname like #{data}
+        			order by accountbookregdate , accountbookno asc) join (	select sum(nvl(accountbookspend,0)) total,categoryno
+                                                                			from accountbook_tbl
+                                                                			where groupno=1
+                                                                			group by categoryno) using(categoryno)
+
+		]]>
+	</select>
+	
+	<select id="getChartDataByUsage" parameterType="Map" resultType="com.modu.vo.AccountbookCategoryVo">
+		<![CDATA[
+			select categoryname,total
+			from (select sum(nvl(accountbookspend,0)) total,categoryno
+			from accountbook_tbl
+			where groupno=#{groupNo} and accountbookusage like #{data}
+			group by categoryno) join category_tbl using(categoryno)
+		]]>
+	</select>
+	
+	<delete id="categoryDelete" parameterType="map">
+		<![CDATA[
+			delete from category_tbl
+			where categoryno=#{categoryno} and groupno=#{groupNo}
+		]]>
+	</delete>
+	
+	<update id="categoryUpdate" parameterType="map">
+		<![CDATA[
+			UPDATE category_tbl
+			SET categoryname=#{categoryname}
+			WHERE categoryno=#{categoryno}
+		]]>
+	</update>
+	
+	<insert id="categoryInsert" parameterType="map">	
+		<![CDATA[
+			insert into category_tbl(categoryno,categoryname,groupNo) 
+			values(seq_categoryno.nextval
+			,#{categoryname}
+            ,#{groupNo})
+		]]>
+	</insert>
 
 </mapper>

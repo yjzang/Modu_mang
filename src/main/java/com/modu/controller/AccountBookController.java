@@ -108,14 +108,30 @@ public class AccountBookController {
 	public void tagDelete(@RequestParam("accountbooktagno") String accountbooktagno,@RequestParam("tagno") String tagno){
 		moduAccountbookService.tagDelete(accountbooktagno,tagno);
 	}
-
+	
 	@ResponseBody
-	@RequestMapping( "/getchartdata")
-	public List<AccountbookCategoryVo> getChartData(@RequestParam("groupNo") String groupNo){
-		return moduAccountbookService.getChartData(groupNo);
+	@RequestMapping( "/getcategorylist")
+	public List<AccountbookCategoryVo> getcategorylist(@RequestParam("groupNo") String groupNo){
+		return moduAccountbookService.getCategoryList(groupNo);
 	}
 	
+	@ResponseBody
+	@RequestMapping( "/categorydelete")
+	public void categorydelete(@RequestParam("groupNo") String groupNo,@RequestParam("categoryno") String categoryno){
+		moduAccountbookService.categoryDelete(groupNo,categoryno);
+	}
 	
+	@ResponseBody
+	@RequestMapping( "/updatecategory")
+	public void updateCategory(@RequestParam("categoryno") String categoryno,@RequestParam("categoryname") String categoryname){
+		moduAccountbookService.categoryUpdate(categoryno,categoryname);
+	}
+	
+	@ResponseBody
+	@RequestMapping( "/insertcategory")
+	public void insertCategory(@RequestParam("groupNo") String groupNo,@RequestParam("categoryname") String categoryname){
+		moduAccountbookService.categoryInsert(groupNo,categoryname);
+	}
 
 	///////////////////////////////////////로그인/////////////////////////////////////////////
 	
