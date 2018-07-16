@@ -26,6 +26,13 @@ public class BoardDao {
 		return boardNo;
 		
 	}
+	
+	public int postCheck() {
+		
+		int postCheck = sqlsession.selectOne("boardDB.postCheck");
+		System.out.println("라이크체크 0이면 인서트 1이면 업데이트 --- "+postCheck);
+		return postCheck;
+	}
 
 	public List<BoardVo> getPostList() {
 		
@@ -65,5 +72,38 @@ public class BoardDao {
 		int flagImg = sqlsession.delete("boardDB.deleteImg",boardNo);
 		return flagImg;
 		
+	}
+	
+	public void updateLike(BoardVo boardVo) {
+		
+		int flag = sqlsession.update("boardDB.updateLike",boardVo);
+		System.out.println("다오 업데이트 여부 up"+flag);
+	}
+	
+	
+	public int likeCheck(BoardVo boardVo) {
+		
+		int likeCheck = sqlsession.selectOne("boardDB.likeCheck",boardVo);
+		System.out.println("라이크체크 0이면 인서트 1이면 업데이트 --- "+likeCheck);
+		return likeCheck;
+	}
+	
+	public int likeCount(String boardNo) {
+		
+		int likeCount = sqlsession.selectOne("boardDB.likeCount",boardNo);
+		System.out.println("다오에서 찍은 좋아요 수 "+likeCount);
+		return likeCount;
+	}
+	
+	public String likeState(BoardVo boardVo) {
+		
+		String likeState = sqlsession.selectOne("boardDB.likeState",boardVo);
+		return likeState;		
+	}
+	
+	public void insertLike(BoardVo boardVo) {
+		
+		int flag = sqlsession.update("boardDB.insertLike",boardVo);
+		System.out.println("다오 업데이트 여부 up"+flag);
 	}
 }

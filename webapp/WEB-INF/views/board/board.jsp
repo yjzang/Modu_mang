@@ -125,43 +125,42 @@
 		});
 	
 		
-		
 		/* 게시글 불러오기 AJAX */
 		
 		function fetchBoard(){
 			/* console.log("초기화 1이어야하는 "+ begin); */
 			
 			
-	
-		$.ajax({
-			  
-			  url : "${pageContext.request.contextPath}/board/getList",
-			  type : "POST",
-			  /*   data : {begin : 1},
-			  dataType : "json", */
-			
-			  success : function(list){
+		
+			$.ajax({
 				  
+				  url : "${pageContext.request.contextPath}/board/getList",
+				  type : "POST",
+				  /*   data : {begin : 1},
+				  dataType : "json", */
+				
+				  success : function(list){
+					  
+									  
+					  $.each(list, function(idx, val) {
+							console.log(idx + " " + val.boardNo);
+							var src ='${pageContext.request.contextPath}/assets/images/like_off.png';
+							if(val.likeState==1){
+								src ='${pageContext.request.contextPath}/assets/images/like_on.png';
+							} 
+							render(val,"down",src);
 								  
-				  $.each(list, function(idx, val) {
-						console.log(idx + " " + val.boardNo);
-						var src ='${pageContext.request.contextPath}/assets/images/like_off.PNG';
-						if(val.state==1){
-							src ='${pageContext.request.contextPath}/assets/images/like.PNG';
-						} 
-						render(val,"down",src);
-							  
-				   });
+					   });
+					  
 				  
+				  },
+				  
+				  error : function(XHR, status, error){
+					 console.error(XHR+status+error);
+				  }
+				  
+			  });
 			  
-			  },
-			  
-			  error : function(XHR, status, error){
-				 console.error(XHR+status+error);
-			  }
-			  
-		  });
-		  
 		}
 		
 		
@@ -286,10 +285,10 @@
 			  str+= "	    <div class='card-footer p-1'> ";
 			  str+= "	    	<div class='text-left my-2'>";
 			  str+= "	   			<span>";
-			  str+= "	 				  <button class='t-button p-1 ml-2'> <img id='like' data-no='"+vo.boardNo+"' width=50px src='${pageContext.request.contextPath }/assets/images/like_off.png'> </button>";
+			  str+= "	 				  <button class='t-button p-1 ml-2'> <img id='like_"+vo.boardNo+"' data-likeno='"+vo.boardNo+"' width=50px src='"+src+"' data-state='"+vo.likeState+"'> </button>";
 			  str+= "	  			</span>";
-			  str+= "	    		<span class='ml-2'>";
-			  str+= "	  				  12명의 회원이 좋아합니다.";
+			  str+= "	    		<span id='likeCount_"+vo.boardNo+"' class='ml-2'>";
+			  str+= "	  				"+vo.likeCount+"명의 회원이 좋아합니다.";
 			  str+= "	  			</span>";
 			  str+= "	        </div>";
 			
@@ -366,25 +365,51 @@
 				  
 		}
 		
+			  
+		
 		
 		/*좋아요*/
 
-		$("#like").on('click',function(){
-
-			var boardNo=$(this).data('no');
-			alert(boardNo);
-			
-			var fileName = $("#like").attr('src');
-			fileName = fileName.split(".");
-			fileName = fileName[0].split("/");
-			fileName = fileName.pop(); /* 배열의 맨마지막 요소 불러오기 */
-			console.log(fileName);
-			if(fileName=="like_off"){
-				$("#like").attr("src","${pageContext.request.contextPath }/assets/images/like_on.png");
-			} else{
-				$("#like").attr("src","${pageContext.request.contextPath }/assets/images/like_off.png");
-			}
 		
+		$("div").on('click',"img[data-likeno]",function(){
+
+			
+			var likeState = $(this).data("state");
+			var boardNo = $(this).data("likeno");
+			var src= $("[data-likeno="+boardNo+"]").attr("src");
+			if(likeState==0){
+				src="${pageContext.request.contextPath}/assets/images/like_on.png";
+				
+			} else{
+				
+				src= "${pageContext.request.contextPath}/assets/images/like_off.png";
+			}
+			
+			console.log("삼항 후"+src);
+			$("[data-likeno="+boardNo+"]").attr("src",src);      
+			
+			
+			$.ajax({
+				  
+				  url : "${pageContext.request.contextPath}/board/upLike",
+				  type : "POST",
+				  data : {boardNo:boardNo, likeState: likeState},
+				  dataType : "json",	
+				
+				  success : function(resultVo){
+					  
+					  console.log(resultVo);
+					  $("#likeCount_"+boardNo).text(resultVo.likeCount+"명의 회원이 좋아합니다.");
+					  $("[data-likeno="+boardNo+"]").data("state",resultVo.likeState);						
+				  },
+				  
+				  error : function(XHR, status, error){
+					 console.error(XHR+status+error);
+				  }
+				  
+			  });
+			
+			return false;
 
 		});
 			  

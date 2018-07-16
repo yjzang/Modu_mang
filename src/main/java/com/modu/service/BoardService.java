@@ -96,7 +96,13 @@ public class BoardService {
 				
 	}
 	
-	public List<BoardVo> getPostList() {
+	public int postCheck() {
+		
+		int postCheck = dao.postCheck();
+		return postCheck;
+	}
+	
+	public List<BoardVo> getPostList(BoardVo boardVo) {
 		
 		
 		List<BoardVo> postList= (List<BoardVo>)dao.getPostList();
@@ -104,6 +110,11 @@ public class BoardService {
 			
 			String boardNo = vo.getBoardNo();
 			List<FileVo> imgList = dao.getPostImgs(boardNo);
+			int likeCount = dao.likeCount(boardNo);
+			boardVo.setBoardNo(boardNo);
+			String likeState = dao.likeState(boardVo);
+			vo.setLikeState(likeState);
+			vo.setLikeCount(likeCount);
 		    vo.setImgList(imgList);
 			
 		}
@@ -124,7 +135,44 @@ public class BoardService {
 	}
 	
 	
-	
+	public BoardVo updateLike(BoardVo boardVo) {
+		
+
+		String likeState = boardVo.getLikeState();
+		System.out.println("서비스 스테이트 " +likeState);
+		BoardVo resultVo= new BoardVo();
+		
+		if("0".equals(likeState)) {
+			int likeCheck=dao.likeCheck(boardVo);
+			if(likeCheck==0) {
+				
+				boardVo.setLikeState("1");
+				dao.insertLike(boardVo);
+				
+			} else {
+				
+				System.out.println("서비스 스테이트 실행여부0" +likeState);
+				boardVo.setLikeState("1");
+				dao.updateLike(boardVo);
+				
+			}
+		
+			
+		} else {
+			System.out.println("서비스 스테이트 실행여부1" +likeState);
+			boardVo.setLikeState("0");
+			dao.updateLike(boardVo);
+		}
+		int likeCount = dao.likeCount(boardVo.getBoardNo());
+		boardVo.setLikeCount(likeCount);
+		
+		/*
+		int no = Integer.parseInt(vo.getNo());
+		resultVo = dao.selectImg(no);
+		resultVo.getLike();*/
+		
+		return boardVo;
+	}
 	
 
 }

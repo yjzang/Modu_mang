@@ -31,6 +31,12 @@
 	</insert>
 	
 	
+	<select id="postCheck" parameterType="boardVo" resultType="int">
+		select count(*)
+		from board_tbl
+	</select>
+	
+	
 	<select id="getPostList" resultType="boardVo" >
 
 		select boardNo,boardTitle,boardContent,boardRegDate
@@ -66,26 +72,45 @@
 		and userNo = #{userNo}					
 	</select>
 
-	
-	<insert id="upLike" parameterType="map">
+
+		
+	<insert id="insertLike" parameterType="boardVo">
 		insert into like_tbl
-		values(seq_like_no.nextval,'on',#{boardNo},#{boardNo},#{userNo}		
+		values(seq_like_no.nextval,#{likeState},#{boardNo},#{userNo})
 	</insert>
 	
-	<delete id="downLike" parameterType="map">
-		delete form like_tbl
-		where boardNo = #{boardNo} 
-		and userNo = #{userNo}	
-	</delete>
 	
+	<update id="updateLike" parameterType="boardVo"> 
+		update like_tbl 
+		set likeState=#{likeState}
+		where boardNo=#{boardNo}
+		and userNo=#{userNo}
+	</update>
 
-	<select id="getLikeTotal" parameterType="map" resultType="string">
-		select rownum total 
-		from 
-		(select * from like_tbl
-		where boardNo = #{boardNo}
-		and likeState='on') 
-							
+
+	<select id="likeCheck" parameterType="boardVo" resultType="int">
+		select count(*)
+		from like_tbl
+		where boardNo=#{boardNo}
+		and userNo=#{userNo}
+		
 	</select>
+	
+	
+	<select id="likeCount" parameterType="String" resultType="int">
+		select count(*)
+		from like_tbl
+		where boardNo=#{boardNo}
+		and likeState=1
+	</select>
+	
+	
+	<select id="likeState" parameterType="String" resultType="String">
+		select likeState
+		from like_tbl
+		where boardNo=#{boardNo}
+		and userNo=#{userNo}
+	</select>
+	
 	
 </mapper>

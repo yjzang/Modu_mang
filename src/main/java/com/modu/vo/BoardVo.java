@@ -12,7 +12,7 @@ public class BoardVo {
 	String tagNo;
 	String groupNo;
 	String likeState;
-	String likeTotal;
+	int likeCount;
 	List<FileVo> imgList ;
 	
 	
@@ -76,11 +76,11 @@ public class BoardVo {
 	}
 	
 	
-	public String getLikeTotal() {
-		return likeTotal;
+	public int getLikeCount() {
+		return likeCount;
 	}
-	public void setLikeTotal(String likeTotal) {
-		this.likeTotal = likeTotal;
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
 	}
 	
 	
@@ -88,8 +88,10 @@ public class BoardVo {
 	public String toString() {
 		return "BoardVo [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
 				+ ", boardRegDate=" + boardRegDate + ", userNo=" + userNo + ", tagNo=" + tagNo + ", groupNo=" + groupNo
-				+ ", likeState=" + likeState + ", likeTotal=" + likeTotal + ", imgList=" + imgList + "]";
+				+ ", likeState=" + likeState + ", likeCount=" + likeCount + ", imgList=" + imgList + "]";
 	}
+	
+	
 
 	
 	
