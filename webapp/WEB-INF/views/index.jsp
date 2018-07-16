@@ -267,6 +267,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -280,6 +281,9 @@
         charset="UTF-8"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
+
+
+	
     //달력 생성
     $(document).on("ready", function () {
         $('.form_day').datetimepicker({
@@ -293,6 +297,21 @@
             forceParse: 0
         });
     });
+    
+    
+    /* 게시판 클릭시 로그인 세션 체크 */
+	$("#btn_board").on("click",function(){
+    	
+    	if(${authUser eq null}){
+    		alert("로그인이 필요한 서비스입니다.");    
+    		$("#exampleModalCenter").modal();
+    	} else{
+			location.href = "${pageContext.request.contextPath }/board";			
+		} 
+    	
+    });
+
+
     var joinForm = function(){
         $("#exampleModalCenter").modal("hide");
         $("#exampleModalCenter3").modal();

@@ -3,10 +3,14 @@ package com.modu.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.modu.service.BoardService;
 import com.modu.vo.BoardVo;
 import com.modu.vo.FileVo;
+import com.modu.vo.ModuUserVo;
 
 @Controller
 @RequestMapping("/board")
@@ -25,19 +30,19 @@ public class BoardController {
 	@Autowired
 	BoardService service;
 	
+	
 	@RequestMapping(value="", method={RequestMethod.GET,RequestMethod.POST})
 	public String goBoard(Model model){
-		System.out.println("/hellospring/hello");
-		List<BoardVo> list= service.getPostList();
+		
+		int postCheck= service.postCheck();
 	    
-		if(list.isEmpty()) {
+		if(postCheck==0) {
 			System.out.println("리스트 없음");
 			return "/board/boardStart";
 			
 		} else {
 		
 			System.out.println("리스트 있음");
-			model.addAttribute("list",list);
 			return "/board/board";
 			
 		}
@@ -46,9 +51,13 @@ public class BoardController {
 
 	@ResponseBody
 	@RequestMapping(value="/getList",method= {RequestMethod.GET, RequestMethod.POST})
-	public List<BoardVo> getList() {
+	public List<BoardVo> getList(HttpSession session) {
 		
-		List<BoardVo> postList =(List<BoardVo>)service.getPostList();
+		ModuUserVo authVo = (ModuUserVo)session.getAttribute("authUser");
+		String userNo = String.valueOf(authVo.getUserNo());
+		BoardVo boardVo = new BoardVo();
+		boardVo.setUserNo(userNo);
+		List<BoardVo> postList =(List<BoardVo>)service.getPostList(boardVo);
 		System.out.println(postList);
 		return postList;
 	
@@ -104,6 +113,24 @@ public class BoardController {
 	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="/upLike")
+	public BoardVo upLike(@ModelAttribute BoardVo boardVo, HttpSession session) {
+		
+		ModuUserVo authVo=(ModuUserVo)session.getAttribute("authUser");
+		String userNo = String.valueOf(authVo.getUserNo());
+		boardVo.setUserNo(userNo);
+		System.out.println("스테이트"+boardVo.getLikeState());
+		BoardVo resultVo = service.updateLike(boardVo);
+		System.out.println("서비스 다녀온"+resultVo.getLikeState());
+		System.out.println("좋아요 수"+resultVo.getLikeCount());
+		
+		return resultVo;
+		
+	}
+	
+	
+}
 	/*
 	@ResponseBody
 	@RequestMapping(value="/getPostList",method=RequestMethod.POST)
@@ -117,4 +144,4 @@ public class BoardController {
 	
 	
 
-}
+
