@@ -3,7 +3,7 @@
          pageEncoding="UTF-8" %>
 
 <!-----------header------------------>
-<header>
+<header style="z-index:4;">
 
 
     <%--첫번째 네비바--%>
@@ -45,7 +45,6 @@
                         <%--</button>--%>
 
                     </ul>
-
                 </div>
     </nav>
     <!-- <div style="margin-bottom: 80px;"></div> -->

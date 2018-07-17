@@ -64,6 +64,17 @@
 		delete from board_tbl
 		where boardNo = #{boardNo}
 	</delete>
+	
+	<delete id="deleteCmt" parameterType="string">
+		delete from comment_tbl
+		where commentNo = #{commentNo}
+	</delete>
+	
+	<delete id="deleteCmtAll" parameterType="string">
+		delete from comment_tbl
+		where boardNo = #{boardNo}
+	</delete>
+	
 
 	<select id="getLikeState" parameterType="map" resultType="string">
 		select likeState 
@@ -110,6 +121,21 @@
 		from like_tbl
 		where boardNo=#{boardNo}
 		and userNo=#{userNo}
+	</select>
+	
+	<insert id="insertCmt" parameterType="boardVo">
+		insert into comment_tbl
+		values(seq_comment_no.nextval,#{commentContent},#{userNo},#{boardNo},sysdate)
+		
+	</insert>
+	
+	<select id="getCmtList"  resultType="boardVo">
+		select userName,commentNo,commentContent,u.userNo,boardNo,commentRegDate
+		from user_tbl u,comment_tbl c
+		where u.userNo = c.userNo
+		and boardNo=#{boardNo} 
+		order by commentRegDate desc
+		
 	</select>
 	
 	

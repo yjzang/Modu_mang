@@ -30,7 +30,7 @@ public class BoardDao {
 	public int postCheck() {
 		
 		int postCheck = sqlsession.selectOne("boardDB.postCheck");
-		System.out.println("라이크체크 0이면 인서트 1이면 업데이트 --- "+postCheck);
+		System.out.println("post체크 0이면 start페이지로 --- "+postCheck);
 		return postCheck;
 	}
 
@@ -67,13 +67,31 @@ public class BoardDao {
 		
 	}
 	
+	public int deleteCmt(String commentNo) {
+		
+		
+		int flagCmt= sqlsession.delete("boardDB.deleteCmt",commentNo);
+		return flagCmt;
+		
+	}
+	
+	public int deleteCmtAll(String boardNo) {
+		
+		
+		int flagCmt= sqlsession.delete("boardDB.deleteCmtAll",boardNo);
+		return flagCmt;
+		
+	}
+	
+	
+	
 	public int deleteImg(String boardNo) {
 		
 		int flagImg = sqlsession.delete("boardDB.deleteImg",boardNo);
 		return flagImg;
 		
 	}
-	
+// ---------- 좋아요  ------------	
 	public void updateLike(BoardVo boardVo) {
 		
 		int flag = sqlsession.update("boardDB.updateLike",boardVo);
@@ -84,10 +102,11 @@ public class BoardDao {
 	public int likeCheck(BoardVo boardVo) {
 		
 		int likeCheck = sqlsession.selectOne("boardDB.likeCheck",boardVo);
-		System.out.println("라이크체크 0이면 인서트 1이면 업데이트 --- "+likeCheck);
+		System.out.println("라이크체크 0이면 인서트 1이상이면 업데이트 --- "+likeCheck);
 		return likeCheck;
 	}
 	
+    
 	public int likeCount(String boardNo) {
 		
 		int likeCount = sqlsession.selectOne("boardDB.likeCount",boardNo);
@@ -106,4 +125,20 @@ public class BoardDao {
 		int flag = sqlsession.update("boardDB.insertLike",boardVo);
 		System.out.println("다오 업데이트 여부 up"+flag);
 	}
+	
+//-------- 댓 글 ---------
+	public int addCmt(BoardVo boardVo) {
+		int flag = sqlsession.insert("boardDB.insertCmt",boardVo);
+		return flag;
+	}
+	
+	public List<BoardVo> getCmtList(BoardVo boardVo) {
+		
+		List<BoardVo> list = sqlsession.selectList("boardDB.getCmtList",boardVo);
+		
+		return list;
+	}
+	
+		
 }
+
