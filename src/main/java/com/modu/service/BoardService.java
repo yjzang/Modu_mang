@@ -96,6 +96,13 @@ public class BoardService {
 				
 	}
 	
+	public int addCmt(BoardVo boardVo) {
+		
+		int flag=dao.addCmt(boardVo);
+		return flag;
+	}
+	
+	
 	public int postCheck() {
 		
 		int postCheck = dao.postCheck();
@@ -128,12 +135,19 @@ public class BoardService {
 		System.out.println("서비스에서 받은 no == "+boardNo);
 		int flagImg = dao.deleteImg(boardNo);
 		int flagPost = dao.deletePost(boardNo);
-		System.out.println("이미지 삭제:"+flagImg+"글 삭제:"+flagPost);
+		int flagCmt =dao.deleteCmtAll(boardNo);
+		System.out.println("이미지 삭제:"+flagImg+"글 삭제:"+flagPost+"댓글 삭제:"+flagCmt);
 		int flag=0;
 		flag= flagImg+flagPost;
 		return flag;
 	}
 	
+	public int deleteCmt(String commentNo) {
+		
+		int flag = dao.deleteCmt(commentNo);
+		return flag;
+		
+	}
 	
 	public BoardVo updateLike(BoardVo boardVo) {
 		
@@ -174,5 +188,16 @@ public class BoardService {
 		return boardVo;
 	}
 	
-
+	
+	public List<BoardVo> getCmtList(BoardVo boardVo){
+		
+		List<BoardVo> list = dao.getCmtList(boardVo);
+	/*	for(BoardVo vo:list) {
+			String regDate=vo.getCommentRegDate();
+			System.out.println("######"+regDate);
+			
+		}*/
+		return list;
+	}
 }
+	

@@ -12,6 +12,10 @@ public class BoardVo {
 	String tagNo;
 	String groupNo;
 	String likeState;
+	String commentContent;
+	String commentNo;
+	String commentRegDate;
+	String userName;
 	int likeCount;
 	List<FileVo> imgList ;
 	
@@ -84,19 +88,47 @@ public class BoardVo {
 	}
 	
 	
+	public String getCommentContent() {
+		return commentContent;
+	}
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
+	}
+	
+	public String getCommentNo() {
+		return commentNo;
+	}
+	public void setCommentNo(String commentNo) {
+		this.commentNo = commentNo;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	
+	public String getCommentRegDate() {
+		return commentRegDate;
+	}
+	public void setCommentRegDate(String commentRegDate) {
+		this.commentRegDate = commentRegDate;
+	}
 	@Override
 	public String toString() {
 		return "BoardVo [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
 				+ ", boardRegDate=" + boardRegDate + ", userNo=" + userNo + ", tagNo=" + tagNo + ", groupNo=" + groupNo
-				+ ", likeState=" + likeState + ", likeCount=" + likeCount + ", imgList=" + imgList + "]";
+				+ ", likeState=" + likeState + ",\n commentContent=" + commentContent + ", commentNo=" + commentNo
+				+ ", commentRegDate=" + commentRegDate + ", userName=" + userName + ", likeCount=" + likeCount
+				+ ", imgList=" + imgList + "]\n";
 	}
 	
 	
-
 	
 	
 	
-
+	
 	
 	
 	
