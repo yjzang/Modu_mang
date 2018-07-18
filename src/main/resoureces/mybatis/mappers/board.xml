@@ -139,4 +139,12 @@
 	</select>
 	
 	
+	<select id="cmtCount" parameterType="String" resultType="int">
+		select count(*)
+		from comment_tbl
+		where boardNo=#{boardNo}
+	</select>
+	
+	
+	
 </mapper>

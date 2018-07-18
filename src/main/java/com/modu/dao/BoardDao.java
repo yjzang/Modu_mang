@@ -139,6 +139,12 @@ public class BoardDao {
 		return list;
 	}
 	
+	public int cmtCount(String boardNo) {
+		
+		int cmtCount = sqlsession.selectOne("boardDB.cmtCount",boardNo);
+		System.out.println("다오에서 찍은 댓글 수 "+cmtCount);
+		return cmtCount;
+	}
 		
 }
 
