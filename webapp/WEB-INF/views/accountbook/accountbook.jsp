@@ -43,62 +43,58 @@ table {
 		<div class="calendar-content" style="margin-left: 500px">
 			<input type="text" class="form-control page-link col-4 text-center" style="font-size: 25px" id="monthCal" value="">
 		</div>
-
 		<hr>
 
 		<!----------------- 검색 창------------------->
-		<div>
-			<form class="form-inline ml-2 float-left">
-				<select class="custom-select" id="inputGroupSelect01" name="search_mode">
-					<option selected>검색 유형</option>
-					<option value="1">날짜 검색</option>
-					<option value="2">태그 검색</option>
-					<option value="3">내역 검색</option>
-				</select> 
-				<input class="form-control mr-sm-2 ml-2" type="search" id="search_text" placeholder="모임 찾기" aria-label="search">
-				<div id="search_date_div">
-				<input class="form-control mr-sm-2 ml-2" type="search" id="search_date1" placeholder="모임 찾기" aria-label="search">
-				~
-				<input class="form-control mr-sm-2 ml-2" type="search" id="search_date2" placeholder="모임 찾기" aria-label="search">
-				</div>
-				<button class="btn btn-outline-primary my-2 my-sm-0" id="search_btn">검색</button>
-			</form>
+		<div class="form-inline ml-2 float-left">
+			<select class="custom-select" id="searchMode">
+				<option selected>검색 유형</option>
+				<option value="1">날짜 검색</option>
+				<option value="2">태그 검색</option>
+				<option value="3">내역 검색</option>
+			</select> 
+			
+			<input class="form-control mr-sm-2 ml-2" type="search" id="searchText" placeholder="모임 찾기" aria-label="search">
+			<div id="searchDateDiv">
+			<input class="form-control mr-sm-2 ml-2" type="search" id="searchDate1" placeholder="모임 찾기" aria-label="search">
+			~
+			<input class="form-control mr-sm-2 ml-2" type="search" id="searchDate2" placeholder="모임 찾기" aria-label="search">
+			</div>
+			<button class="btn btn-outline-primary my-2 my-sm-0" id="searchBtn">검색</button>
 		</div>
-		
-		<!----------------- 그래프 숨김/보이기 , 카테고리 수정 버튼 ------------------->
+
+		<!-----------------수입/지출, 그래프 숨김/보이기 , 카테고리 수정 버튼 ------------------->
 		<div class="float-right">
-			<button id="hidegraph" type="button" class="btn btn-primary">그래프 숨기기</button>
+			<button id="spendBtn" type="button" class="btn btn-primary">수입</button>
+			<button id="hiddenGraph" type="button" class="btn btn-primary">그래프 숨기기</button>
 			<button id="categoryUpdate" type="button" class="btn btn-primary">카테고리 수정</button>
 		</div>
 		
 		<!----------------- 가계부 테이블------------------->
 		<div class="table-responsive">
-				<input type="text" value="${authUser.userName}"> 
-				<input type="text" id="groupno" value="${group.groupNo}">
-			<form>
-				<table class="table table-striped table-sm">
-					<thead>
-						<tr>
-							<th>
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="checkall"> 
-									<label class="custom-control-label" for="checkall">&nbsp;</label>
-								</div>
-							</th>
-							<th>날짜</th>
-							<th>사용내역</th>
-							<th>지출액</th>
-							<th>분류</th>
-							<th>태그</th>
-						</tr>
-					</thead>
+			<input type="hidden" id="groupNo" value="${group.groupNo}">
+			<table class="table table-striped table-sm">
+				<thead>
+					<tr>
+						<th>
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="checkAll"> 
+								<label class="custom-control-label" for="checkAll">&nbsp;</label>
+							</div>
+						</th>
+						<th>날짜</th>
+						<th>사용내역</th>
+						<th id='spendTableHead'>지출액</th>
+						<th>분류</th>
+						<th>태그</th>
+					</tr>
+				</thead>
 
-					<tbody id="accountbookContent">
+				<tbody id="accountbookContent">
 
-					</tbody>
+				</tbody>
 
-				</table>
-			</form>
+			</table>
 		</div>
 
 		<!----------------- 태그 버튼------------------->
@@ -119,7 +115,7 @@ table {
 	<br>
 	
 	<!----------------- 모달 (개별 태그)------------------->
-	<div class="modal fade" id="modal" tabindex="-1" role="dialog">
+	<div class="modal fade" id="eachTagModal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -133,14 +129,14 @@ table {
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	      	<button type="button" name="tagInsert" class="btn btn-primary mr-2">태그 추가</button>
+	      	<button type="button" id="tagInsert" class="btn btn-primary mr-2">태그 추가</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	
 	<!----------------- 모달 (일괄 태그)------------------->
-	<div class="modal fade" id="modal1" tabindex="-1" role="dialog">
+	<div class="modal fade" id="tagBundleModal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -151,18 +147,18 @@ table {
 	        </button>
 	      </div>
 	      <div class="modal-body">	
-	      <input class='form-control mr-sm-2 ml-2 w-100' type='search' id='inputTagName' value=''>				
+	      	<input class='form-control mr-sm-2 ml-2 w-100' type='search' id='inputTagsName' value=''>				
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	      	<button type="button" name="saveTag" class="btn btn-primary mr-2">저장하기</button>
+	      	<button type="button" id="saveTag" class="btn btn-primary mr-2">저장하기</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	
 	<!----------------- 모달 (카테고리)------------------->
-	<div class="modal fade" id="modal2" tabindex="-1" role="dialog">
+	<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -175,7 +171,7 @@ table {
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	      	<button type="button" name="categoryInsert" class="btn btn-primary mr-2">카테고리 추가</button>
+	      	<button type="button" id="categoryInsert" class="btn btn-primary mr-2">카테고리 추가</button>
 	      </div>
 	    </div>
 	  </div>
@@ -184,10 +180,10 @@ table {
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-	<script src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
-	<script src="${pageContext.request.contextPath }/assets/js/header.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+	<script src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
+	<script src="${pageContext.request.contextPath }/assets/js/header.js"></script>
 	<script src="${pageContext.request.contextPath }/assets/jquery/jquery.mtz.monthpicker.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
@@ -198,7 +194,7 @@ table {
 			//차트 작성
 			function MyChart(chartDataList){
 				
-				 $('[id=myChart]').replaceWith('<canvas class="m-4 w-75" id="myChart" width="50" height="13"></canvas>');
+				 $('#myChart').replaceWith('<canvas class="m-4 w-75" id="myChart" width="50" height="13"></canvas>');
 				 
 				var chartCategoryList = new Array();
 				var chartCategoryDatas = new Array(); 
@@ -214,18 +210,12 @@ table {
 				    labels: [ ],
 				    datasets: [
 				        {
-				        	backgroundColor: "rgba(75,192,192,0.4)",
+				        	backgroundColor: "rgba(0,123,255,0.4)",
 		                	data: [ ]
 				        }
 				    ]
 				};
-	
-				function adddata(index,data,label){
-					myBarChart.data.datasets[0].data[index] = data;
-				  	myBarChart.data.labels[index] = label;
-				  	myBarChart.update();
-				}
-	
+
 				var option = {
 					scales : {
 						yAxes : [ {
@@ -251,6 +241,12 @@ table {
 				  options:option
 				});
 				
+				function adddata(index,data,label){
+					myBarChart.data.datasets[0].data[index] = data;
+				  	myBarChart.data.labels[index] = label;
+				  	myBarChart.update();
+				}
+				
 				for(var i=0;i<chartCategoryList.length;i++){
 					adddata(i,chartCategoryDatas[i],chartCategoryList[i]);
 				}
@@ -261,21 +257,114 @@ table {
 			$('.menuTab').removeClass("active");
 			$("#accountbook").addClass("active");
 			
-			$('[id=hidegraph]').on('click',function(){
-				$('[id=chartCanvas]').toggle();
-				if ( $('[id=hidegraph]').html() == '그래프 숨기기'){
-					$('[id=hidegraph]').html('그래프 보이기');
+			//내비바 효과
+			var didScroll;
+			var lastScrollTop = 0;
+			var delta = 5;
+			var navbarHeight = $('header').outerHeight();
+
+			$(window).scroll(function(event) {
+				didScroll = true;
+			});
+
+			setInterval(function() {
+				if (didScroll) {
+					hasScrolled();
+					didScroll = false;
+				}
+			}, 250);
+
+			function hasScrolled() {
+				var st = $(this).scrollTop();
+
+				if (Math.abs(lastScrollTop - st) <= delta)
+					return;
+
+				// 속도 향상 클래스 - nav-up. 
+				if (st > lastScrollTop && st > navbarHeight) {
+					// 스크롤 내릴때
+					$('header').removeClass('nav-down').addClass('nav-up');
+				} else {
+					// 스크롤 올릴때
+					if (st + $(window).height() < $(document).height()) {
+						$('header').removeClass('nav-up').addClass('nav-down');
+					}
+				}
+				lastScrollTop = st;
+			}
+			
+			//통계 그래프 숨기기/보이기			
+			$('#hiddenGraph').on('click',function(){
+				$('#chartCanvas').toggle();
+				if ( $('#hiddenGraph').html() == '그래프 숨기기'){
+					$('#hiddenGraph').html('그래프 보이기');
 				}else{
-					$('[id=hidegraph]').html('그래프 숨기기') ;
+					$('#hiddenGraph').html('그래프 숨기기') ;
 				}
 				
 			});
 			
-			//검색창 숨기기 및 datepicker이벤트 추가
-			$('[id=search_date1]').datepicker();
-			$('[id=search_date2]').datepicker();
-			$('[id=search_date_div]').hide();
+			//지출/수입 전환 버튼
+			var spendFlag = 'spend';
+			$('#spendBtn').on('click',function(){
+				if ( $('#spendBtn').html() == '수입'){					
+					$('#spendTableHead').html('수입액');
+					$('#spendBtn').html('지출');
+					spendFlag = 'income';
+					var mode = $("#searchMode").val()
+					if(mode != 1 && mode != 2 && mode != 3){
+						fetchAccountbookList();
+					}else{
+						searching()
+					}	
+				}else{
+					$('#spendTableHead').html('지출액');
+					$('#spendBtn').html('수입') ;
+					spendFlag = 'spend';
+					if(mode != 1 && mode != 2 && mode != 3){
+						fetchAccountbookList();
+					}else{
+						searching()
+					}
+				}		
+			});
+			
+			//최상단 체크박스 클릭시 체크박스 전체 선택 / 전체 해제
+			$("#checkAll").click(function() {
+				//클릭되었으면
+				if ($("#checkAll").prop("checked")) {
+					//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+					$("input[name=chk]").prop("checked", true);
+				//클릭이 안되있으면
+				} else {
+					//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+					$("input[name=chk]").prop("checked", false);
+				}
+			})
 
+			//datepicker
+			$(function() {
+				$(".datepicker").datepicker();
+			});
+
+			//캘린더 datepicker
+			$('#monthCal').monthpicker(
+					{
+						pattern : 'yyyy / mm',
+						selectedYear : (new Date()).getFullYear(),
+						startYear : 1900,
+						finalYear : 2212,
+						monthNames : [ 	'1월', '2월', '3월', '4월',
+										'5월', '6월', '7월', '8월', '9월',
+										'10월', '11월', '12월' ],
+					});
+			
+			//월 선택시 재 리스팅
+			$('#monthCal').change(
+					function changeAccountbookList() {
+						fetchAccountbookList()
+			});
+			
 			//오늘 날짜 불러와서 달력에 입력
 			var today = new Date();
 			var year = today.getFullYear();
@@ -283,99 +372,128 @@ table {
 			if (month.length < 2) {
 				month = "0" + month;
 			}
-			$('[id=monthCal]').val(year + " / " + month);
+			$('#monthCal').val(year + " / " + month);
 
-			//표에 가계부 내역 호출
-			fetchAccountbookList();
+			//append시 datepicker 이벤트 먹지 않는 문제 발생 - datepicker 이벤트 제거후 재 실행
+			function datepickerReset() {
+				$(document).find(".datepicker").removeClass('hasdatepicker').datepicker();
 
-			//최상단 체크박스 클릭시 체크박스 전체 선택 / 전체 해제
-			$("#checkall").click(
-					function() {
-						//클릭되었으면
-						if ($("#checkall").prop("checked")) {
-							//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-							$("input[name=chk]").prop(
-									"checked", true);
-							//클릭이 안되있으면
-						} else {
-							//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-							$("input[name=chk]").prop(
-									"checked", false);
-						}
-					})	
-					
-			//태그 일괄 적용 모달창 팝업
-			$("[id=tagGroup]").click(function() {
-				$('[id=inputTagName]').val('');
-				$('[id=modal1]').modal();
-				$('[id=modal]').modal('hide');
-				$('[id=moda2]').modal('hide');		
-			});
-			
-			//태그 저장 버튼 클릭시 체크된 항목 태그 일괄 적용	
-			$('[name=saveTag]').on('click',function(){
-				
-				var AccountbookList = '';
-			    $('input:checkbox[name=chk]').each(function() {
-			    	if($(this).is(':checked')){
-			       		AccountbookList += ","+($(this).closest("tr").attr("id"));	
-			    	}
-				})
-				
-				var tagName = $('[id=inputTagName]').val();
-				tagGroup(AccountbookList,tagName);
-				$('[id=modal1]').modal('hide');
-			})
-			
-			//db에서 태그 일괄 적용
-			function tagGroup(AccountbookList,tagName){
-				$.ajax({
-					url : "${pageContext.request.contextPath }/accountbook/taggroup",
-					type : "post",
-					//contentType : "application/json",
-					data : {
-						AccountbookList : AccountbookList,
-						tagName : tagName
-					},
-					//dataType : "json",
-					success : function() {
-						fetchAccountbookList();
-					},
-					error : function(XHR, status, error) {
-						console.error(status + " : " + error);
-					}
+				$.datepicker.setDefaults({
+					prevText : '이전 달',
+					nextText : '다음 달',
+					monthNames : [ 	'1월', '2월', '3월', '4월',
+									'5월', '6월', '7월', '8월', '9월',
+									'10월', '11월', '12월' ], //월 이름
+					monthNamesShort : [ '1월', '2월', '3월', '4월',
+										'5월', '6월', '7월', '8월', '9월',
+										'10월', '11월', '12월' ], //
+					dayNames : [ '일', '월', '화', '수', '목', '금',
+								'토' ],
+					dayNamesShort : [ '일', '월', '화', '수', '목',
+									'금', '토' ],
+					dayNamesMin : [ '일', '월', '화', '수', '목',
+									'금', '토' ],
+					showMonthAfterYear : true,
+					yearSuffix : '년',
+					changeMonth : true,
+					changeYear : true,
+					dateFormat : "yy년 mm월 dd일"
 				});
 			}
-			
-			//삭제 버튼 클릭시 체크된 항목 모두 제거	
-			$("[id=deleteAccountbook]").click(function() {
-				var AccountbookList = '';
-			    	$('input:checkbox[name=chk]').each(function() {
-			        	if($(this).is(':checked')){
-			       			AccountbookList += ","+($(this).closest("tr").attr("id"));		
-			        	}
-			      	});
-				deleteAccountbook(AccountbookList);							      
+
+			//검색 모드에 따른 검색창 갯수 변화
+			$('#searchMode').change(
+				function search() {
+					var mode = $(this).val();
+					if(mode==1){
+						$('#searchText').hide();
+						$('#searchDate1').val('');
+						$('#searchDate2').val('');
+						$('#searchDateDiv').show();
+					}else{
+						$('#searchDateDiv').hide();
+						$('#searchText').val('');
+						$('#searchText').show();
+				}
 			});
-									
-			//db에서 삭제
-			function deleteAccountbook(AccountbookList){
-				$.ajax({
-					url : "${pageContext.request.contextPath }/accountbook/deleteaccountbook",
-					type : "post",
-					//contentType : "application/json",
-					data : {
-						AccountbookList : AccountbookList
-					},
-					//dataType : "json",
-					success : function() {
-						fetchAccountbookList();
-					},
-					error : function(XHR, status, error) {
-						console.error(status + " : " + error);
-					}
-				});
-			}			
+			
+			//검색
+			$('#searchBtn').on("click",function() {
+				event.preventDefault();
+				searching();
+			});		
+			
+			//db 검색 mode1:날짜 검색 / mode2:태그 검색 / mode3:내역 검색 
+			function searching(){
+				var mode = $("#searchMode").val();
+				
+				if(mode == 1){
+					$.ajax({
+						url : "${pageContext.request.contextPath }/accountbook/searchaccountlistbydate",
+						type : "post",
+						//contentType : "application/json",
+						data : {
+								search_date1 : $("#searchDate1").val(),
+								search_date2 : $("#searchDate2").val(),
+								groupNo : $("#groupNo").val(),
+								spendFlag : spendFlag
+								},
+						dataType : "json",
+						success : function(map) {
+							$("#accountbookContent").empty();
+							var accountbookList = map.accountList;
+							var categoryList = map.categoryList;
+							var chartDataList = map.chartDataList;
+
+							for (var i = 0; i < accountbookList.length; i++) {
+								render(accountbookList[i],i, categoryList);
+							}
+							
+							MyChart(chartDataList);
+						},
+						error : function(XHR, status, error) {
+							console.error(status + " : " + error);
+						}
+					}); 
+				}else if(mode == 2 || mode ==3){
+					$.ajax({
+						url : "${pageContext.request.contextPath }/accountbook/searchaccountlist",
+						type : "post",
+						//contentType : "application/json",
+						data : { mode : mode , 
+								search_text : $("#searchText").val(),
+								groupNo : $("#groupNo").val(),
+								spendFlag : spendFlag
+								},
+						dataType : "json",
+						success : function(map) {
+							$("#accountbookContent").empty();
+							var accountbookList = map.accountList;
+							var categoryList = map.categoryList;
+							var chartDataList = map.chartDataList;
+
+							for (var i = 0; i < accountbookList.length; i++) {
+								render(accountbookList[i], i, categoryList);
+							}
+							
+							MyChart(chartDataList);
+						},
+						error : function(XHR, status, error) {
+							console.error(status + " : " + error);
+						}
+					}); 
+				}else{
+					fetchAccountbookList();	
+				}
+			}
+			
+			//검색창 숨기기 및 datepicker이벤트 추가
+			$('#searchDate1').datepicker();
+			$('#searchDate2').datepicker();
+			$('#searchDateDiv').hide();
+			
+			//표에 가계부 내역 호출
+			fetchAccountbookList();
 			
 			//페이지 로딩시 리스트 불러오기
 			var globalCategoryList;
@@ -385,12 +503,14 @@ table {
 					url : "${pageContext.request.contextPath }/accountbook/getaccountlist",
 					type : "post",
 					//contentType : "application/json",
-					data : { 	groupNo : $("[id=groupno]").val(),
-								month : $('[id=monthCal]').val()
+					data : { 	groupNo : $("#groupNo").val(),
+								month : $('#monthCal').val(),
+								spendFlag : spendFlag
+								
 					},
 					dataType : "json",
 					success : function(map) {
-						$("[id=accountbookContent]").empty();
+						$("#accountbookContent").empty();
 						
 						var accountbookList = map.accountList;
 						var categoryList = map.categoryList;
@@ -429,7 +549,11 @@ table {
 				str += "<input type='text' class='form-control text-center usage' style='margin-top: 7px' id='usage" + i + "' value='" + accountbookVo.accountbookUsage + "' placeholder='사용내역'>";
 				str += "</td>";
 				str += "<td>";
-				str += "<input type='text' class='form-control text-center spend' style='margin-top: 7px' id='spend" + i + "' value='" + accountbookVo.accountbookSpend + "' placeholder='지출액'>";
+				if (spendFlag == 'spend'){
+					str += "<input type='text' class='form-control text-center spend' style='margin-top: 7px' id='spend" + i + "' value='" + accountbookVo.accountbookSpend + "' placeholder='지출액'>";
+				}else{
+					str += "<input type='text' class='form-control text-center spend' style='margin-top: 7px' id='spend" + i + "' value='" + accountbookVo.accountbookIncome + "' placeholder='수입액'>";
+				}
 				str += "</td>";
 				str += "<td>";
 				str += "<select class='form-control custom-select text-center category' style='margin-top: 7px' id='category" + i + "'>";
@@ -456,7 +580,7 @@ table {
 				str += "<td>";
 				str += "</tr>";
 
-				$("[id=accountbookContent]").append(str);
+				$("#accountbookContent").append(str);
 				datepickerReset();
 
 			}
@@ -464,7 +588,7 @@ table {
 			//마지막칸 새로운 라인 추가
 			function newline(i, categoryList) {
 				
-				var mode = $("[name=search_mode]").val();
+				var mode = $("#searchMode").val();
 				
 				if(mode != 1 && mode != 2 && mode != 3){
 					var str = "";
@@ -483,7 +607,11 @@ table {
 					str += "<input type='text' class='usage form-control text-center data" + i + "' style='margin-top: 7px' id='usage" + i + "' value='' placeholder='사용내역'>";
 					str += "</td>";
 					str += "<td>";
-					str += "<input type='text' class='spend form-control text-center data" +i + "' style='margin-top: 7px' id='spend" + i + "' value='' placeholder='지출액'>";
+					if (spendFlag == 'spend'){
+						str += "<input type='text' class='spend form-control text-center data" +i + "' style='margin-top: 7px' id='spend" + i + "' value='' placeholder='지출액'>";
+					}else{
+						str += "<input type='text' class='spend form-control text-center data" +i + "' style='margin-top: 7px' id='spend" + i + "' value='' placeholder='수입액'>";
+					}
 					str += "</td>";
 					str += "<td>";
 					str += "<select class='category form-control custom-select text-center data" + i + "' style='margin-top: 7px' id='category" + i + "'>";
@@ -502,60 +630,50 @@ table {
 					str += "<td>";
 					str += "</tr>";
 
-					$("[id=accountbookContent]").append(str);
+					$("#accountbookContent").append(str);
 					datepickerReset();
 				}
 			}
 
 			//focusout시 데이터 변화 있으면 데이터 삽입
-			$("[id=accountbookContent]").on("focusout","tr",function() {
+			$("#accountbookContent").on("focusout","tr",function() {
 				var id = $(this).closest("tr").attr("id");
-				var groupno = $("[id=groupno]").val();
 				var date = $(this).find(".date").val()
 				if ( id == '' ){
 					if( $(this).find(".usage").val() != '' ){
 						var id = $(this).closest("tr").attr("id",0);
 						var usage = $(this).find(".usage").val();
-						$(this).closest("tr").attr("id",saveAccountbook(usage,'','',groupno,date));
+						$(this).closest("tr").attr("id",saveAccountbook(usage,'','',date));
 					}else if( $(this).find(".spend").val() != '' ){
 						var id = $(this).closest("tr").attr("id",0);
 						var spend = $(this).find(".spend").val();
-						$(this).closest("tr").attr("id",saveAccountbook('',spend,'',groupno,date));
+						$(this).closest("tr").attr("id",saveAccountbook('',spend,'',date));
 					}else if( $(this).find(".category").val() != '' ){
 						var id = $(this).closest("tr").attr("id",0);
 						var category = $(this).find(".category").val();
-						$(this).closest("tr").attr("id",saveAccountbook('','',category,groupno,date));
-					}else{	
-						var id = $(this).closest("tr").attr("id",0);
-						$(".date").change(function(){			
-							date = $(this).val();
-							$(this).closest("tr").attr("id",saveAccountbook('','','',groupno,date));
-						}) 	
+						$(this).closest("tr").attr("id",saveAccountbook('','',category,date));
 					}
 				}
 			});	
 			
 			//가계부 db저장
-			function saveAccountbook(usage,spend,category,groupNo,date){
+			function saveAccountbook(usage,spend,category,date){
 				var accNo; 
 				$.ajax({
 					url : "${pageContext.request.contextPath }/accountbook/saveaccountbook",
 					type : "post",
 					//contentType : "application/json",
 					data : {
+						groupNo : $("#groupNo").val(),
 						usage : usage,		
 						spend : spend,	
 						category : category,	
-						groupNo : groupNo,
-						date : date
+						date : date,
+						spendFlag : spendFlag
 					},
 					//dataType : "json", 
 					async: false,
 					success : function(accountbookno) {									
-						//fetchAccountbookList();	
-						/* $(this).closest("tr").attr("id",accountbookno);
-						console.log(accountbookno);
-						console.log("##" + $(this).closest("tr").attr("id")); */
 						accNo = accountbookno;
 					},
 					error : function(XHR, status, error) {
@@ -566,9 +684,9 @@ table {
 			}
 			
 			//데이터 업데이트 및 마지막 줄 선택시 새로운 라인 삽입
-			$("[id=accountbookContent]").on("focus","tr",function() {
+			$("#accountbookContent").on("focus","tr",function() {
 				var $this = $(this);
-				if ($('[id=accountbookContent] > tr').index(this) == $('[id=accountbookContent] > tr ').last().index()) {
+				if ($('#accountbookContent > tr').index(this) == $('#accountbookContent > tr ').last().index()) {
 					var today = new Date();
 					var yyyy = today.getFullYear();
 					var mm = today.getMonth() + 1;
@@ -580,7 +698,7 @@ table {
 						dd = '0'+dd;
 					}
 
-					$("[id=date"+ $this.attr("name")+ "]").attr("value",yyyy+ "년 "+ mm+ "월 "+ dd+ "일");
+					$("#date"+ $this.attr("name")).attr("value",yyyy+ "년 "+ mm+ "월 "+ dd+ "일");
 
 					var row = parseInt($this.attr("name")) + 1;
 									
@@ -628,7 +746,8 @@ table {
 					data : {
 						accountbookno : accountbookno,		
 						data : data,	
-						updatePos : updatePos
+						updatePos : updatePos,
+						spendFlag : spendFlag
 					},
 					//dataType : "json", 
 					success : function() {									
@@ -639,174 +758,79 @@ table {
 					}
 				});	
 			}
-
-			/*datepicker*/
-			$(function() {
-				$(".datepicker").datepicker();
+			
+			//삭제 버튼 클릭시 체크된 항목 모두 제거	
+			$("#deleteAccountbook").click(function() {
+				var AccountbookList = '';
+			    	$('input:checkbox[name=chk]').each(function() {
+			        	if($(this).is(':checked')){
+			       			AccountbookList += ","+($(this).closest("tr").attr("id"));		
+			        	}
+			      	});
+				deleteAccountbook(AccountbookList);							      
 			});
-
-			/*캘린더 datepicker*/
-			$('#monthCal').monthpicker(
-					{
-						pattern : 'yyyy / mm',
-						selectedYear : (new Date()).getFullYear(),
-						startYear : 1900,
-						finalYear : 2212,
-						monthNames : [ 	'1월', '2월', '3월', '4월',
-										'5월', '6월', '7월', '8월', '9월',
-										'10월', '11월', '12월' ],
-					});
-
-			//내비바 효과
-			var didScroll;
-			var lastScrollTop = 0;
-			var delta = 5;
-			var navbarHeight = $('header').outerHeight();
-
-			$(window).scroll(function(event) {
-				didScroll = true;
-			});
-
-			setInterval(function() {
-				if (didScroll) {
-					hasScrolled();
-					didScroll = false;
-				}
-			}, 250);
-
-			function hasScrolled() {
-				var st = $(this).scrollTop();
-
-				if (Math.abs(lastScrollTop - st) <= delta)
-					return;
-
-				// 속도 향상 클래스 - nav-up. 
-				if (st > lastScrollTop && st > navbarHeight) {
-					// 스크롤 내릴때
-					$('header').removeClass('nav-down').addClass('nav-up');
-				} else {
-					// 스크롤 올릴때
-					if (st + $(window).height() < $(document).height()) {
-						$('header').removeClass('nav-up').addClass('nav-down');
+									
+			//db에서 삭제
+			function deleteAccountbook(AccountbookList){
+				$.ajax({
+					url : "${pageContext.request.contextPath }/accountbook/deleteaccountbook",
+					type : "post",
+					//contentType : "application/json",
+					data : {
+						AccountbookList : AccountbookList
+					},
+					//dataType : "json",
+					success : function() {
+						fetchAccountbookList();
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
 					}
-				}
-				lastScrollTop = st;
-			}
-
-			//append시 datepicker 이벤트 먹지 않는 문제 발생 - datepicker 이벤트 제거후 재 실행
-			function datepickerReset() {
-				$(document).find(".datepicker").removeClass('hasdatepicker').datepicker();
-
-				$.datepicker.setDefaults({
-					prevText : '이전 달',
-					nextText : '다음 달',
-					monthNames : [ 	'1월', '2월', '3월', '4월',
-									'5월', '6월', '7월', '8월', '9월',
-									'10월', '11월', '12월' ], //월 이름
-					monthNamesShort : [ '1월', '2월', '3월', '4월',
-										'5월', '6월', '7월', '8월', '9월',
-										'10월', '11월', '12월' ], //
-					dayNames : [ '일', '월', '화', '수', '목', '금',
-								'토' ],
-					dayNamesShort : [ '일', '월', '화', '수', '목',
-									'금', '토' ],
-					dayNamesMin : [ '일', '월', '화', '수', '목',
-									'금', '토' ],
-					showMonthAfterYear : true,
-					yearSuffix : '년',
-					changeMonth : true,
-					changeYear : true,
-					dateFormat : "yy년 mm월 dd일"
 				});
 			}
-
-			//월 선택시 재 리스팅
-			$('[id=monthCal]').change(
-					function changeAccountbookList() {
-						fetchAccountbookList()
+			
+			
+			
+			//태그 일괄 적용 모달창 팝업
+			$("#tagGroup").click(function() {
+				$('#inputTagsName').val('');
+				$('#tagBundleModal').modal();
+				$('#eachTagModal').modal('hide');
+				$('#moda2').modal('hide');		
 			});
 			
-			//검색 모드에 따른 검색창 갯수 변화
-			$('[name=search_mode]').change(
-					function search() {
-						var mode = $(this).val();
-						if(mode==1){
-							$('[id=search_text]').hide();
-							$('[id=search_date1]').val('');
-							$('[id=search_date2]').val('');
-							$('[id=search_date_div]').show();
-						}else{
-							$('[id=search_date_div]').hide();
-							$('[id=search_text]').val('');
-							$('[id=search_text]').show();
-						}
-			});
-			
-			//검색
-			$('[id=search_btn]').on("click",function() {
-				event.preventDefault();
-				searching();
-			});		
-			
-			//db 검색 mode1:날짜 검색 / mode2:태그 검색 / mode3:내역 검색 
-			function searching(){
-				var mode = $("[name=search_mode]").val();
+			//태그 저장 버튼 클릭시 체크된 항목 태그 일괄 적용	
+			$('#saveTag').on('click',function(){			
+				var AccountbookList = '';
+			    $('input:checkbox[name=chk]').each(function() {
+			    	if($(this).is(':checked')){
+			       		AccountbookList += ","+($(this).closest("tr").attr("id"));	
+			    	}
+				})
 				
-				if(mode == 1){
-					$.ajax({
-						url : "${pageContext.request.contextPath }/accountbook/searchaccountlistbydate",
-						type : "post",
-						//contentType : "application/json",
-						data : {
-								search_date1 : $("[id=search_date1]").val(),
-								search_date2 : $("[id=search_date2]").val(),
-								groupNo : $("[id=groupno]").val()
-								},
-						dataType : "json",
-						success : function(map) {
-							$("[id=accountbookContent]").empty();
-							var accountbookList = map.accountList;
-							var categoryList = map.categoryList;
-							var chartDataList = map.chartDataList;
-
-							for (var i = 0; i < accountbookList.length; i++) {
-								render(accountbookList[i],i, categoryList);
-							}
-							
-							MyChart(chartDataList);
-						},
-						error : function(XHR, status, error) {
-							console.error(status + " : " + error);
-						}
-					}); 
-				}else if(mode == 2 || mode ==3){
-					$.ajax({
-						url : "${pageContext.request.contextPath }/accountbook/searchaccountlist",
-						type : "post",
-						//contentType : "application/json",
-						data : { mode : mode , 
-								search_text : $("[id=search_text]").val(),
-								groupNo : $("[id=groupno]").val() },
-						dataType : "json",
-						success : function(map) {
-							$("[id=accountbookContent]").empty();
-							var accountbookList = map.accountList;
-							var categoryList = map.categoryList;
-							var chartDataList = map.chartDataList;
-
-							for (var i = 0; i < accountbookList.length; i++) {
-								render(accountbookList[i], i, categoryList);
-							}
-							
-							MyChart(chartDataList);
-						},
-						error : function(XHR, status, error) {
-							console.error(status + " : " + error);
-						}
-					}); 
-				}else{
-					fetchAccountbookList();	
-				}
+				var tagName = $('#inputTagsName').val();
+				tagGroup(AccountbookList,tagName);
+				$('#tagBundleModal').modal('hide');
+			})
+			
+			//db에서 태그 일괄 적용
+			function tagGroup(AccountbookList,tagName){
+				$.ajax({
+					url : "${pageContext.request.contextPath }/accountbook/taggroup",
+					type : "post",
+					//contentType : "application/json",
+					data : {
+						AccountbookList : AccountbookList,
+						tagName : tagName
+					},
+					//dataType : "json",
+					success : function() {
+						fetchAccountbookList();
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
 			}
 			
 			//태그 모달창 팝업
@@ -814,14 +838,14 @@ table {
 			var tagRow;
 			var insertedTagRow;
 			
-			$("[id=accountbookContent]").on("focusin",".tag",function() {	
-				$('[id=modal]').modal();
-				$('[id=modal1]').modal('hide');
-				$('[id=modal2]').modal('hide');
-				$("[id=tagBody]").empty();
+			$("#accountbookContent").on("focusin",".tag",function() {	
+				$('#eachTagModal').modal();
+				$('#tagBundleModal').modal('hide');
+				$('#categoryModal').modal('hide');
+				$("#tagBody").empty();
 				
 				var accountNo = $(this).closest("tr").attr('id');
-				$('[id=hiddenAnoTag]').val(accountNo);
+				$('#hiddenAnoTag').val(accountNo);
 				tagRow = 1;												
 				
 				tagList(accountNo);					
@@ -850,7 +874,7 @@ table {
 			}
 			
 			//태그 추가 버튼
-			$("[name=tagInsert]").on("click",function() {								
+			$("#tagInsert").on("click",function() {								
 				tagRowInsert('');								
 			});
 			
@@ -869,13 +893,13 @@ table {
 				str+="<div style='clear:both;''></div>";
 				str+="</div>";
 				
-				$("[id=tagBody]").append(str);
+				$("#tagBody").append(str);
 				
 				tagRow++;
 			}							
 			
 			//태그 삭제
-			$("[id=tagBody]").on("click","[name=tagDelete]",function() {
+			$("#tagBody").on("click","[name=tagDelete]",function() {
 			
 				$(this).closest("div").remove();
 				var accountbooktagno = $(this).closest("div").attr("id");
@@ -897,7 +921,7 @@ table {
 					},
 					//dataType : "json",	
 					success : function() {	
-						$("[id=accountbookContent]").empty();
+						$("#accountbookContent").empty();
 						searching();
 					},
 					error : function(XHR, status, error) {
@@ -908,9 +932,9 @@ table {
 			
 			
 			//태그 변화 감지
-			$("[id=tagBody]").on("focusout","[id=inputTag]",function() {
+			$("#tagBody").on("focusout","#inputTag",function() {
 				
-				var accountbookNo = $('[id=hiddenAnoTag]').val();
+				var accountbookNo = $('#hiddenAnoTag').val();
 				var tagname = $(this).val();
 
 				var selRow = $(this).closest("div").index() + 1;
@@ -939,9 +963,9 @@ table {
 					},
 					//dataType : "json",	
 					success : function() {
-						$("[id=accountbookContent]").empty();
+						$("#accountbookContent").empty();
 						searching();	
-						$("[id=tagBody]").empty();
+						$("#tagBody").empty();
 						tagRow = 1;	
 						tagList(accountbookNo);
 					},
@@ -963,9 +987,9 @@ table {
 					},
 					//dataType : "json",	
 					success : function() {
-						$("[id=accountbookContent]").empty();
+						$("#accountbookContent").empty();
 						searching();	
-						$("[id=tagBody]").empty();
+						$("#tagBody").empty();
 						tagRow = 1;	
 						tagList(accountbookNo);
 					},
@@ -980,11 +1004,11 @@ table {
 			var cateRow;
 			var insertedCateRow;
 			
-			$("[id=categoryUpdate]").on("click",function() {	
-				$('[id=modal2]').modal();
-				$('[id=modal]').modal('hide');
-				$('[id=modal1]').modal('hide');
-				$("[id=categoryBody]").empty();
+			$("#categoryUpdate").on("click",function() {	
+				$('#categoryModal').modal();
+				$('#eachTagModal').modal('hide');
+				$('#tagBundleModal').modal('hide');
+				$("#categoryBody").empty();
 				
 				cateRow = 1;												
 				
@@ -998,7 +1022,7 @@ table {
 					type : "post",
 					//contentType : "application/json",
 					data : {
-						groupNo : $("[id=groupno]").val(),
+						groupNo : $("#groupNo").val(),
 					},
 					dataType : "json", 
 					success : function(cateList) {									
@@ -1029,18 +1053,18 @@ table {
 				str+="<div style='clear:both;''></div>";
 				str+="</div>";
 				
-				$("[id=categoryBody]").append(str);
+				$("#categoryBody").append(str);
 				
 				cateRow++;
 			}	
 			
 			//카테고리 추가 버튼
-			$("[name=categoryInsert]").on("click",function() {								
+			$("#categoryInsert").on("click",function() {								
 				cateRowInsert('');								
 			});
 			
 			//카테고리 삭제
-			$("[id=categoryBody]").on("click","[name=categoryDelete]",function() {
+			$("#categoryBody").on("click","[name=categoryDelete]",function() {
 			
 				$(this).closest("div").remove();
 				var categoryno = $(this).attr('id');
@@ -1056,12 +1080,12 @@ table {
 					type : "post",
 					//contentType : "application/json",
 					data : {
-						groupNo : $("[id=groupno]").val(),
+						groupNo : $("#groupNo").val(),
 						categoryno : categoryno
 					},
 					//dataType : "json",	
 					success : function() {	
-						$("[id=accountbookContent]").empty();
+						$("#accountbookContent").empty();
 						searching();
 					},
 					error : function(XHR, status, error) {
@@ -1071,7 +1095,7 @@ table {
 			}
 				
 			//카테고리 변화 감지
-			$("[id=categoryBody]").on("focusout","[id=inputCategory]",function() {
+			$("#categoryBody").on("focusout","#inputCategory",function() {
 				var categoryname = $(this).val();
 
 				var selRow = $(this).closest("div").index() + 1;
@@ -1096,9 +1120,9 @@ table {
 					},
 					//dataType : "json",	
 					success : function() {
-						$("[id=accountbookContent]").empty();
+						$("#accountbookContent").empty();
 						searching();	
-						$("[id=categoryBody]").empty();
+						$("#categoryBody").empty();
 						cateRow = 1;	
 						cateList();
 					},
@@ -1116,13 +1140,13 @@ table {
 					//contentType : "application/json",
 					data : {
 						categoryname : categoryname,
-						groupNo : $("[id=groupno]").val(),
+						groupNo : $("#groupNo").val(),
 					},
 					//dataType : "json",	
 					success : function() {
-						$("[id=accountbookContent]").empty();
+						$("#accountbookContent").empty();
 						searching();	
-						$("[id=categoryBody]").empty();
+						$("#categoryBody").empty();
 						cateRow = 1;	
 						cateList();
 					},

@@ -36,8 +36,8 @@ public class AccountBookController {
 	
 	@ResponseBody
 	@RequestMapping( "/getaccountlist")
-	public Map<String,Object> getAccountList(@RequestParam("groupNo") String groupNo, @RequestParam("month") String month){
-		Map<String,Object> map = moduAccountbookService.getAccountList(groupNo,month);
+	public Map<String,Object> getAccountList(@RequestParam("groupNo") String groupNo, @RequestParam("month") String month, @RequestParam("spendFlag") String spendFlag){
+		Map<String,Object> map = moduAccountbookService.getAccountList(groupNo,month,spendFlag);
 		return map;
 	}
 	
@@ -48,8 +48,9 @@ public class AccountBookController {
 			@RequestParam( value="spend", required=false, defaultValue="0") String spend,
 			@RequestParam( value="category", required=false, defaultValue="1") String category,
 			@RequestParam("groupNo") String groupNo,
-			@RequestParam("date") String date){
-		return moduAccountbookService.saveAccountbook(usage,spend,category,groupNo,date);
+			@RequestParam("date") String date,
+			@RequestParam("spendFlag") String spendFlag){
+		return moduAccountbookService.saveAccountbook(usage,spend,category,groupNo,date,spendFlag);
 	}
 	
 	@ResponseBody
@@ -60,8 +61,8 @@ public class AccountBookController {
 	
 	@ResponseBody
 	@RequestMapping( "/updateaccountbook")
-	public void updateaccountbook(@RequestParam("accountbookno") String accountbookno, @RequestParam("data") String data, @RequestParam("updatePos") String updatePos){
-		moduAccountbookService.updateAccountbook(accountbookno,data,updatePos);
+	public void updateaccountbook(@RequestParam("accountbookno") String accountbookno, @RequestParam("data") String data, @RequestParam("updatePos") String updatePos, @RequestParam("spendFlag") String spendFlag){
+		moduAccountbookService.updateAccountbook(accountbookno,data,updatePos,spendFlag);
 	}
 	
 	@ResponseBody
@@ -73,15 +74,15 @@ public class AccountBookController {
 	
 	@ResponseBody
 	@RequestMapping( "/searchaccountlistbydate")
-	public Map<String,Object> searchaccountlistbydate(@RequestParam("groupNo") String groupNo, @RequestParam("search_date1") String search_date1, @RequestParam("search_date2") String search_date2){		
-		Map<String,Object> map = moduAccountbookService.searchaccountlistbydate(groupNo,search_date1,search_date2);
+	public Map<String,Object> searchaccountlistbydate(@RequestParam("groupNo") String groupNo, @RequestParam("search_date1") String search_date1, @RequestParam("search_date2") String search_date2, @RequestParam("spendFlag") String spendFlag){		
+		Map<String,Object> map = moduAccountbookService.searchaccountlistbydate(groupNo,search_date1,search_date2,spendFlag);
 		return map;
 	}
 	
 	@ResponseBody
 	@RequestMapping( "/searchaccountlist")
-	public Map<String,Object> searchaccountlist(@RequestParam("groupNo") String groupNo, @RequestParam("mode") String mode, @RequestParam("search_text") String search_text){	
-		Map<String,Object> map = moduAccountbookService.searchaccountlist(groupNo,mode,search_text);
+	public Map<String,Object> searchaccountlist(@RequestParam("groupNo") String groupNo, @RequestParam("mode") String mode, @RequestParam("search_text") String search_text, @RequestParam("spendFlag") String spendFlag){	
+		Map<String,Object> map = moduAccountbookService.searchaccountlist(groupNo,mode,search_text,spendFlag);
 		return map;
 	}
 	

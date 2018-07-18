@@ -23,9 +23,10 @@ public class ModuAccountbookService {
 	private ModuAccountbookDao moduAccountbookDao;
 	
 	@Transactional
-	public Map<String,Object> getAccountList(String groupNo,String month) {
+	public Map<String,Object> getAccountList(String groupNo,String month,String spendFlag) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("groupNo", groupNo);
+		map.put("spendFlag", spendFlag);
 		
 		Calendar cal = Calendar.getInstance();
 		int y = Integer.parseInt(month.substring(0, 4));
@@ -68,7 +69,7 @@ public class ModuAccountbookService {
 	}
 	
 	@Transactional
-	public int saveAccountbook(String usage,String spend,String category,String groupNo,String date) {
+	public int saveAccountbook(String usage,String spend,String category,String groupNo,String date,String spendFlag) {
 		
 		AccountbookVo accountbookVo = new AccountbookVo();
 		
@@ -81,8 +82,12 @@ public class ModuAccountbookService {
 		String d = date.substring(10, 12);
 		accountbookVo.setAccountbookRegDate(y+"/"+m+"/"+d);
 
-		moduAccountbookDao.saveAccountbook(accountbookVo);
-		
+		if(spendFlag.equals("spend")) {
+			moduAccountbookDao.saveAccountbookSpend(accountbookVo);
+		}else {
+			moduAccountbookDao.saveAccountbookIncome(accountbookVo);
+		}
+
 		return accountbookVo.getAccountbookno();
 	}
 	
@@ -134,7 +139,7 @@ public class ModuAccountbookService {
 	}
 	
 	@Transactional
-	public void updateAccountbook(String accountbookno, String data, String updatePos) {
+	public void updateAccountbook(String accountbookno, String data, String updatePos, String spendFlag) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("accountbookno", accountbookno);
 		if(updatePos.equals("accountbookregdate")) {
@@ -145,14 +150,15 @@ public class ModuAccountbookService {
 		}
 		map.put("data", data);
 		map.put("updatePos", updatePos);
-		
+		map.put("spendFlag", spendFlag);
 		moduAccountbookDao.updateAccountbook(map);
 	}
 	
 	@Transactional
-	public Map<String,Object> searchaccountlistbydate(String groupNo,String search_date1,String search_date2) {
+	public Map<String,Object> searchaccountlistbydate(String groupNo,String search_date1,String search_date2,String spendFlag) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("groupNo", groupNo);
+		map.put("spendFlag", spendFlag);
 		String sy = search_date1.substring(0, 4);
 		String sm = search_date1.substring(6, 8);
 		String sd = search_date1.substring(10, 12);
@@ -187,15 +193,19 @@ public class ModuAccountbookService {
 		
 		List<AccountbookCategoryVo> categoryList = moduAccountbookDao.getCategoryList(groupNo);
 		returnMap.put("categoryList", categoryList);
+		
+		List<AccountbookCategoryVo> chartDataList = moduAccountbookDao.getChartDataByDate(map);
+		returnMap.put("chartDataList", chartDataList);
 
 		return returnMap;
 	}
 	
 	@Transactional
-	public Map<String,Object> searchaccountlist(String groupNo,String mode,String search_text) {
+	public Map<String,Object> searchaccountlist(String groupNo,String mode,String search_text,String spendFlag) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("groupNo", groupNo);
 		map.put("data", "%"+search_text+"%");
+		map.put("spendFlag", spendFlag);
 		
 		Map<String,Object> returnMap = new HashMap<String,Object>();		
 		List<AccountbookVo> accountList = null;

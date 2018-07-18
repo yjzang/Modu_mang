@@ -7,7 +7,15 @@
 		<![CDATA[
 		select accountbookno,accountbookusage,accountbookspend,accountbookincome,categoryno,abt.groupno,memberfeeno,categoryname,to_char(accountbookregdate,'yyyy"년" mm"월" dd"일"') accountbookregdate
 		from accountbook_tbl abt join category_tbl cate using(categoryno)
-		where abt.groupno=#{groupNo} and abt.accountbookregdate between #{startDate} and #{endDate}
+		where abt.groupno=#{groupNo} and abt.accountbookregdate between #{startDate} and #{endDate} 
+		]]>
+		<if test="spendFlag == 'spend'">
+		    and accountbookincome is null
+		</if>
+		<if test="spendFlag == 'income'">
+		    and accountbookspend is null
+		</if>
+		<![CDATA[
 		order by accountbookregdate , accountbookno asc
 		]]>
 	</select>
@@ -26,6 +34,14 @@
 		select accountbookno,accountbookusage,accountbookspend,accountbookincome,categoryno,abt.groupno,memberfeeno,categoryname,to_char(accountbookregdate,'yyyy"년" mm"월" dd"일"') accountbookregdate,tagname
 		from accountbook_tbl abt join category_tbl cate using(categoryno) join accountbook_tag_tbl using(accountbookno) join tag_tbl using(tagno)
 		where abt.groupno=#{groupNo} and tagname like #{data}
+		]]>
+		<if test="spendFlag == 'spend'">
+		    and accountbookincome is null
+		</if>
+		<if test="spendFlag == 'income'">
+		    and accountbookspend is null
+		</if>
+		<![CDATA[
 		order by accountbookregdate , accountbookno asc
 		]]>
 	</select>
@@ -35,6 +51,14 @@
 		select accountbookno,accountbookusage,accountbookspend,accountbookincome,categoryno,abt.groupno,memberfeeno,categoryname,to_char(accountbookregdate,'yyyy"년" mm"월" dd"일"') accountbookregdate
 		from accountbook_tbl abt join category_tbl cate using(categoryno)
 		where abt.groupno=#{groupNo} and accountbookusage like #{data}
+		]]>
+		<if test="spendFlag == 'spend'">
+		    and accountbookincome is null
+		</if>
+		<if test="spendFlag == 'income'">
+		    and accountbookspend is null
+		</if>
+		<![CDATA[
 		order by accountbookregdate , accountbookno asc
 		]]>
 	</select>
@@ -125,7 +149,7 @@
 		]]>
 	</delete>
 	
-	<insert id="saveAccountbook" parameterType="com.modu.vo.AccountbookVo">
+	<insert id="saveAccountbookSpend" parameterType="com.modu.vo.AccountbookVo">
 		<selectKey keyProperty="accountbookno" resultType="int" order="BEFORE">	
 			select seq_accountbookno.nextval from dual
 		</selectKey>
@@ -134,6 +158,28 @@
 			(accountbookno,
 			accountbookusage,
 			accountbookspend,
+			categoryno,
+			groupno,
+			accountbookregdate) 
+			values(
+			#{accountbookno},
+			#{accountbookUsage},
+			#{accountbookSpend},
+			#{categoryNo},
+			#{groupNo},
+			#{accountbookRegDate}) 
+		]]>
+	</insert>
+	
+	<insert id="saveAccountbookIncome" parameterType="com.modu.vo.AccountbookVo">
+		<selectKey keyProperty="accountbookno" resultType="int" order="BEFORE">	
+			select seq_accountbookno.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into accountbook_tbl
+			(accountbookno,
+			accountbookusage,
+			accountbookincome,
 			categoryno,
 			groupno,
 			accountbookregdate) 
@@ -158,7 +204,12 @@
 		    accountbookregdate=#{data}
 		</if>
 		<if test="updatePos == 'accountbookspend'">
-		    accountbookspend=#{data}
+			<if test="spendFlag == 'spend'">
+		    	accountbookspend=#{data}
+			</if>
+			<if test="spendFlag == 'income'">
+		    	accountbookincome=#{data}
+			</if>
 		</if>
 		<if test="updatePos == 'categoryno'">
 		    categoryno=#{data}
@@ -191,9 +242,26 @@
 	<select id="getChartDataByDate" parameterType="Map" resultType="com.modu.vo.AccountbookCategoryVo">
 		<![CDATA[
 			select categoryname,total
-			from (select sum(nvl(accountbookspend,0)) total,categoryno
+			from (select 
+			]]>
+			<if test="spendFlag == 'spend'">
+			    sum(nvl(accountbookspend,0)) total
+			</if>
+			<if test="spendFlag == 'income'">
+			    sum(nvl(accountbookincome,0)) total
+			</if>	
+			<![CDATA[
+			,categoryno
 			from accountbook_tbl
 			where groupno=#{groupNo} and accountbookregdate between #{startDate} and #{endDate}
+			]]>
+			<if test="spendFlag == 'spend'">
+			    and accountbookincome is null
+			</if>
+			<if test="spendFlag == 'income'">
+			    and accountbookspend is null
+			</if>
+			<![CDATA[
 			group by categoryno) join category_tbl using(categoryno)
 		]]>
 	</select>
@@ -204,10 +272,28 @@
 			from (  select accountbookno,accountbookusage,accountbookspend,accountbookincome,categoryno,abt.groupno,memberfeeno,categoryname,to_char(accountbookregdate,'yyyy"년" mm"월" dd"일"') accountbookregdate,tagname
         			from accountbook_tbl abt join category_tbl cate using(categoryno) join accountbook_tag_tbl using(accountbookno) join tag_tbl using(tagno)
         			where abt.groupno=#{groupNo} and tagname like #{data}
-        			order by accountbookregdate , accountbookno asc) join (	select sum(nvl(accountbookspend,0)) total,categoryno
+        			]]>
+					<if test="spendFlag == 'spend'">
+					    and accountbookincome is null
+					</if>
+					<if test="spendFlag == 'income'">
+					    and accountbookspend is null
+					</if>
+					<![CDATA[
+        			order by accountbookregdate , accountbookno asc) join (	select 
+        																	]]>
+																			<if test="spendFlag == 'spend'">
+																			    sum(nvl(accountbookspend,0)) total
+																			</if>
+																			<if test="spendFlag == 'income'">
+																			    sum(nvl(accountbookincome,0)) total
+																			</if>	
+																			<![CDATA[
+        																	,categoryno
                                                                 			from accountbook_tbl
                                                                 			where groupno=1
                                                                 			group by categoryno) using(categoryno)
+                    group by categoryname,total
 
 		]]>
 	</select>
@@ -215,9 +301,26 @@
 	<select id="getChartDataByUsage" parameterType="Map" resultType="com.modu.vo.AccountbookCategoryVo">
 		<![CDATA[
 			select categoryname,total
-			from (select sum(nvl(accountbookspend,0)) total,categoryno
+			from (select 
+			]]>
+			<if test="spendFlag == 'spend'">
+			    sum(nvl(accountbookspend,0)) total
+			</if>
+			<if test="spendFlag == 'income'">
+			    sum(nvl(accountbookincome,0)) total
+			</if>	
+			<![CDATA[
+			,categoryno
 			from accountbook_tbl
 			where groupno=#{groupNo} and accountbookusage like #{data}
+			]]>
+			<if test="spendFlag == 'spend'">
+			    and accountbookincome is null
+			</if>
+			<if test="spendFlag == 'income'">
+			    and accountbookspend is null
+			</if>
+			<![CDATA[
 			group by categoryno) join category_tbl using(categoryno)
 		]]>
 	</select>

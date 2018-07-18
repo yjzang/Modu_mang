@@ -76,8 +76,13 @@ public class ModuAccountbookDao {
 		sqlSession.delete("accountbook.tagDelete",accountbookTagVo);
 	}
 	
-	public AccountbookVo saveAccountbook(AccountbookVo accountbookVo) {
-		sqlSession.insert("accountbook.saveAccountbook",accountbookVo);
+	public AccountbookVo saveAccountbookSpend(AccountbookVo accountbookVo) {
+		sqlSession.insert("accountbook.saveAccountbookSpend",accountbookVo);
+		return accountbookVo;
+	}
+	
+	public AccountbookVo saveAccountbookIncome(AccountbookVo accountbookVo) {
+		sqlSession.insert("accountbook.saveAccountbookIncome",accountbookVo);
 		return accountbookVo;
 	}
 	
