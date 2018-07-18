@@ -17,6 +17,7 @@ public class BoardVo {
 	String commentRegDate;
 	String userName;
 	int likeCount;
+	int cmtCount;
 	List<FileVo> imgList ;
 	
 	
@@ -108,13 +109,21 @@ public class BoardVo {
 		this.userName = userName;
 	}
 	
-	
 	public String getCommentRegDate() {
 		return commentRegDate;
 	}
 	public void setCommentRegDate(String commentRegDate) {
 		this.commentRegDate = commentRegDate;
 	}
+	
+	
+	public int getCmtCount() {
+		return cmtCount;
+	}
+	public void setCmtCount(int cmtCount) {
+		this.cmtCount = cmtCount;
+	}
+	
 	@Override
 	public String toString() {
 		return "BoardVo [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent

@@ -120,6 +120,8 @@ public class BoardService {
 			int likeCount = dao.likeCount(boardNo);
 			boardVo.setBoardNo(boardNo);
 			String likeState = dao.likeState(boardVo);
+			int cmtCount = dao.cmtCount(boardNo);
+			vo.setCmtCount(cmtCount);
 			vo.setLikeState(likeState);
 			vo.setLikeCount(likeCount);
 		    vo.setImgList(imgList);
@@ -192,9 +194,10 @@ public class BoardService {
 	public List<BoardVo> getCmtList(BoardVo boardVo){
 		
 		List<BoardVo> list = dao.getCmtList(boardVo);
-	/*	for(BoardVo vo:list) {
-			String regDate=vo.getCommentRegDate();
-			System.out.println("######"+regDate);
+/*		for(BoardVo vo : list) {
+			
+			String boardNo = vo.getBoardNo();
+	
 			
 		}*/
 		return list;
