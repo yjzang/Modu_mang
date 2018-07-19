@@ -16,6 +16,8 @@
     <link href="${pageContext.request.contextPath }/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
           media="screen">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+   
+    
 </head>
 <c:if test="${authUser eq null}">
 <body style="overflow-x:hidden; overflow-y:auto;padding-top: 90px;">
@@ -116,7 +118,7 @@
         </div>
     </div>
 </div>
-
+<%-- <span>${authUser.userName }</span> --%>
 
 <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 

@@ -11,6 +11,18 @@ public class BoardVo {
 	
 	
 	
+	
+	public BoardVo() {
+	}
+	public BoardVo(String boardNo, String boardTitle, String boardContent, String writer, String tagNo,
+			String groupNo) {
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.writer = writer;
+		this.tagNo = tagNo;
+		this.groupNo = groupNo;
+	}
 	public String getBoardNo() {
 		return boardNo;
 	}
@@ -47,5 +59,13 @@ public class BoardVo {
 	public void setGroupNo(String groupNo) {
 		this.groupNo = groupNo;
 	}
+	@Override
+	public String toString() {
+		return "BoardVo [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
+				+ ", writer=" + writer + ", tagNo=" + tagNo + ", groupNo=" + groupNo + "]";
+	}
+	
+	
+	
 }
 

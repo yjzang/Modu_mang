@@ -200,6 +200,55 @@
 
 	}
 	
+	/* search.css */
+	
+	.searchlist {
+		margin-left: 100px;
+	}
+	.searchresult h3{
+		font-family: 'NanumGothicExtraBold', sans-serif;  font-weight: 800; 
+		font-size: 2em;
+	}
+
+	.searchlist h4{
+		font-family: 'NanumGothicExtraBold', sans-serif;  font-weight: 800; 
+		font-size: 1.8em;
+	}
+
+	.searchlist h6{
+		font-family: 'NanumGothicExtraBold', sans-serif;  font-weight: 800; 
+		font-size: .9em;
+	}
+
+	.searchlist p{
+		font-family: 'NanumGothicExtraBold', sans-serif;  font-weight: 800; 
+		font-size: .8em;
+	}
+
+	.searchlist div{
+		display: flex;
+		align-items: center;
+
+	}
+	.searchClub{
+		width: 30rem; height: 16rem;
+	}
+
+	.modal-text{
+		font-family: 'NanumGothicExtraBold', sans-serif;  font-weight: 800; 
+		font-size: 1.3em;
+	}
+	
+	.introduce label{
+		font-family: 'NanumGothicExtraBold', sans-serif;  font-weight: 800; 
+		font-size: 1.3em;
+	}
+
+	.introduce textarea{
+		font-family: 'NanumGothicExtraBold', sans-serif;  font-weight: 800; 
+		font-size: 0.8em;
+	}
+	
 	body { padding-top: 280px; // 헤더 높이만큼 여백부여 }
 
 	header { position: fixed; top: 0; left: 0; width: 100%; height: 40px; transition: top 0.2s ease-in-out; z-index: 1 }
@@ -210,3 +259,7 @@
 		margin : 2% auto 2% auto;
 		width: 90%;
 	}
+	
+	/* 드롭다운 자동 펼치기 */
+	
+	

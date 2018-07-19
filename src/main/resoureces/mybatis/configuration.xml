@@ -5,6 +5,7 @@
   <typeAliases>
   	 <typeAlias alias="boardVo" type="com.modu.vo.BoardVo" />
 	 <typeAlias alias="GroupVo" type="com.modu.vo.ModuGroupVo" />
+	 <typeAlias alias="UserGroupVo" type="com.modu.vo.UserGroupVo" />
   </typeAliases>	
 
     	

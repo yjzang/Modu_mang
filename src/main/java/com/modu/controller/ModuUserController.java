@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -13,7 +14,7 @@ public class ModuUserController {
 
     @Autowired
     private ModuUserService moduUserService;
-
+    
     @RequestMapping(value = "/emailcheck", method = RequestMethod.POST)
     @ResponseBody
     public int emailCheck(@ModelAttribute ModuUserVo userVo) {
@@ -39,8 +40,9 @@ public class ModuUserController {
         System.out.println(userVo.toString());
         ModuUserVo moduUserVo = moduUserService.userLoginCheck(userVo);
         System.out.println("아이디 체크하고 왔다 : " + moduUserVo.toString());
-
+        
         if (moduUserVo != null) {
+       
             session.setAttribute("authUser", moduUserVo);
             System.out.println("로그인 됨");
             return 1;
@@ -48,7 +50,18 @@ public class ModuUserController {
             System.out.println("로그인 실패");
             return 0;
         }
+                
     }
+  /*  
+    @RequestMapping(value="/getGroupList",method=RequestMethod.GET)
+    public String getGroupList(@RequestParam("userNo")int userNo, Model model) {
+    	System.out.println("노나여니 들어왔냐");
+    	List<ModuGroupVo> gList  = groupService.selectGroup(userNo);
+    	model.addAttribute("gList",gList);
+    	System.out.println(gList.toString());
+    	return "/index";
+    }
+    */
 
     @RequestMapping(value = "/kakaoJoin", method = RequestMethod.POST)
     public String kakaoJoin(@ModelAttribute ModuUserVo userVo) {

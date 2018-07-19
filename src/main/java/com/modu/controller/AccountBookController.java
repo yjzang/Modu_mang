@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.modu.service.ModuAccountbookService;
+import com.modu.service.ModuGroupService;
 import com.modu.service.ModuUserService;
 import com.modu.vo.AccountbookVo;
 import com.modu.vo.ModuGroupVo;
@@ -27,8 +28,23 @@ public class AccountBookController {
 	@Autowired
 	private ModuAccountbookService moduAccountbookService;
 	
+	@Autowired
+	private ModuGroupService groupService;
+	
+	//모임 카테고리 불러오기 
+	
 	@RequestMapping( "/accountbook")
-	public String accountbook(){
+	public String accountbook(Model model, HttpSession session,@RequestParam("groupNo")int groupNo){
+		
+		// 모임 카테고리 
+		ModuUserVo uservo =  (ModuUserVo) session.getAttribute("authUser");
+		List<ModuGroupVo> gList  = groupService.selectGroup(uservo.getUserNo());
+		model.addAttribute("gList",gList);
+		
+		// 클릭한 모임  가계부 보여주기
+		ModuGroupVo gvo = groupService.selectGroupImg(groupNo);
+		model.addAttribute("gvo",gvo);
+		
 		return "/accountbook/accountbook";
 	}
 	
