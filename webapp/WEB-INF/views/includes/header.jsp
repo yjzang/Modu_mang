@@ -3,7 +3,9 @@
          pageEncoding="UTF-8" %>
 
 <!-----------header------------------>
-<header>
+<header style="z-index:4;">
+
+
     <%--첫번째 네비바--%>
     <nav class="container navbar navbar-expand-lg navbar-light bg-light">
         <%-- 공통 로고 --%>
@@ -43,7 +45,6 @@
                         <%--</button>--%>
 
                     </ul>
-
                 </div>
     </nav>
     <!-- <div style="margin-bottom: 80px;"></div> -->
@@ -147,7 +148,7 @@
                     </li>
                         <%--게시판--%>
                     <li id="btn_board" class="nav-item menuTab">
-                        <a class="nav-link" href="${pageContext.request.contextPath }/board"
+                        <a class="nav-link" href="#"
                            onclick="btn_board()">게시판</a>
                     </li>
                         <%--회비관리--%>
@@ -163,6 +164,8 @@
 
         </nav>
     </c:if>
+
+
 </header>
 
 
@@ -235,6 +238,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
     /*  이미지 미리보기 , 확장자 체크  */
 

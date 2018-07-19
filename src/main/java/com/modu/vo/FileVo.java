@@ -1,39 +1,42 @@
 package com.modu.vo;
 
 public class FileVo {
-    private int no;
-    private String filepath;
-    private String orgName;
+    private String boardImgNo;
+    private String boardNo;
+    private String userNo;
+    private String boardImgPath;
+    private String originalName;
     private String saveName;
-    private long fileSize;
+    private long imgSize;
     
-    public FileVo(int no, String filepath, String orgName, String saveName, long fileSize) {
-		this.no = no;
-		this.filepath = filepath;
-		this.orgName = orgName;
-		this.saveName = saveName;
-		this.fileSize = fileSize;
-	}
-	public FileVo() {
-	}
     
-	public int getNo() {
-		return no;
+    
+       
+    
+	
+	public String getBoardImgNo() {
+		return boardImgNo;
 	}
-	public void setNo(int no) {
-		this.no = no;
+	public void setBoardImgNo(String boardImgNo) {
+		this.boardImgNo = boardImgNo;
 	}
-	public String getFilepath() {
-		return filepath;
+	public String getBoardNo() {
+		return boardNo;
 	}
-	public void setFilepath(String filepath) {
-		this.filepath = filepath;
+	public void setBoardNo(String boardNo) {
+		this.boardNo = boardNo;
 	}
-	public String getOrgName() {
-		return orgName;
+	public String getBoardImgPath() {
+		return boardImgPath;
 	}
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
+	public void setBoardImgPath(String boardImgPath) {
+		this.boardImgPath = boardImgPath;
+	}
+	public String getOriginalName() {
+		return originalName;
+	}
+	public void setOriginalName(String originalName) {
+		this.originalName = originalName;
 	}
 	public String getSaveName() {
 		return saveName;
@@ -41,18 +44,30 @@ public class FileVo {
 	public void setSaveName(String saveName) {
 		this.saveName = saveName;
 	}
-	public long getFileSize() {
-		return fileSize;
+	
+	public long getImgSize() {
+		return imgSize;
 	}
-	public void setFileSize(long fileSize) {
-		this.fileSize = fileSize;
+	public void setImgSize(long imgSize) {
+		this.imgSize = imgSize;
 	}
-	@Override
-	public String toString() {
-		return "FileVo [no=" + no + ", filepath=" + filepath + ", orgName=" + orgName + ", saveName=" + saveName
-				+ ", fileSize=" + fileSize + "]";
+	public String getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
 	}
 	
+	
+	@Override
+	public String toString() {
+		return "FileVo [boardImgNo=" + boardImgNo + ", boardNo=" + boardNo + ", userNo=" + userNo + ", boardImgPath="
+				+ boardImgPath + ", originalName=" + originalName + ", saveName=" + saveName + ", imgSize=" + imgSize
+				+ "]";
+	}
+    
+   
+    	
     
     
     

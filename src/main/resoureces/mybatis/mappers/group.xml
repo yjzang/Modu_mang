@@ -5,16 +5,22 @@
 	
 	<insert id="insert" parameterType="GroupVo">
 		<![CDATA[
-		insert into group_tbl
-            VALUES(SEQ_NO.NEXTVAL
+		insert into group_tbl(groupNo,groupName,groupExplain,groupImg,groupType,manager)
+            VALUES(seq_groupNo.NEXTVAL
              ,#{groupName}
              ,#{groupExplain}
              ,#{groupImg}
              ,#{groupType}
-             ,)
-		
+             ,#{manager})
 		]]>
 	</insert>
+	
+	<select id="selectGroupList" resultType="GroupVo">
+	 <![CDATA[
+             Select groupNo,groupName,groupExplain,groupImg,groupType,manager
+               from group_tbl
+             ]]>
+	</select>
 
 	
 </mapper>
