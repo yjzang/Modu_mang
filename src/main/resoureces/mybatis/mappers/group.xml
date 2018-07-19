@@ -14,11 +14,39 @@
              ,#{manager})
 		]]>
 	</insert>
-	
-	<select id="selectGroupList" resultType="GroupVo">
+
+	<insert id="insertJoin" parameterType="UserGroupVo">
+		<![CDATA[
+		insert into user_group_tbl(user_groupNo,userNo,groupNo,joinMessage,joinState)
+            VALUES(seq_user_groupNo.NEXTVAL
+             ,#{userNo}
+             ,#{groupNo}
+             ,#{joinMessage}
+             ,#{joinState})
+		]]>
+	</insert>
+
+	<select id="selectGroupList"  parameterType="int"  resultType="GroupVo">
 	 <![CDATA[
              Select groupNo,groupName,groupExplain,groupImg,groupType,manager
                from group_tbl
+               where manager=#{manager}
+             ]]>
+	</select>
+
+	<select id="searchList"  parameterType="String"  resultType="GroupVo">
+	 <![CDATA[
+             Select groupNo,groupName,groupExplain,groupImg,groupType,manager
+               from group_tbl
+               where groupName like '%'||#{groupName}||'%'
+             ]]>
+	</select>
+
+	<select id="selectImg"  parameterType="int"  resultType="GroupVo">
+	 <![CDATA[
+             Select groupNo,groupName,groupExplain,groupImg,groupType,manager
+               from group_tbl
+               where groupNo=#{groupNo}
              ]]>
 	</select>
 

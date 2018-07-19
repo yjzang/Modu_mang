@@ -78,6 +78,7 @@
 							</tr>
 						</thead>
 						<tbody>
+							
 							<tr>
 								<th scope="row">
 									<div>
@@ -90,7 +91,7 @@
 								<td>강남역 하남돼지</td>
 								<td><button type="button" class="btn t-button p-0 " data-toggle="modal" data-target="#mapModal"><img src="${pageContext.request.contextPath }/assets/images/mapIcon.png"></button></td>
 								<td>30</td>
-								<td><img src="${pageContext.request.contextPath }/assets/images/x.png"></td>
+								<td>&times;</td>
 	
 							</tr>
 							<tr>

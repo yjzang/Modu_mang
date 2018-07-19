@@ -30,5 +30,10 @@
 		<![CDATA[	select USERNO,USEREMAIL,USERNAME,USERBIRTHDAY from USER_TBL where USEREMAIL=#{userEmail} and USERPASSWORD=#{userPassword}
 	]]>
 	</select>
+	<select id="loginUserGroupNo" parameterType="com.modu.vo.ModuUserVo" resultType="String">
+		select groupNo
+from (select groupno,ROWNUM rnum from  USER_GROUP_TBL where USERNO=#{userNo})
+where rnum=1
+	</select>
 	
 </mapper>

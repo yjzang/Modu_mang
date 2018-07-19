@@ -29,8 +29,8 @@ public class BoardController {
 	
 	@Autowired
 	BoardService service;
-	
-	
+
+
 	@RequestMapping(value="", method={RequestMethod.GET,RequestMethod.POST})
 	public String goBoard(Model model){
 		
@@ -115,25 +115,25 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="/addCmt", method=RequestMethod.POST)
 	public int addCmt(@ModelAttribute BoardVo boardVo, HttpSession session) {
-		
+
 		ModuUserVo authVo = (ModuUserVo)session.getAttribute("authUser");
 		String userNo = String.valueOf(authVo.getUserNo());
 		boardVo.setUserNo(userNo);
 		System.out.println("왓썹맨~"+boardVo.toString());
 		int flag = service.addCmt(boardVo);
 		return flag;
-		
+
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value="/getCmtList", method=RequestMethod.POST)
 	public List<BoardVo> getCmtList(@ModelAttribute BoardVo boardVo) {
-		
+
 		List<BoardVo> list= service.getCmtList(boardVo);
 		return list;
 	}
-	
-	
+
+
 	@ResponseBody
 	@RequestMapping(value="/upLike")
 	public BoardVo upLike(@ModelAttribute BoardVo boardVo, HttpSession session) {
@@ -153,14 +153,14 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="/delCmt", method=RequestMethod.POST)
 	public int deleteCmt(@RequestParam String commentNo){
-	 
+
 		int flag = service.deleteCmt(commentNo);
 		return flag;
 	}
-	
-	
-	
-	
+
+
+
+
 }
 	/*
 	@ResponseBody

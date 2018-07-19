@@ -6,7 +6,9 @@
   	 <typeAlias alias="boardVo" type="com.modu.vo.BoardVo" />
   	 <typeAlias alias="fileVo" type="com.modu.vo.FileVo" />
 	 <typeAlias alias="GroupVo" type="com.modu.vo.ModuGroupVo" />
-  </typeAliases>	
+	 <typeAlias alias="UserGroupVo" type="com.modu.vo.UserGroupVo" />
+	 <typeAlias alias="reportVo" type="com.modu.vo.ReportVo" />
+  </typeAliases>
 
     	
 	<mappers>
@@ -14,6 +16,7 @@
 		<mapper resource="mybatis/mappers/accountbook.xml" />
 		<mapper resource="mybatis/mappers/board.xml" />
 		<mapper resource="mybatis/mappers/group.xml" />
+		<mapper resource="mybatis/mappers/report.xml" />
 	</mappers>
 	
 </configuration>

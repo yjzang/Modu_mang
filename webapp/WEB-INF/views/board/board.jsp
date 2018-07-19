@@ -327,7 +327,6 @@
 			  str+= "	   		  </div>";
 			  str+= "		</div>";
 			  str+= "		<div class='text-left my-3'><span>";
-			  str+= "	 				  <button class='t-button p-1 ml-2'> <img width=50px src='${pageContext.request.contextPath }/assets/images/comment01.jpg' data-state='"+vo.likeState+"'> </button></span>";
 			  str+= "			                       <span class='ml-3' style='color:gray;'>  댓글 "+vo.cmtCount+"개</span></div>";
  			  str+= "	    	 <div id='cmtList_"+vo.boardNo+"' style=' overflow-x:hidden; overflow-y:auto;  max-height:720px;'>";
 			  
