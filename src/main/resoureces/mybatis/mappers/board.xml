@@ -87,7 +87,7 @@
 		
 	<insert id="insertLike" parameterType="boardVo">
 		insert into like_tbl
-		values(seq_like_no.nextval,#{likeState},#{boardNo},#{userNo})
+		values(seq_likeno.nextval,#{likeState},#{boardNo},#{userNo})
 	</insert>
 	
 	
@@ -125,7 +125,7 @@
 	
 	<insert id="insertCmt" parameterType="boardVo">
 		insert into comment_tbl
-		values(seq_comment_no.nextval,#{commentContent},#{userNo},#{boardNo},sysdate)
+		values(seq_commentno.nextval,#{commentContent},#{userNo},#{boardNo},sysdate)
 		
 	</insert>
 	

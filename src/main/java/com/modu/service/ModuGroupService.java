@@ -7,12 +7,17 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.executor.keygen.SelectKeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.modu.dao.ModuGroupDao;
 import com.modu.vo.ModuGroupVo;
+import com.modu.vo.ModuUserVo;
+import com.modu.vo.UserGroupVo;
 
 @Service
 public class ModuGroupService {
@@ -20,7 +25,7 @@ public class ModuGroupService {
 	@Autowired
 	private ModuGroupDao groupDao;
 
-	public List<ModuGroupVo> plusGroup(ModuGroupVo groupvo,MultipartFile multipartFile) {
+	public List<ModuGroupVo> plusGroup(ModuGroupVo groupvo,MultipartFile multipartFile,int userNo) {
 		//오리지날 파일명
         String OrgName = multipartFile.getOriginalFilename(); 
         System.out.println("오리지날 파일명 = "+OrgName);
@@ -46,9 +51,8 @@ public class ModuGroupService {
         System.out.println("파일사이즈 = "+ fileSize);
 		
         groupvo.setGroupImg(saveName);
-        groupvo.setManager(1);
-        //System.out.println("두번째"+groupvo.toString());
-        
+        groupvo.setManager(userNo);
+
         
         try {                     
         	byte[] fileData = multipartFile.getBytes();
@@ -67,7 +71,27 @@ public class ModuGroupService {
         int no = groupDao.plusGroup(groupvo);
         System.out.println(no+"그룹생성");
         
-		return groupDao.selectGroup();
+		return groupDao.selectGroup(userNo);
+	}
+
+	public List<ModuGroupVo> selectGroup(int userNo) {
+		return groupDao.selectGroup(userNo);
+	}
+
+
+	public ModuGroupVo selectGroupImg(int groupNo) {
+		return groupDao.selectGroupImg(groupNo);
+	}
+
+	public List<ModuGroupVo> searchGroup(String gSearch){
+		return groupDao.searchGroup(gSearch);
+	}
+
+	public ModuGroupVo  insertJoin (UserGroupVo usergroupvo) {
+		usergroupvo.setJoinState("대기");
+	    groupDao.insertJoin(usergroupvo);
+
+	    return groupDao.selectGroupImg(usergroupvo.getGroupNo());
 	}
 	
 	

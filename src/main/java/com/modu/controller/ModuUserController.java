@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -42,7 +43,7 @@ public class ModuUserController {
 
         if (moduUserVo != null) {
             session.setAttribute("authUser", moduUserVo);
-            System.out.println("로그인 됨");
+            System.out.println("로그인 됨"+moduUserVo.toString());
             return 1;
         } else {
             System.out.println("로그인 실패");
@@ -59,7 +60,7 @@ public class ModuUserController {
 
     @RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
     public String kakaoLogin(@RequestParam String userEmail,HttpSession session) {
-        System.out.println("카카오톡 로그인하기");
+        System.out.println("카카오톡 로그인하기 : "+userEmail);
         ModuUserVo userVo = moduUserService.kakaoLogin(userEmail);
         System.out.println("유저 세션 세팅 : "+userVo.toString());
         session.setAttribute("authUser",userVo);

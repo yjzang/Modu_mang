@@ -24,7 +24,7 @@
 			    
 			    <h1 class="textalgin-center">모임을 추가하세요.</h1>
 			    <br><br>
-			    <button type="button" class="btn btn-mint btn-lg" data-toggle="modal" data-target="#exampleModalCenter01">모임 추가하기</button>
+			    <button type="button" class="btn btn-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter01">모임 추가하기</button>
 			    <br>
 			</div>
 		    <img class="d-block w-100" src="${pageContext.request.contextPath }/assets/images/main04.png" alt="create-group">

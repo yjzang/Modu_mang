@@ -6,19 +6,21 @@ public class ModuUserVo {
 	private String userPassword;
 	private String userName;
 	private String userBirthday;
+	private int groupNo;
 
 
 
 	public ModuUserVo() {
 		
 	}
-  
-	public ModuUserVo(int userNo, String userEmail, String userPassword, String userName, String userBirthday) {
+
+	public ModuUserVo(int userNo, String userEmail, String userPassword, String userName, String userBirthday, int groupNo) {
 		this.userNo = userNo;
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;
 		this.userName = userName;
 		this.userBirthday = userBirthday;
+		this.groupNo = groupNo;
 	}
 
 	public int getUserNo() {
@@ -61,16 +63,23 @@ public class ModuUserVo {
 		this.userBirthday = userBirthday;
 	}
 
+	public int getGroupNo() {
+		return groupNo;
+	}
+
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
+	}
+
 	@Override
 	public String toString() {
-
 		return "ModuUserVo{" +
 				"userNo=" + userNo +
 				", userEmail='" + userEmail + '\'' +
 				", userPassword='" + userPassword + '\'' +
 				", userName='" + userName + '\'' +
 				", userBirthday='" + userBirthday + '\'' +
+				", groupNo=" + groupNo +
 				'}';
 	}
-
 }

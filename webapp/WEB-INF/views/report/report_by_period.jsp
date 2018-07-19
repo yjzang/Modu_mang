@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: cnrp
-  Date: 2018-06-29
-  Time: 오후 9:41
+  Date: 2018-07-19
+  Time: 오전 11:57
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -36,12 +36,12 @@
         <input type="button" value="◀" id="fromYearPrev" style="border: none; background-color: white;">
         <input type="text" id="fromYearMonthOutput" readonly="readonly" class="form_month" data-date=""
                data-date-format="yyyy년 MM" data-link-field="dtp_input3" data-link-format="yyyy MM"
-               style="text-align: center;border: none;" placeholder="월 선택" onchange="isChanged()">
+               style="text-align: center;border: none;">
         <input type="button" value="▶" id="fromYearNext" style="border: none; background-color: white;">
         <input type="button" value="◀" id="toYearPrev" style="border: none; background-color: white;">
         <input type="text" id="toYearMonthOutput" readonly="readonly" class="form_month" data-date=""
                data-date-format="yyyy년 MM" data-link-field="dtp_input3" data-link-format="yyyy MM"
-               style="text-align: center;border: none;" placeholder="월 선택" onchange="isChanged()">
+               style="text-align: center;border: none;">
         <input type="button" value="▶" id="toYearNext" style="border: none; background-color: white;">
         <button type="button" id="searchPeriod">검색</button>
     </div>
@@ -50,7 +50,8 @@
         <div>
             <br>
             <div align="center"><span style="font-size: 30px"
-                                      id="annualReportTitle1"><strong>${fromYear}년 ${fromMonth}월 ~ ${toYear}년 ${toMonth}월 보고서</strong></span></div>
+                                      id="periodTitle"><strong>${fromYear}년 ${fromMonth}월 ~ ${toYear}년 ${toMonth}월 보고서</strong></span>
+            </div>
             <br>
             <br>
             <div class="mx-auto" id="graph1" style="width: 90%; height: 500px;"></div>
@@ -198,6 +199,7 @@
 
         $("#fromYearMonthOutput").val(fromYear + "년 " + fromMonth + "월");
         $("#toYearMonthOutput").val(toYear + "년 " + toMonth + "월");
+        $("#periodTitle").html("<strong>" + fromYear + "년 " + fromMonth + "월" + ~toYear + "년 " + toMonth + "월 보고서</strong>");
         // var today = new Date();
         // var currentYear = today.getFullYear();
         // var currentMonth = today.getMonth()+1;
@@ -218,27 +220,51 @@
         });
         $('#fromYearPrev').on("click", function () {
             var fromYearMonth = $("#fromYearMonthOutput").val();
-            var year = fromYearMonth.substr();
-            var month = fromYearMonth.substr();
-            $("#fromYearMonthOutput").val(year+"년 "+month+"월");
+            var tmp = fromYearMonth.replace(/[^0-9]/g, '');
+            var year = Number(tmp.substr(0, 4));
+            var month = Number(tmp.substr(4, 6));
+            if (month <= 1) {
+                month = 12;
+                $("#fromYearMonthOutput").val(year - 1 + "년 " + month + "월");
+            } else {
+                $("#fromYearMonthOutput").val(year + "년 " + month - 1 + "월");
+            }
         });
         $('#fromYearNext').on("click", function () {
             var fromYearMonth = $("#fromYearMonthOutput").val();
-            var year = fromYearMonth.substr();
-            var month = fromYearMonth.substr();
-            $("#fromYearMonthOutput").val(year+"년 "+month+"월");
+            var tmp = fromYearMonth.replace(/[^0-9]/g, '');
+            var year = Number(tmp.substr(0, 4));
+            var month = Number(tmp.substr(4, 6));
+            if (month >= 12) {
+                month = 1;
+                $("#fromYearMonthOutput").val(year + 1 + "년 " + month + "월");
+            } else {
+                $("#fromYearMonthOutput").val(year + "년 " + month + 1 + "월");
+            }
         });
         $('#toYearPrev').on("click", function () {
             var toYearMonth = $("#toYearMonthOutput").val();
-            var year = toYearMonth.substr();
-            var month = toYearMonth.substr();
-            $("#toYearMonthOutput").val(year+"년 "+month+"월");
+            var tmp = toYearMonth.replace(/[^0-9]/g, '');
+            var year = Number(tmp.substr(0, 4));
+            var month = Number(tmp.substr(4, 6));
+            if (month <= 1) {
+                month = 12;
+                $("#toYearMonthOutput").val(year - 1 + "년 " + month + "월");
+            } else {
+                $("#toYearMonthOutput").val(year + "년 " + month - 1 + "월");
+            }
         });
         $('#toYearNext').on("click", function () {
             var toYearMonth = $("#toYearMonthOutput").val();
-            var year = toYearMonth.substr();
-            var month = toYearMonth.substr();
-            $("#toYearMonthOutput").val(year+"년 "+month+"월");
+            var tmp = toYearMonth.replace(/[^0-9]/g, '');
+            var year = Number(tmp.substr(0, 4));
+            var month = Number(tmp.substr(4, 6));
+            if (month >= 12) {
+                month = 1;
+                $("#toYearMonthOutput").val(year + 1 + "년 " + month + "월");
+            } else {
+                $("#toYearMonthOutput").val(year + "년 " + month + 1 + "월");
+            }
         });
     });
 
@@ -248,9 +274,9 @@
     };
 
     <%--var isChanged = function () {--%>
-        <%--var year = $("#yearOutput").val();--%>
-        <%--year = Number(year.substr(0, 4));--%>
-        <%--location.href = "${pageContext.request.contextPath }/annualreport/${groupNo}/" + year;--%>
+    <%--var year = $("#yearOutput").val();--%>
+    <%--year = Number(year.substr(0, 4));--%>
+    <%--location.href = "${pageContext.request.contextPath }/annualreport/${groupNo}/" + year;--%>
     <%--};--%>
 
 

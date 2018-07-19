@@ -266,3 +266,13 @@
 		padding: 10px;
 		margin:auto auto 50px auto;
 	}
+
+	@media print {
+		page-divide {
+			page-break-after: always;
+		}
+
+		.no-print-page {
+			display: none;
+		}
+	}

@@ -32,11 +32,20 @@ public class ModuUserDao {
 	}
 
 	public ModuUserVo userLoginCheck(Map<String, Object> map) {
-		System.out.println(map.toString());
-		return sqlSession.selectOne("user.userLoginAvailableCheck",map);
+		System.out.println("유저로그인체크"+map.toString());
+		ModuUserVo userVo = sqlSession.selectOne("user.userLoginAvailableCheck",map);
+		System.out.println("유저로그인 나오면 출력"+userVo.toString());
+		return userVo;
 	}
 
 	public ModuUserVo kakaoLogin(Map<String,Object> map) {
 		return sqlSession.selectOne("user.userLoginAvailableCheck",map);
 	}
+
+	public String loginUserGroupNo(ModuUserVo userVo) {
+		String tmp = sqlSession.selectOne("user.loginUserGroupNo",userVo);
+		System.out.println("유저그룹번호 : "+tmp);
+		return tmp;
+	}
+
 }
